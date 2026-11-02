@@ -13,6 +13,7 @@ from pathlib import Path
 
 import pdfplumber
 from docx import Document as WordDocument
+from docx.oxml.ns import qn
 from docx.table import Table as WordTable
 from docx.text.paragraph import Paragraph
 from openpyxl import load_workbook
@@ -100,10 +101,24 @@ def _section_label(heading: str) -> str:
 
 # --- Word ---------------------------------------------------------------------------------------------
 
+def _body_items(element, parent):
+    """Paragraphs and tables in order, also inside block-level content controls (cover pages, contents lists), which
+    python-docx's own iterator skips."""
+    for child in element.iterchildren():
+        if child.tag == qn("w:p"):
+            yield Paragraph(child, parent)
+        elif child.tag == qn("w:tbl"):
+            yield WordTable(child, parent)
+        elif child.tag == qn("w:sdt"):
+            content = child.find(qn("w:sdtContent"))
+            if content is not None:
+                yield from _body_items(content, parent)
+
+
 def _read_docx(doc: Document) -> None:
     word = WordDocument(str(doc.path))
     section, para_no, table_no = "", 0, 0
-    for item in word.iter_inner_content():
+    for item in _body_items(word.element.body, word._body):
         if isinstance(item, Paragraph):
             text = _line(item.text)
             if not text:
@@ -115,7 +130,7 @@ def _read_docx(doc: Document) -> None:
                 doc.add("heading", text, f"§{_section_label(text)}", section)
             else:
                 para_no += 1
-                doc.add("para", text, f"§{_section_label(section)} ¶{para_no}", section)
+                doc.add("para", text, f"§{_section_label(section)} ¶{para_no}", section, noise=style.lower().startswith("toc"))
         elif isinstance(item, WordTable):
             table_no += 1
             rows = _docx_rows(item)

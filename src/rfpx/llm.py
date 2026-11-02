@@ -16,7 +16,6 @@ import httpx
 DEFAULT_BASE = "http://127.0.0.1:1234/v1"
 LOCAL_HOSTS = {"127.0.0.1", "localhost", "::1", "host.docker.internal"}
 CHAT_PREFERENCE = ["qwen2.5-3b-instruct", "qwen2.5-7b-instruct", "llama-3.2-3b-instruct"]
-NO_THINK = " /no_think"
 
 
 class LLMUnavailable(RuntimeError):
@@ -48,11 +47,14 @@ def strip_think(text: str) -> str:
 
 class LocalLLM:
     def __init__(self, base: str | None = None, model: str | None = None, timeout: float = 900.0,
-                 client: httpx.Client | None = None):
+                 client: httpx.Client | None = None, reasoning_effort: str | None = "auto"):
+        """reasoning_effort: "auto" sends `none` to qwen3 models (which otherwise think first, spend the token budget and
+        can return an empty answer) and nothing to other models; None never sends it; any other value is sent as given."""
         self.base = assert_local(base or os.environ.get("LLM_BASE_URL") or DEFAULT_BASE)
         self._model = model
         self._timeout = timeout
         self._client = client or httpx.Client(follow_redirects=False)
+        self._reasoning_effort = reasoning_effort
 
     def _request(self, method: str, path: str, payload: dict[str, Any] | None = None, timeout: float = 10.0) -> dict[str, Any]:
         if disabled():
@@ -81,13 +83,11 @@ class LocalLLM:
     def chat(self, messages: list[dict[str, str]], max_tokens: int = 1800, temperature: float = 0.0,
              schema: dict[str, Any] | None = None) -> str:
         model = self.model()
-        messages = [dict(m) for m in messages]
-        if "qwen3" in model.lower():
-            for m in reversed(messages):
-                if m["role"] == "user":
-                    m["content"] += NO_THINK
-                    break
-        payload: dict[str, Any] = {"model": model, "messages": messages, "max_tokens": max_tokens, "temperature": temperature}
+        payload: dict[str, Any] = {"model": model, "messages": [dict(m) for m in messages], "max_tokens": max_tokens,
+                                   "temperature": temperature}
+        effort = ("none" if "qwen3" in model.lower() else None) if self._reasoning_effort == "auto" else self._reasoning_effort
+        if effort:
+            payload["reasoning_effort"] = effort
         if schema is not None:
             payload["response_format"] = {"type": "json_schema", "json_schema": {"name": "rfp_questions", "strict": True, "schema": schema}}
         data = self._request("POST", "/chat/completions", payload, self._timeout)

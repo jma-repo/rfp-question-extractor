@@ -1,0 +1,205 @@
+{
+  "summary": {
+    "documents": 3,
+    "gold": 95,
+    "pred": 57,
+    "tp": 57,
+    "fp": 0,
+    "fn": 38,
+    "precision": 1.0,
+    "recall": 0.6,
+    "f1": 0.75,
+    "macro_precision": 1.0,
+    "macro_recall": 0.594,
+    "recall_with_review": 0.9368,
+    "review_items": 35,
+    "near_misses": 0,
+    "type_accuracy": 0.9649,
+    "required_accuracy": 1.0,
+    "id_accuracy": 1.0,
+    "review_real_questions": 32,
+    "review_reasons": {
+      "found by rules only: the model reply for this part of the file could not be used": 35
+    },
+    "seconds": 1903.2
+  },
+  "by_format": {
+    "docx": {
+      "documents": 1,
+      "gold": 30,
+      "pred": 8,
+      "tp": 8,
+      "fp": 0,
+      "fn": 22,
+      "precision": 1.0,
+      "recall": 0.2667,
+      "f1": 0.4211,
+      "macro_precision": 1.0,
+      "macro_recall": 0.2667,
+      "recall_with_review": 0.9333,
+      "review_items": 21,
+      "near_misses": 0,
+      "type_accuracy": 1.0,
+      "required_accuracy": 1.0,
+      "id_accuracy": 1.0
+    },
+    "pdf": {
+      "documents": 1,
+      "gold": 37,
+      "pred": 27,
+      "tp": 27,
+      "fp": 0,
+      "fn": 10,
+      "precision": 1.0,
+      "recall": 0.7297,
+      "f1": 0.8437,
+      "macro_precision": 1.0,
+      "macro_recall": 0.7297,
+      "recall_with_review": 0.8919,
+      "review_items": 8,
+      "near_misses": 0,
+      "type_accuracy": 1.0,
+      "required_accuracy": 1.0,
+      "id_accuracy": 1.0
+    },
+    "xlsx": {
+      "documents": 1,
+      "gold": 28,
+      "pred": 22,
+      "tp": 22,
+      "fp": 0,
+      "fn": 6,
+      "precision": 1.0,
+      "recall": 0.7857,
+      "f1": 0.88,
+      "macro_precision": 1.0,
+      "macro_recall": 0.7857,
+      "recall_with_review": 1.0,
+      "review_items": 6,
+      "near_misses": 0,
+      "type_accuracy": 0.9091,
+      "required_accuracy": 1.0,
+      "id_accuracy": 1.0
+    }
+  },
+  "by_split": {
+    "test": {
+      "documents": 3,
+      "gold": 95,
+      "pred": 57,
+      "tp": 57,
+      "fp": 0,
+      "fn": 38,
+      "precision": 1.0,
+      "recall": 0.6,
+      "f1": 0.75,
+      "macro_precision": 1.0,
+      "macro_recall": 0.594,
+      "recall_with_review": 0.9368,
+      "review_items": 35,
+      "near_misses": 0,
+      "type_accuracy": 0.9649,
+      "required_accuracy": 1.0,
+      "id_accuracy": 1.0
+    }
+  },
+  "documents": [
+    {
+      "file": "capital-library-digital-content.pdf",
+      "format": "pdf",
+      "split": "test",
+      "gold": 37,
+      "pred": 27,
+      "tp": 27,
+      "precision": 1.0,
+      "recall": 0.7297,
+      "review": 8,
+      "near_misses": 0,
+      "false_positives": [],
+      "misses": [
+        "Disclose any litigation or claims against your organization in the last five years that relate to services of this kind.",
+        "Any actual or potential conflict of interest relating to this RFP must be disclosed.",
+        "Provide a profile of your organization, including years in business, number of employees and head office location.",
+        "Subcontractors the Proponent intends to use, and the portion of the work each will perform, are to be listed.",
+        "Assumptions and exclusions that affect the prices quoted are to be stated.",
+        "Provide a fixed price for the Services using the Pricing Schedule in Appendix C (Canadian dollars, excluding GST)."
+      ],
+      "wrong_labels": [],
+      "seconds": 652.87,
+      "notes": [
+        "model unavailable for part of the file (The model returned an empty answer)"
+      ]
+    },
+    {
+      "file": "mountain-view-records.docx",
+      "format": "docx",
+      "split": "test",
+      "gold": 30,
+      "pred": 8,
+      "tp": 8,
+      "precision": 1.0,
+      "recall": 0.2667,
+      "review": 21,
+      "near_misses": 0,
+      "false_positives": [],
+      "misses": [
+        "Please describe at least two comparable projects completed in the last five years, including scope, duration and outcome.",
+        "The product roadmap for the next 24 months is to be attached.",
+        "Please describe how the electronic records management system scales to support peak loads and growth in the number of users.",
+        "Does the electronic records management system support single sign-on using SAML 2.0 or OpenID Connect? (Yes/No)",
+        "Describe how retention schedules are applied and how records are disposed of at the end of the retention period.",
+        "(Optional) Does the electronic records management system support legal holds that suspend disposal of selected records? (Yes/No)"
+      ],
+      "wrong_labels": [],
+      "seconds": 593.67,
+      "notes": [
+        "model unavailable for part of the file (The model returned an empty answer)"
+      ]
+    },
+    {
+      "file": "northern-lights-security-assessment.xlsx",
+      "format": "xlsx",
+      "split": "test",
+      "gold": 28,
+      "pred": 22,
+      "tp": 22,
+      "precision": 1.0,
+      "recall": 0.7857,
+      "review": 6,
+      "near_misses": 0,
+      "false_positives": [],
+      "misses": [
+        "Does your organization maintain a documented information security policy that is reviewed at least annually?",
+        "Is there a named executive accountable for information security?",
+        "Describe how security responsibilities are assigned across your teams.",
+        "Is multi-factor authentication required for all administrative access?",
+        "Are user access rights reviewed at least quarterly?",
+        "Describe how access is removed when an employee or subcontractor leaves."
+      ],
+      "wrong_labels": [
+        "type table -> narrative | Where will customer data be stored and processed? List each country.",
+        "type table -> narrative | List every subcontractor that will have access to customer data."
+      ],
+      "seconds": 656.69,
+      "notes": [
+        "the model reply could not be read for some parts of the file"
+      ]
+    }
+  ],
+  "extractor_stats": {
+    "calls": 14,
+    "retries": 2,
+    "fallback_chunks": 5,
+    "recheck_added": 0,
+    "schema_used": false
+  },
+  "settings": {
+    "extractor": "llm",
+    "label": "qwen/qwen3.8-27b (local model server)",
+    "split": "test",
+    "max_chars": 1400,
+    "section_gate": true,
+    "model": "qwen/qwen3.8-27b",
+    "recheck": false
+  }
+}

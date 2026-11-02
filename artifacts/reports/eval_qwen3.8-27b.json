@@ -1,0 +1,339 @@
+{
+  "summary": {
+    "documents": 10,
+    "gold": 350,
+    "pred": 353,
+    "tp": 350,
+    "fp": 3,
+    "fn": 0,
+    "precision": 0.9915,
+    "recall": 1.0,
+    "f1": 0.9957,
+    "macro_precision": 0.9921,
+    "macro_recall": 1.0,
+    "recall_with_review": 1.0,
+    "review_items": 0,
+    "near_misses": 0,
+    "type_accuracy": 0.96,
+    "required_accuracy": 1.0,
+    "id_accuracy": 1.0,
+    "review_real_questions": 0,
+    "review_reasons": {},
+    "seconds": 1438.4
+  },
+  "by_format": {
+    "docx": {
+      "documents": 4,
+      "gold": 152,
+      "pred": 154,
+      "tp": 152,
+      "fp": 2,
+      "fn": 0,
+      "precision": 0.987,
+      "recall": 1.0,
+      "f1": 0.9935,
+      "macro_precision": 0.9868,
+      "macro_recall": 1.0,
+      "recall_with_review": 1.0,
+      "review_items": 0,
+      "near_misses": 0,
+      "type_accuracy": 0.9539,
+      "required_accuracy": 1.0,
+      "id_accuracy": 1.0
+    },
+    "pdf": {
+      "documents": 3,
+      "gold": 111,
+      "pred": 112,
+      "tp": 111,
+      "fp": 1,
+      "fn": 0,
+      "precision": 0.9911,
+      "recall": 1.0,
+      "f1": 0.9955,
+      "macro_precision": 0.9912,
+      "macro_recall": 1.0,
+      "recall_with_review": 1.0,
+      "review_items": 0,
+      "near_misses": 0,
+      "type_accuracy": 0.9459,
+      "required_accuracy": 1.0,
+      "id_accuracy": 1.0
+    },
+    "xlsx": {
+      "documents": 3,
+      "gold": 87,
+      "pred": 87,
+      "tp": 87,
+      "fp": 0,
+      "fn": 0,
+      "precision": 1.0,
+      "recall": 1.0,
+      "f1": 1.0,
+      "macro_precision": 1.0,
+      "macro_recall": 1.0,
+      "recall_with_review": 1.0,
+      "review_items": 0,
+      "near_misses": 0,
+      "type_accuracy": 0.9885,
+      "required_accuracy": 1.0,
+      "id_accuracy": 1.0
+    }
+  },
+  "by_split": {
+    "dev": {
+      "documents": 3,
+      "gold": 125,
+      "pred": 126,
+      "tp": 125,
+      "fp": 1,
+      "fn": 0,
+      "precision": 0.9921,
+      "recall": 1.0,
+      "f1": 0.996,
+      "macro_precision": 0.9932,
+      "macro_recall": 1.0,
+      "recall_with_review": 1.0,
+      "review_items": 0,
+      "near_misses": 0,
+      "type_accuracy": 0.96,
+      "required_accuracy": 1.0,
+      "id_accuracy": 1.0
+    },
+    "test": {
+      "documents": 7,
+      "gold": 225,
+      "pred": 227,
+      "tp": 225,
+      "fp": 2,
+      "fn": 0,
+      "precision": 0.9912,
+      "recall": 1.0,
+      "f1": 0.9956,
+      "macro_precision": 0.9916,
+      "macro_recall": 1.0,
+      "recall_with_review": 1.0,
+      "review_items": 0,
+      "near_misses": 0,
+      "type_accuracy": 0.96,
+      "required_accuracy": 1.0,
+      "id_accuracy": 1.0
+    }
+  },
+  "documents": [
+    {
+      "file": "bow-river-fare-questionnaire.xlsx",
+      "format": "xlsx",
+      "split": "dev",
+      "gold": 29,
+      "pred": 29,
+      "tp": 29,
+      "precision": 1.0,
+      "recall": 1.0,
+      "review": 0,
+      "near_misses": 0,
+      "false_positives": [],
+      "misses": [],
+      "wrong_labels": [],
+      "seconds": 117.32,
+      "notes": []
+    },
+    {
+      "file": "capital-library-digital-content.pdf",
+      "format": "pdf",
+      "split": "test",
+      "gold": 37,
+      "pred": 38,
+      "tp": 37,
+      "precision": 0.9737,
+      "recall": 1.0,
+      "review": 0,
+      "near_misses": 0,
+      "false_positives": [
+        "Proponents shall submit each attachment as a separate PDF file named after the item number."
+      ],
+      "misses": [],
+      "wrong_labels": [
+        "type pricing -> narrative | Describe any annual price escalation proposed for the term of the contract.",
+        "type pricing -> narrative | Assumptions and exclusions that affect the prices quoted are to be stated."
+      ],
+      "seconds": 139.81,
+      "notes": []
+    },
+    {
+      "file": "foothills-student-information-system.pdf",
+      "format": "pdf",
+      "split": "dev",
+      "gold": 48,
+      "pred": 48,
+      "tp": 48,
+      "precision": 1.0,
+      "recall": 1.0,
+      "review": 0,
+      "near_misses": 0,
+      "false_positives": [],
+      "misses": [],
+      "wrong_labels": [
+        "type table -> narrative | Provide a high-level schedule showing the main phases and their durations.",
+        "type pricing -> narrative | Any annual price escalation proposed for the term of the contract is to be described.",
+        "type pricing -> narrative | The Proponent shall state every assumption and exclusion that affects the prices quoted."
+      ],
+      "seconds": 204.12,
+      "notes": []
+    },
+    {
+      "file": "lakeshore-billing-modernization.docx",
+      "format": "docx",
+      "split": "test",
+      "gold": 26,
+      "pred": 26,
+      "tp": 26,
+      "precision": 1.0,
+      "recall": 1.0,
+      "review": 0,
+      "near_misses": 0,
+      "false_positives": [],
+      "misses": [],
+      "wrong_labels": [
+        "type pricing -> narrative | The Proponent must state every assumption and exclusion that affects the prices quoted."
+      ],
+      "seconds": 113.02,
+      "notes": []
+    },
+    {
+      "file": "mountain-view-records.docx",
+      "format": "docx",
+      "split": "test",
+      "gold": 30,
+      "pred": 31,
+      "tp": 30,
+      "precision": 0.9677,
+      "recall": 1.0,
+      "review": 0,
+      "near_misses": 0,
+      "false_positives": [
+        "Proposals must include the RFP number and the name of the Proponent on the cover page."
+      ],
+      "misses": [],
+      "wrong_labels": [
+        "type pricing -> narrative | (Optional) Any annual price escalation proposed for the term of the contract is to be desc",
+        "type table -> narrative | List all subcontractors you intend to use and the portion of the work each will perform."
+      ],
+      "seconds": 116.28,
+      "notes": []
+    },
+    {
+      "file": "northern-lights-security-assessment.xlsx",
+      "format": "xlsx",
+      "split": "test",
+      "gold": 28,
+      "pred": 28,
+      "tp": 28,
+      "precision": 1.0,
+      "recall": 1.0,
+      "review": 0,
+      "near_misses": 0,
+      "false_positives": [],
+      "misses": [],
+      "wrong_labels": [],
+      "seconds": 103.37,
+      "notes": []
+    },
+    {
+      "file": "northfield-fleet-telematics.docx",
+      "format": "docx",
+      "split": "dev",
+      "gold": 48,
+      "pred": 49,
+      "tp": 48,
+      "precision": 0.9796,
+      "recall": 1.0,
+      "review": 0,
+      "near_misses": 0,
+      "false_positives": [
+        "Mark each requirement Yes or No."
+      ],
+      "misses": [],
+      "wrong_labels": [
+        "type table -> narrative | Provide a high-level schedule showing the main phases and their durations.",
+        "type pricing -> narrative | The Proponent shall state every assumption and exclusion that affects the prices quoted."
+      ],
+      "seconds": 212.07,
+      "notes": []
+    },
+    {
+      "file": "prairie-health-scheduling.docx",
+      "format": "docx",
+      "split": "test",
+      "gold": 48,
+      "pred": 48,
+      "tp": 48,
+      "precision": 1.0,
+      "recall": 1.0,
+      "review": 0,
+      "near_misses": 0,
+      "false_positives": [],
+      "misses": [],
+      "wrong_labels": [
+        "type table -> narrative | Provide a high-level schedule showing the main phases and their durations.",
+        "type pricing -> narrative | Describe any annual price escalation proposed for the term of the contract."
+      ],
+      "seconds": 206.46,
+      "notes": []
+    },
+    {
+      "file": "tri-valley-housing-requirements.xlsx",
+      "format": "xlsx",
+      "split": "test",
+      "gold": 30,
+      "pred": 30,
+      "tp": 30,
+      "precision": 1.0,
+      "recall": 1.0,
+      "review": 0,
+      "near_misses": 0,
+      "false_positives": [],
+      "misses": [],
+      "wrong_labels": [
+        "type pricing -> narrative | State every assumption and exclusion that affects the prices quoted."
+      ],
+      "seconds": 117.16,
+      "notes": []
+    },
+    {
+      "file": "westland-cloud-hosting.pdf",
+      "format": "pdf",
+      "split": "test",
+      "gold": 26,
+      "pred": 26,
+      "tp": 26,
+      "precision": 1.0,
+      "recall": 1.0,
+      "review": 0,
+      "near_misses": 0,
+      "false_positives": [],
+      "misses": [],
+      "wrong_labels": [
+        "type pricing -> narrative | The Proponent must state every assumption and exclusion that affects the prices quoted."
+      ],
+      "seconds": 108.77,
+      "notes": []
+    }
+  ],
+  "extractor_stats": {
+    "calls": 56,
+    "retries": 0,
+    "fallback_chunks": 0,
+    "recheck_added": 0,
+    "schema_used": true
+  },
+  "settings": {
+    "extractor": "llm",
+    "label": "qwen/qwen3.8-27b (local model server)",
+    "split": "all",
+    "max_chars": 1400,
+    "section_gate": true,
+    "model": "qwen/qwen3.8-27b",
+    "recheck": false
+  }
+}

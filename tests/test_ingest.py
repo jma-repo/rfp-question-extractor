@@ -99,6 +99,34 @@ def test_xlsx_banner_rows_become_headings_and_section_for_the_rows_below(rfp_fil
     assert row.section == "Encryption"
 
 
+def _docx_with_content_control(tmp_path):
+    """A Word file whose body has a block-level content control (as cover-page and contents building blocks do) and a TOC-styled line."""
+    from docx import Document as W
+    from docx.enum.style import WD_STYLE_TYPE
+    from docx.oxml import parse_xml
+    from docx.oxml.ns import nsdecls
+
+    word = W()
+    word.styles.add_style("TOC 1", WD_STYLE_TYPE.PARAGRAPH)
+    word.add_heading("4.1 Experience", level=2)
+    word.add_paragraph("4.1.1 Describe your support model.")
+    inside = parse_xml(
+        f'<w:sdt {nsdecls("w")}><w:sdtPr/><w:sdtContent><w:p><w:r><w:t>4.1.2 Provide three references.</w:t></w:r></w:p></w:sdtContent></w:sdt>')
+    word.element.body.insert(len(word.element.body) - 1, inside)          # before the final sectPr
+    word.add_paragraph("Introduction 3", style="TOC 1")
+    path = tmp_path / "control.docx"
+    word.save(str(path))
+    return path
+
+
+def test_text_inside_a_block_level_content_control_is_read_and_contents_lines_are_noise(tmp_path):
+    doc = read_document(_docx_with_content_control(tmp_path))
+    texts = [b.text for b in doc.blocks if not b.noise]
+    assert "4.1.2 Provide three references." in texts and "4.1.1 Describe your support model." in texts
+    assert next(b for b in doc.blocks if b.text == "Introduction 3").noise
+    assert next(b for b in doc.blocks if b.text.startswith("4.1.2")).section == "4.1 Experience"
+
+
 def test_locations_are_unique_within_a_document(rfp_files):
     for name, path in rfp_files.items():
         locs = [b.loc for b in read_document(path).blocks if not b.noise]

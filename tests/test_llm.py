@@ -66,20 +66,28 @@ def test_chat_sends_a_schema_and_returns_the_message_text():
     assert sent["temperature"] == 0 and sent["max_tokens"] == 50 and sent["messages"][-1]["content"] == "hi"
 
 
-def test_reasoning_models_get_the_no_think_switch_on_the_last_user_message_only():
-    sent = {}
+def test_reasoning_models_are_told_not_to_think_and_other_models_are_left_alone():
+    """Measured on LM Studio with qwen3.8-27b: `reasoning_effort: none` removes the reasoning (10 tokens, 2.5 s for a copy task);
+    the `/no_think` suffix does not (it produced more reasoning), and reasoning that eats max_tokens leaves an empty answer."""
+    sent = []
 
-    def handler(request):
-        if request.url.path.endswith("/models"):
-            return models_response("qwen/qwen3.8-27b")
-        sent.update(json.loads(request.content))
-        return httpx.Response(200, json={"choices": [{"message": {"content": "<think>x</think>ok"}}]})
+    def handler(model):
+        def respond(request):
+            if request.url.path.endswith("/models"):
+                return models_response(model)
+            sent.append(json.loads(request.content))
+            return httpx.Response(200, json={"choices": [{"message": {"content": "<think>x</think>ok"}}]})
+        return respond
 
-    llm = LocalLLM(client=client(handler))
-    assert llm.chat([{"role": "system", "content": "s"}, {"role": "user", "content": "a"}, {"role": "assistant", "content": "b"},
-                     {"role": "user", "content": "c"}]) == "ok"
-    contents = [m["content"] for m in sent["messages"]]
-    assert contents == ["s", "a", "b", "c /no_think"]
+    messages = [{"role": "system", "content": "s"}, {"role": "user", "content": "a"}]
+    assert LocalLLM(client=client(handler("qwen/qwen3.8-27b"))).chat(messages) == "ok"
+    assert sent[-1]["reasoning_effort"] == "none" and [m["content"] for m in sent[-1]["messages"]] == ["s", "a"]
+    assert LocalLLM(client=client(handler("qwen2.5-3b-instruct"))).chat(messages) == "ok"
+    assert "reasoning_effort" not in sent[-1]
+    assert LocalLLM(client=client(handler("qwen2.5-3b-instruct")), reasoning_effort="low").chat(messages) == "ok"
+    assert sent[-1]["reasoning_effort"] == "low"
+    assert LocalLLM(client=client(handler("qwen/qwen3.8-27b")), reasoning_effort=None).chat(messages) == "ok"
+    assert "reasoning_effort" not in sent[-1]
 
 
 def test_a_server_that_rejects_the_schema_raises_a_specific_error():

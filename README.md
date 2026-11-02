@@ -68,6 +68,11 @@ columns for the team. A summary table opens the document; a **Needs human review
 Edit styles (`Heading 1`, `RFP Table Text`, ...), column widths, header and footer or any fixed wording in Word; the next run follows.
 Leave the `{{ }}` and `{% %}` tags alone.
 
+![The review list: what the model and the rules disagreed on, and text that failed the verbatim check, each with its reason](docs/img/register-review.png)
+
+Both pictures are from the hybrid run with the 3B model, so the review list is long. The "not a verbatim piece of the source" rows are the check doing its job:
+on chunks with nothing to extract (covers, contents pages) the small model sometimes hands back a worked example from its own prompt, lightly reworded.
+
 ## Results
 
 Ten synthetic RFPs (four Word, three PDF, three Excel), 350 distinct questions. A prediction counts only if its words equal the answer key's
@@ -75,7 +80,40 @@ Ten synthetic RFPs (four Word, three PDF, three Excel), 350 distinct questions. 
 files, was not touched while tuning. Everything below is regenerated from `artifacts/reports/*.json` by `scripts/results_table.py`.
 
 <!-- results:start -->
-(run `uv run python scripts/results_table.py --write`)
+| Extractor | Test precision | Test recall | Test F1 | Test recall incl. review list | Items in review (test) | Dev F1 |
+|---|---|---|---|---|---|---|
+| Rules (regular expressions, no model) | 0.970 | 0.871 | 0.918 | 0.871 | 0 | 0.947 |
+| qwen2.5-3b-instruct | 0.872 | 0.911 | 0.891 | 0.911 | 36 | 0.947 |
+| &nbsp;&nbsp;+ second pass for missed items | 0.900 | 0.924 | 0.912 | 0.924 | 37 | 0.944 |
+| &nbsp;&nbsp;without the section gate | 0.830 | 0.911 | 0.869 | 0.911 | 24 | 0.910 |
+| &nbsp;&nbsp;without JSON-schema decoding | 0.895 | 0.876 | 0.885 | 0.876 | 33 | 0.951 |
+| Hybrid: qwen2.5-3b + rules, disagreements to review | 0.984 | 0.800 | 0.882 | 0.982 | 108 | 0.923 |
+| &nbsp;&nbsp;+ second pass for missed items | 0.989 | 0.804 | 0.887 | 0.982 | 99 | 0.923 |
+| qwen3.8-27b, reasoning off | 0.991 | 1.000 | 0.996 | 1.000 | 0 | 0.996 |
+
+| Test split | Word (3 files) | PDF (2 files) | Excel (2 files) |
+|---|---|---|---|
+| Rules | P 0.970 / R 0.923 | P 0.933 / R 0.667 | P 1.000 / R 1.000 |
+| qwen2.5-3b | P 0.802 / R 0.894 | P 0.885 / R 0.857 | P 1.000 / R 1.000 |
+| Hybrid | P 0.978 / R 0.846 | P 0.971 / R 0.540 | P 1.000 / R 1.000 |
+| qwen3.8-27b | P 0.990 / R 1.000 | P 0.984 / R 1.000 | P 1.000 / R 1.000 |
+
+| Test split, matched questions | Type correct | Required correct | Number correct |
+|---|---|---|---|
+| Rules | 0.990 | 1.000 | 1.000 |
+| qwen2.5-3b | 0.756 | 0.902 | 1.000 |
+| Hybrid | 0.761 | 0.906 | 1.000 |
+| qwen3.8-27b | 0.960 | 1.000 | 1.000 |
+
+| Why an item is in the review list (all 10 files) | qwen2.5-3b | Hybrid | qwen3.8-27b |
+|---|---|---|---|
+| text is not a verbatim piece of the source | 27 | 27 | 0 |
+| found under a heading that normally holds background or instructions, not questions | 22 | 0 | 0 |
+| text runs across more than one paragraph or table cell | 3 | 3 | 0 |
+| found by the model only, not by the rules | 0 | 87 | 0 |
+| found by the rules only, not by the model | 0 | 31 | 0 |
+| **Items in the review list** | **52** | **148** | **0** |
+| of which are real questions from the answer key | 0 | 58 | 0 |
 <!-- results:end -->
 
 ## What the numbers say
@@ -89,7 +127,10 @@ files, was not touched while tuning. Everything below is regenerated from `artif
   is worth about two F1 points; the second pass for missed items is worth about two more; JSON-schema decoding changes little for this model but guarantees parseable replies.
 - **Agreement is a cheap confidence signal.** In the hybrid, only what the model and the rules both found is accepted: precision above 0.98. A person then
   decides the disagreements, which is how recall including the review list gets close to 0.98, at the price of a long list.
-- **Bigger helps, slowly.** The 27B model was run on three test files only because each call takes minutes; see the subset table.
+- **A 27B model with its reasoning switched off is close to perfect here**: test F1 0.996, nothing in the review list, at two to three and a half minutes per
+  document (the 3B takes 10 to 25 seconds, the rules no time). That says as much about how clean the synthetic set is as about the model; with a model this good the checks stop being what limits quality.
+  The first 27B run scored recall 0.600 for a reason that had nothing to do with the model: the client's `/no_think` suffix did not stop it reasoning, the reasoning used up
+  `max_tokens` and 5 of 12 chunks came back empty and fell back to the rules. Sending `reasoning_effort: none` fixed it (details in `artifacts/reports/dev-tuning/NOTES.md`).
 
 How the prompt got where it is (dev split): 3 examples and 2,400-character chunks gave F1 0.905; smaller chunks and two extra rules, 0.914; a fourth example showing an
 excerpt with nothing to extract made it *worse* (0.854, the model began rewording) and was dropped; the section gate then took it to about 0.95.
@@ -101,13 +142,14 @@ Repeating one configuration moved dev F1 by up to 0.004 (the model server is not
   (the rules scored F1 0.96); I made the wording messier and added sentences that borrow question wording but ask for nothing, then fixed three plain oversights in the rules
   (a question mark followed by "(Yes/No)", "Please", bullet glyphs) and stopped. I did not add rules for the passive wording or the unusual table header, which is what overfitting to this set would look like.
   Real RFPs are messier than this; expect lower numbers.
-- **Small.** Seven test files, 225 questions: one file moves a number by several points. The 27B result is three files.
+- **Small.** Seven test files, 225 questions: one file moves a number by several points.
 - **What counts as a question is a labelling choice.** Sentences that only introduce a list are not questions, their lettered items are; procedural sentences ("Proposals shall be
   submitted before the Closing Time") are not; the instruction to complete a pricing table is. Another team might label differently.
 - **Verbatim, not semantic.** A model that rewords a question correctly is still a miss and a false positive here, and goes to review. That is the intended trade.
-- **Not handled:** scanned PDFs (no OCR), two-column PDF layouts, Word lists whose numbers are generated by Word (the number is not in the text, so `No.` shows a dash), text boxes, comments and tracked changes,
+- **Not handled:** scanned PDFs (no OCR), two-column PDF layouts, Word lists whose numbers are generated by Word (the number is not in the text, so `No.` shows a dash), text boxes, tables nested inside table cells, comments and tracked changes,
   languages other than English, near-duplicates across different RFPs.
-- **Labels from the model are weak.** Type and required are right far less often than from the rules; a production version should take them from rules where the rules are sure.
+- **Labels from the small model are weak.** Its type and required labels are right far less often than the rules'; a production version should take them from the rules where the rules are sure.
+  The 27B is better but still behind the rules on type.
 - **No real RFPs were used.** Public files are listed in `docs/public-sources.md`, not downloaded; nothing confidential was ever in this repository.
 
 ## Without Python: Microsoft Copilot

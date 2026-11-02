@@ -24,7 +24,8 @@ def _extractor(s: Settings, args: argparse.Namespace):
         options["recheck"] = True
     if getattr(args, "no_json_schema", False):
         options["json_schema"] = "off"
-    llm = LocalLLM(args.base_url or options["base_url"], model=args.model, timeout=float(options["timeout_s"]))
+    llm = LocalLLM(args.base_url or options["base_url"], model=args.model, timeout=float(options["timeout_s"]),
+                   reasoning_effort=options.get("reasoning_effort", "auto"))
     model = LlmExtractor(llm, **{k: options[k] for k in ("temperature", "max_tokens", "retries", "recheck", "json_schema")})
     return HybridExtractor(model) if args.extractor == "hybrid" else model
 

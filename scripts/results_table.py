@@ -23,6 +23,7 @@ ROWS = [
     ("&nbsp;&nbsp;without JSON-schema decoding", "eval_qwen2.5-3b_noschema"),
     ("Hybrid: qwen2.5-3b + rules, disagreements to review", "eval_hybrid-qwen2.5-3b"),
     ("&nbsp;&nbsp;+ second pass for missed items", "eval_hybrid-qwen2.5-3b_recheck"),
+    ("qwen3.8-27b, reasoning off", "eval_qwen3.8-27b"),
 ]
 
 
@@ -44,7 +45,7 @@ def fmt(x: float) -> str:
 
 
 def main_table() -> list[str]:
-    lines = ["| Extractor | Test precision | Test recall | Test F1 | Recall incl. review list | Items in review | Dev F1 |",
+    lines = ["| Extractor | Test precision | Test recall | Test F1 | Test recall incl. review list | Items in review (test) | Dev F1 |",
              "|---|---|---|---|---|---|---|"]
     for label, name in ROWS:
         report = load(name)
@@ -58,7 +59,8 @@ def main_table() -> list[str]:
 
 def by_format_table() -> list[str]:
     lines = ["| Test split | Word (3 files) | PDF (2 files) | Excel (2 files) |", "|---|---|---|---|"]
-    for label, name in (("Rules", "eval_rules"), ("qwen2.5-3b", "eval_qwen2.5-3b"), ("Hybrid", "eval_hybrid-qwen2.5-3b")):
+    for label, name in (("Rules", "eval_rules"), ("qwen2.5-3b", "eval_qwen2.5-3b"), ("Hybrid", "eval_hybrid-qwen2.5-3b"),
+                        ("qwen3.8-27b", "eval_qwen3.8-27b")):
         report = load(name)
         if report is None:
             continue
@@ -73,7 +75,8 @@ def by_format_table() -> list[str]:
 
 def labels_table() -> list[str]:
     lines = ["| Test split, matched questions | Type correct | Required correct | Number correct |", "|---|---|---|---|"]
-    for label, name in (("Rules", "eval_rules"), ("qwen2.5-3b", "eval_qwen2.5-3b"), ("Hybrid", "eval_hybrid-qwen2.5-3b")):
+    for label, name in (("Rules", "eval_rules"), ("qwen2.5-3b", "eval_qwen2.5-3b"), ("Hybrid", "eval_hybrid-qwen2.5-3b"),
+                        ("qwen3.8-27b", "eval_qwen3.8-27b")):
         report = load(name)
         if report is None:
             continue
@@ -83,7 +86,7 @@ def labels_table() -> list[str]:
 
 
 def review_reasons() -> list[str]:
-    columns = [("qwen2.5-3b", load("eval_qwen2.5-3b")), ("Hybrid", load("eval_hybrid-qwen2.5-3b"))]
+    columns = [("qwen2.5-3b", load("eval_qwen2.5-3b")), ("Hybrid", load("eval_hybrid-qwen2.5-3b")), ("qwen3.8-27b", load("eval_qwen3.8-27b"))]
     columns = [(label, report["summary"]) for label, report in columns if report is not None]
     if not columns:
         return []
@@ -96,24 +99,8 @@ def review_reasons() -> list[str]:
     return lines
 
 
-def subset_table() -> list[str]:
-    big = load("eval_qwen3.8-27b_subset")
-    if big is None:
-        return []
-    files = [d["file"] for d in big["documents"]]
-    lines = [f"Subset for the 27B model: {', '.join(files)} (test split).", "",
-             "| Extractor on the same files | Precision | Recall | F1 | Items in review | Seconds |", "|---|---|---|---|---|---|"]
-    for label, name in (("Rules", "eval_rules"), ("qwen2.5-3b-instruct", "eval_qwen2.5-3b"), ("qwen3.8-27b", "eval_qwen3.8-27b_subset")):
-        report = load(name)
-        if report is None:
-            continue
-        r = roll(report, files)
-        lines.append(f"| {label} | {fmt(r['p'])} | {fmt(r['r'])} | {fmt(r['f1'])} | {r['review']} | {r['seconds']:.0f} |")
-    return lines
-
-
 def block() -> str:
-    parts = [main_table(), [""], by_format_table(), [""], labels_table(), [""], review_reasons(), [""], subset_table()]
+    parts = [main_table(), [""], by_format_table(), [""], labels_table(), [""], review_reasons()]
     return "\n".join(line for part in parts for line in part).strip()
 
 

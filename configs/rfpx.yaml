@@ -13,6 +13,7 @@ llm:
   retries: 1                 # one retry with the validation error sent back to the model
   recheck: false             # second pass per chunk: ask the model what was missed
   json_schema: auto          # auto | on | off: constrain the reply with response_format when the server supports it
+  reasoning_effort: auto     # auto: "none" for qwen3 models (measured: no reasoning, 2.5 s instead of minutes), nothing for others
   timeout_s: 900
 
 paths:

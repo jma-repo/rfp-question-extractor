@@ -38,8 +38,8 @@
 
 | # | 要验证什么 | 怎么测 | 不行怎么办 |
 |---|---|---|---|
-| 1 | 你能不能新建 agent：Microsoft 365 Copilot 里有没有 **New agent**（✅ Agent Builder 的入口），还是只有普通 Copilot Chat | 左侧栏找 New agent / Agents | 退化为"普通对话"：把第 3 节的 Instructions 当作每次对话的第一条消息粘贴 |
-| 2 | **Instructions 长度**（✅ 官方上限 8,000 字符） | 粘贴第 3 节的 Instructions，看是否被接受 | 删掉里面的示例，示例改放第一条消息 |
+| 1 | 你能不能新建 agent：Microsoft 365 Copilot 里有没有 **New agent**（✅ Agent Builder 的入口），还是只有普通 Copilot Chat | 左侧栏找 New agent / Agents | 退化为"普通对话"：把第 2 节的 Instructions 当作每次对话的第一条消息粘贴 |
+| 2 | **Instructions 长度**（✅ 官方上限 8,000 字符） | 粘贴第 2 节的 Instructions，看是否被接受 | 删掉里面的示例，示例改放第一条消息 |
 | 3 | 能不能读你的文件类型 | 上传一份合成 Word、PDF、Excel（`data/synthetic/rfps/`），问："How many pages / sheets does this file have, and what is the first heading?" | 先转成 PDF 或把文本粘贴进对话 |
 | 4 | 代码解释器：✅ Agent Builder 里"始终启用"，但 ✅ 仅限"有 Microsoft 365 Copilot 许可证，或没有开 metered 用量的 Copilot Chat 用户"；沙盒里有哪些库 🔍 | 问："Use Python to run `import docx, openpyxl; print(docx.__version__ if hasattr(docx,'__version__') else 'docx ok')` and also try `import pdfplumber`, `import pypdf`. Report which imports work." | 只走路线 A |
 | 5 | 能不能下载生成的 .docx（✅ 官方说生成的文件有临时下载链接，会话结束后失效） | 问："Create a Word file with a 3-column table and give me the download link." | 路线 A（Word 里自己粘贴） |
@@ -75,7 +75,7 @@ The user pastes or attaches one chunk of one RFP (a Word section, a PDF page ran
 
 WHAT COUNTS AS A QUESTION
 An item the vendor must answer, describe, state, confirm, list, attach or price in its response. Include items inside table rows and Excel rows. Include every lettered or numbered sub-item under a lead-in sentence; the lead-in itself ("The Proponent shall address each of the following:") is not an item.
-Do NOT include: background, definitions, dates and deadlines, how to submit, evaluation criteria and weights, contact details, headings, table header rows, blank form rows, line items of a pricing table, notes about page limits. The instruction to complete a pricing table IS an item.
+Do NOT include: background, definitions, dates and deadlines, how to submit, evaluation criteria and weights, contact details, headings, table header rows, blank form rows, line items of a pricing table, notes about page limits, running page headers and footers, page numbers. The instruction to complete a pricing table IS an item.
 
 COPY WORD FOR WORD
 Text is the item exactly as printed: same words, same order, same punctuation. Do not fix typos, shorten, merge, reword or translate. Do not put the printed number in Text; it goes in Ref. Keep "(Optional)", "(Desirable)" and "(Yes/No)" when printed. If you cannot copy an item exactly, put it in the REVIEW table instead of rewording it.
@@ -131,7 +131,7 @@ Items: 3 | Review: 0 | Last item in chunk: Attach a sample maintenance schedule 
 | 文件类型 | 怎么拆 | 注意 |
 |---|---|---|
 | **Word** | 视图 → 导航窗格，按标题选中到下一个同级标题，复制，**粘贴为纯文本**到对话（或粘贴进新文档再上传） | 自动编号（Word 列表）复制出来后编号可能丢失，Ref 会变成 `-` 🔍。需要保留编号时，把这一节另存为 PDF（文件 → 另存为 → PDF）再上传，编号就成了页面上的文字；或者接受 Ref 为 `-` |
-| **PDF（文本型）** | 打印 → "Microsoft Print to PDF"，在"页面范围"里填 `5-7`，得到只含这几页的小 PDF，再上传 | 页眉页脚、页码会混进文本：Instructions 已要求忽略标题表头；页眉重复行你可以在抽样时忽略 |
+| **PDF（文本型）** | 打印 → "Microsoft Print to PDF"，在"页面范围"里填 `5-7`，得到只含这几页的小 PDF，再上传 | 页眉页脚、页码会混进文本：Instructions 已要求忽略它们，抽样时仍要留意 |
 | **PDF（扫描版）** | 先做 OCR，或手工录入 | 见第 1 节第 7 条 🔍 |
 | **Excel** | 一个 sheet 一块：右键 sheet → 移动或复制 → 新工作簿。行数 > 60 就按行拆，**每块都带表头行** | ✅ "数据放在一个 sheet 里效果最好"。先把合并单元格取消合并并向下填充：选中该列 → 取消合并 → F5 → 定位条件 → 空值 → 输入 `=` 再按 ↑ → Ctrl+Enter |
 | **跨块的题** | 在下一块开头加一行 `CONTEXT ONLY: <上一块最后 1 个编号题的前 10 个词>` | Instructions 已规定 CONTEXT ONLY 不抽取 |
@@ -243,7 +243,7 @@ PoC 里的规则：`question_text` 必须是原文的一段连续文字。没有
 1. Excel 里把各块的表追加到 sheet `All`；"数据 → 删除重复项"按 `Text` 列去重（只删完全相同的；近似重复用条件格式标出，**让人决定**，对应 PoC 的"flag, never merge"）。
 2. 加两列 `Owner`、`Status`（留给团队填）。
 3. 版式一次性做好，保存为模板：新建 Word 文档，页面设为横向，设置好 标题 1 / 标题 2 / 表格文字 样式，把表头行设成"在各页顶端以标题行形式重复出现"，列宽固定，另存为 `RFP-register.dotx`。
-4. 每次：新建基于 `.dotx` 的文档，把 Excel 的 `All` 区域复制 → 粘贴为表格（"保留目标样式"）。样式来自模板，所以每次一致。
+4. 每次：新建基于 `.dotx` 的文档，把 Excel 的 `All` 区域复制 → 粘贴，粘贴选项选"使用目标样式"（Use Destination Styles）。样式来自模板，所以每次一致。
 5. 汇总统计放在文首：用 Excel 透视表（行 = RFP，列 = Type，值 = 计数）或 `COUNTIFS`，粘贴为表格。
 6. **按 RFP、再按章节分组**：先按 `RFP`、`Section` 排序，再分别粘贴；分节数多时手工很累，这是路线 A 的真实成本，也是路线 B 值得验证的原因。
 
@@ -274,7 +274,7 @@ PoC 里的规则：`question_text` 必须是原文的一段连续文字。没有
 3. 把 `data/synthetic/gold_all.csv` 打开，复制到 sheet `Gold`（`E` 列是 question_text）。
 4. 召回（按前 100 个字符近似，不区分大小写，比 PoC 的逐字匹配宽松）：在 `Gold` 的 `K2` 填 `=IF(COUNTIF(Pred!$C:$C,LEFT(E2,100)&"*")>0,1,0)`，下拉，`=AVERAGE(K:K)`。精确率：在 `Pred` 的 `K2` 填 `=IF(COUNTIF(Gold!$E:$E,LEFT(C2,100)&"*")>0,1,0)`，下拉，`=AVERAGE(K:K)`。
    - `COUNTIF` 会把 `?` `*` 当通配符，所以问号结尾的题可能有少量误判；对一次粗评够用。
-5. 和 PoC 的数字比（README 里的表）：同一批文件，规则基线 F1 约 0.93，3B 本地模型约 0.9 到 0.95。**你的 Copilot 如果明显低于规则基线，就别用在真实 RFP 上，或者只用来做"第二意见"。**
+5. 和 PoC 的数字比（README 里的表）：同一批文件（看 Test F1 一列），规则基线约 0.92，3B 本地模型 0.89 到 0.91。**你的 Copilot 如果明显低于规则基线，就别用在真实 RFP 上，或者只用来做"第二意见"。**
 
 ---
 

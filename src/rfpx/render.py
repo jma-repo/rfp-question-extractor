@@ -23,10 +23,9 @@ def _row(f: Finding) -> dict[str, Any]:
     source = [q.source_ref, *[f"also {ref}" for ref in f.also]]
     if f.similar_to:
         source.append(f"≈ similar to {f.similar_to}")
-    # A zero-width space after "!" lets a long sheet reference break at the sheet name instead of in the middle of the row number.
     return {"no": clean_cell(q.id) or NO_NUMBER, "text": clean_cell(q.question_text), "type": TYPE_LABEL[q.type],
             "required": "Required" if q.required else "Optional", "constraints": clean_cell(q.constraints),
-            "source": Listing(clean_cell("\n".join(source)).replace("!", "!​"))}
+            "source": Listing(clean_cell("\n".join(source)))}
 
 
 def _counts(findings: list[Finding]) -> dict[str, int]:

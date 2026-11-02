@@ -21,7 +21,7 @@ from docx.shared import Inches, Pt, RGBColor
 NAVY = "1F2A44"
 HEADER_TEXT = RGBColor(0xFF, 0xFF, 0xFF)
 SUMMARY_WIDTHS = [2.5, 0.6, 0.8, 0.8, 0.8, 0.8, 0.7, 0.6, 0.7, 0.7, 0.8]        # inches, 9.8 in total
-QUESTION_WIDTHS = [0.55, 3.3, 0.75, 0.8, 1.2, 1.45, 0.9, 0.8]
+QUESTION_WIDTHS = [0.55, 3.0, 0.7, 0.75, 1.1, 1.9, 0.9, 0.75]
 REVIEW_WIDTHS = [1.6, 1.4, 3.4, 2.1, 1.3]
 
 
