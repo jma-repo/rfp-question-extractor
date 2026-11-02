@@ -14,6 +14,7 @@ ROOT = Path(__file__).resolve().parents[1]
 REPORTS = ROOT / "artifacts" / "reports"
 README = ROOT / "README.md"
 START, END = "<!-- results:start -->", "<!-- results:end -->"
+PUBLIC_START, PUBLIC_END = "<!-- public:start -->", "<!-- public:end -->"
 
 ROWS = [
     ("Rules (regular expressions, no model)", "eval_rules"),
@@ -104,15 +105,51 @@ def block() -> str:
     return "\n".join(line for part in parts for line in part).strip()
 
 
+def public_block() -> str:
+    """Counts on the real public files (artifacts/reports/public-files.json, made by summarize_public.py; no text from the files)."""
+    path = REPORTS / "public-files.json"
+    if not path.exists():
+        return ""
+    data = json.loads(path.read_text(encoding="utf-8"))
+
+    def cell(runs: dict, label: str) -> str:
+        return f"{runs[label]['accepted']} / {runs[label]['review']}" if label in runs else "not run"
+
+    lines = ["| File | Chunks | Rules: accepted | 3B hybrid: accepted / in review | 27B: accepted / in review |", "|---|---|---|---|---|"]
+    for name, entry in data["files"].items():
+        runs = entry["runs"]
+        lines.append(f"| {name} | {entry['chunks']} | {runs['rules']['accepted']} | {cell(runs, 'hybrid_3b')} | {cell(runs, 'llm_27b')} |")
+    totals = {label: (sum(e["runs"][label]["accepted"] for e in data["files"].values() if label in e["runs"]),
+                      sum(e["runs"][label]["review"] for e in data["files"].values() if label in e["runs"])) for label in ("rules", "hybrid_3b")}
+    lines.append(f"| **All six** | **{sum(e['chunks'] for e in data['files'].values())}** | **{totals['rules'][0]}** | "
+                 f"**{totals['hybrid_3b'][0]} / {totals['hybrid_3b'][1]}** | |")
+    annex = data["annex_a_numbered_items"]
+    lines += ["", f"CITT Annex A is a list of {annex['total']} numbered items (1.1, 1.2, ...), a rough yardstick for how much of a real list each run found:", "",
+              "| Run on Annex A | Numbered items accepted | Accepted or in review |", "|---|---|---|"]
+    for label, name in (("rules", "Rules"), ("hybrid_3b", "3B hybrid"), ("llm_27b", "27B")):
+        if label in annex:
+            lines.append(f"| {name} | {annex[label]['accepted']} of {annex['total']} | {annex[label]['accepted_or_review']} of {annex['total']} |")
+    return "\n".join(lines)
+
+
+def replace_block(text: str, start: str, end: str, body: str) -> str:
+    if start not in text:
+        return text
+    head, rest = text.split(start, 1)
+    _, tail = rest.split(end, 1)
+    return f"{head}{start}\n{body}\n{end}{tail}"
+
+
 def main() -> int:
-    text = block()
     if "--write" not in sys.argv:
-        print(text)
+        print(block())
+        print()
+        print(public_block())
         return 0
     readme = README.read_text(encoding="utf-8")
-    head, rest = readme.split(START, 1)
-    _, tail = rest.split(END, 1)
-    README.write_text(f"{head}{START}\n{text}\n{END}{tail}", encoding="utf-8", newline="\n")
+    readme = replace_block(readme, START, END, block())
+    readme = replace_block(readme, PUBLIC_START, PUBLIC_END, public_block())
+    README.write_text(readme, encoding="utf-8", newline="\n")
     print(f"updated {README}")
     return 0
 

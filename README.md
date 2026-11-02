@@ -136,6 +136,46 @@ How the prompt got where it is (dev split): 3 examples and 2,400-character chunk
 excerpt with nothing to extract made it *worse* (0.854, the model began rewording) and was dropped; the section gate then took it to about 0.95.
 Repeating one configuration moved dev F1 by up to 0.004 (the model server is not bit-for-bit repeatable), so differences smaller than that mean nothing.
 
+## On real public files
+
+Six Government of Canada tender documents (`docs/public-sources.md`: four PDFs and two workbooks, 3.4 MB, downloaded with permission and kept out of the repository) went
+through the same pipeline. They have no answer key, so this is counts and my reading, not a score, and one person decided what counts as a question.
+The counts come from `artifacts/reports/public-files.json`, which holds numbers and ids only, no text from the files.
+
+<!-- public:start -->
+| File | Chunks | Rules: accepted | 3B hybrid: accepted / in review | 27B: accepted / in review |
+|---|---|---|---|---|
+| citt-rfi-online-questionnaire-management-platform.pdf | 31 | 10 | 1 / 73 | not run |
+| citt-annex-a-questions-to-industry.pdf | 32 | 47 | 33 / 128 | 168 / 13 |
+| citt-annex-c5-certification-attestation.xlsx | 17 | 36 | 0 / 63 | not run |
+| bch2026-10-request-for-proposals-heron-road.pdf | 74 | 33 | 10 / 147 | not run |
+| bch2026-10-schedule-10-exhibit-1-en.xlsx | 3 | 0 | 0 / 18 | not run |
+| cic-160038-ircc-mass-notification-system.pdf | 124 | 13 | 9 / 387 | not run |
+| **All six** | **281** | **139** | **53 / 816** | |
+
+CITT Annex A is a list of 46 numbered items (1.1, 1.2, ...), a rough yardstick for how much of a real list each run found:
+
+| Run on Annex A | Numbered items accepted | Accepted or in review |
+|---|---|---|
+| Rules | 28 of 46 | 28 of 46 |
+| 3B hybrid | 21 of 46 | 44 of 46 |
+| 27B | 36 of 46 | 41 of 46 |
+<!-- public:end -->
+
+- **It runs end to end.** Bilingual PDFs, tables that cross pages and a real Excel questionnaire (a hidden helper column, English and French in one cell) all
+  read and render without an error, and everything accepted is a verbatim piece of its source.
+- **The rules lose about half their precision.** I read all 139 items they accepted: about 67 were real questions or requirements. The rest were the cover-page
+  fields of a request for information (10 of 10), the instruction text on the first sheet of the Excel questionnaire (33 of 36), the scoring-scale rows, schedule names and contact details
+  of a full RFP (22 of 33), and four submission instructions in a 51-page solicitation. On the one file that really is a list of numbered questions they did well (44 of 47 real, but only 28 of its 46 numbered items).
+- **The hybrid with the 3B model is not usable on documents this size.** The 3B model extracts contract clauses and definitions as if they were questions, and the rules, its second opinion,
+  are weak on real wording, so almost nothing is accepted (53 items) and the review list has 816. On the numbered list it did reach 44 of 46 items, but inside 128 review items for one file.
+- **The 27B reads it much more like a person**, on the one file it was run on: 168 items accepted and 13 in review, 36 of the 46 numbered items accepted and 41 of 46 with the review list.
+  I read the first 100 lines of its list and none looked wrong; it lists the bullets under a question as separate items, as the labelling rule says. It took 16 minutes for 26 pages.
+  The 51-page IRCC solicitation is 124 chunks, over an hour at that speed, so it was not run.
+- **What counts as a question is the real problem.** A solicitation of 50 pages holds hundreds of shall and must sentences (contract terms, the statement of work, evaluation rules).
+  Whether a team wants them in a register is a decision, not something a model can settle. The practical fix is upstream: extract only from the sections that ask for responses
+  (an allow-list of headings, or a person picking the pages), which this PoC does not do yet.
+
 ## Limits
 
 - **Synthetic, and written by one person.** The same author wrote the documents, the rules and the prompts. The first version of the set was too regular
@@ -150,7 +190,7 @@ Repeating one configuration moved dev F1 by up to 0.004 (the model server is not
   languages other than English, near-duplicates across different RFPs.
 - **Labels from the small model are weak.** Its type and required labels are right far less often than the rules'; a production version should take them from the rules where the rules are sure.
   The 27B is better but still behind the rules on type.
-- **No real RFPs were used.** Public files are listed in `docs/public-sources.md`, not downloaded; nothing confidential was ever in this repository.
+- **No confidential RFP was ever used.** Six public files were run without an answer key (above); they are not in the repository, and nothing confidential has ever been in it.
 
 ## Without Python: Microsoft Copilot
 

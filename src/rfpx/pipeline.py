@@ -33,11 +33,12 @@ class DocResult:
     stats: dict = field(default_factory=dict)
 
 
-def list_inputs(path: Path) -> list[Path]:
+def list_inputs(path: Path, recursive: bool = False) -> list[Path]:
     path = Path(path)
     if path.is_file():
         return [path]
-    return sorted(p for p in path.iterdir() if p.suffix.lower() in SUPPORTED and not p.name.startswith("~$"))
+    found = path.rglob("*") if recursive else path.iterdir()
+    return sorted(p for p in found if p.is_file() and p.suffix.lower() in SUPPORTED and not p.name.startswith("~$"))
 
 
 def process_document(doc: Document, extractor: Extractor, max_chars: int = 2400, near: float = 0.75, gate: bool = True) -> DocResult:
@@ -56,5 +57,6 @@ def process_document(doc: Document, extractor: Extractor, max_chars: int = 2400,
     return DocResult(doc.name, doc.fmt, merged, notes, len(chunks), round(time.time() - started, 2), stats)
 
 
-def run_directory(path: Path, extractor: Extractor, max_chars: int = 2400, near: float = 0.75, gate: bool = True) -> list[DocResult]:
-    return [process_document(read_document(p), extractor, max_chars, near, gate) for p in list_inputs(path)]
+def run_directory(path: Path, extractor: Extractor, max_chars: int = 2400, near: float = 0.75, gate: bool = True,
+                  recursive: bool = False) -> list[DocResult]:
+    return [process_document(read_document(p), extractor, max_chars, near, gate) for p in list_inputs(path, recursive)]

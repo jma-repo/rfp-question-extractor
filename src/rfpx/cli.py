@@ -34,13 +34,14 @@ def _run(s: Settings, args: argparse.Namespace) -> int:
     from rfpx.pipeline import list_inputs, run_directory
     from rfpx.render import build_context, render_register
 
-    files = list_inputs(Path(args.input))
+    files = list_inputs(Path(args.input), args.recursive)
     if not files:
         print(f"No .docx, .pdf or .xlsx files found in {args.input}", file=sys.stderr)
         return 2
     extractor = _extractor(s, args)
     started = time.time()
-    results = run_directory(Path(args.input), extractor, args.max_chars or s.max_chars, s.near_duplicate, not args.no_section_gate)
+    results = run_directory(Path(args.input), extractor, args.max_chars or s.max_chars, s.near_duplicate, not args.no_section_gate,
+                            args.recursive)
     template = Path(args.template) if args.template else s.path("template")
     out = render_register(build_context(results, extractor.label), template, Path(args.output))
     questions = sum(f.status == "accepted" for r in results for f in r.findings)
@@ -120,6 +121,7 @@ def main(argv: list[str] | None = None) -> int:
     run.add_argument("-o", "--output", default="out/register.docx")
     run.add_argument("--extractor", choices=["rules", "llm", "hybrid"], default="rules")
     run.add_argument("--template", help="Word template (default: templates/question_register.docx)")
+    run.add_argument("-r", "--recursive", action="store_true", help="also read the subfolders of the input folder")
     run.add_argument("--max-chars", type=int, help="chunk size in characters")
     _add_llm_options(run)
 

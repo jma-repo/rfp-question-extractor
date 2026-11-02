@@ -1,0 +1,268 @@
+{
+  "files": {
+    "citt-rfi-online-questionnaire-management-platform.pdf": {
+      "format": "pdf",
+      "bytes": 752675,
+      "pages": 19,
+      "chunks": 31,
+      "runs": {
+        "rules": {
+          "accepted": 10,
+          "review": 0,
+          "review_reasons": {},
+          "extractor": "Rules baseline (regular expressions, no model)",
+          "seconds_all_files_in_run": 14.0
+        },
+        "hybrid_3b": {
+          "accepted": 1,
+          "review": 73,
+          "review_reasons": {
+            "found by the rules only, not by the model": 9,
+            "found by the model only, not by the rules": 51,
+            "text is not a verbatim piece of the source": 12,
+            "text runs across more than one paragraph or table cell": 1
+          },
+          "extractor": "Hybrid: qwen2.5-3b-instruct (local model server) + rules, disagreements held for review",
+          "seconds_all_files_in_run": 422.1
+        }
+      }
+    },
+    "citt-annex-a-questions-to-industry.pdf": {
+      "format": "pdf",
+      "bytes": 458557,
+      "pages": 26,
+      "chunks": 32,
+      "runs": {
+        "rules": {
+          "accepted": 47,
+          "review": 0,
+          "review_reasons": {},
+          "extractor": "Rules baseline (regular expressions, no model)",
+          "seconds_all_files_in_run": 14.0
+        },
+        "hybrid_3b": {
+          "accepted": 33,
+          "review": 128,
+          "review_reasons": {
+            "found by the model only, not by the rules": 75,
+            "text runs across more than one paragraph or table cell": 13,
+            "found by the rules only, not by the model": 14,
+            "text is not a verbatim piece of the source": 26
+          },
+          "extractor": "Hybrid: qwen2.5-3b-instruct (local model server) + rules, disagreements held for review",
+          "seconds_all_files_in_run": 422.1
+        },
+        "llm_27b": {
+          "accepted": 168,
+          "review": 13,
+          "review_reasons": {
+            "text runs across more than one paragraph or table cell": 5,
+            "text is not a verbatim piece of the source": 8
+          },
+          "extractor": "qwen/qwen3.8-27b (local model server)",
+          "seconds_all_files_in_run": 972.6
+        }
+      }
+    },
+    "citt-annex-c5-certification-attestation.xlsx": {
+      "format": "xlsx",
+      "bytes": 115088,
+      "pages": null,
+      "chunks": 17,
+      "runs": {
+        "rules": {
+          "accepted": 36,
+          "review": 0,
+          "review_reasons": {},
+          "extractor": "Rules baseline (regular expressions, no model)",
+          "seconds_all_files_in_run": 14.0
+        },
+        "hybrid_3b": {
+          "accepted": 0,
+          "review": 63,
+          "review_reasons": {
+            "found by the rules only, not by the model": 36,
+            "text runs across more than one paragraph or table cell": 3,
+            "text is not a verbatim piece of the source": 4,
+            "found by the model only, not by the rules": 20
+          },
+          "extractor": "Hybrid: qwen2.5-3b-instruct (local model server) + rules, disagreements held for review",
+          "seconds_all_files_in_run": 422.1
+        }
+      }
+    },
+    "bch2026-10-request-for-proposals-heron-road.pdf": {
+      "format": "pdf",
+      "bytes": 800960,
+      "pages": 50,
+      "chunks": 74,
+      "runs": {
+        "rules": {
+          "accepted": 33,
+          "review": 0,
+          "review_reasons": {},
+          "extractor": "Rules baseline (regular expressions, no model)",
+          "seconds_all_files_in_run": 14.0
+        },
+        "hybrid_3b": {
+          "accepted": 10,
+          "review": 147,
+          "review_reasons": {
+            "found by the model only, not by the rules": 91,
+            "found by the rules only, not by the model": 23,
+            "text runs across more than one paragraph or table cell": 10,
+            "text is not a verbatim piece of the source": 23
+          },
+          "extractor": "Hybrid: qwen2.5-3b-instruct (local model server) + rules, disagreements held for review",
+          "seconds_all_files_in_run": 422.1
+        }
+      }
+    },
+    "bch2026-10-schedule-10-exhibit-1-en.xlsx": {
+      "format": "xlsx",
+      "bytes": 24846,
+      "pages": null,
+      "chunks": 3,
+      "runs": {
+        "rules": {
+          "accepted": 0,
+          "review": 0,
+          "review_reasons": {},
+          "extractor": "Rules baseline (regular expressions, no model)",
+          "seconds_all_files_in_run": 14.0
+        },
+        "hybrid_3b": {
+          "accepted": 0,
+          "review": 18,
+          "review_reasons": {
+            "text is not a verbatim piece of the source": 15,
+            "found by the model only, not by the rules": 3
+          },
+          "extractor": "Hybrid: qwen2.5-3b-instruct (local model server) + rules, disagreements held for review",
+          "seconds_all_files_in_run": 422.1
+        }
+      }
+    },
+    "cic-160038-ircc-mass-notification-system.pdf": {
+      "format": "pdf",
+      "bytes": 1375998,
+      "pages": 51,
+      "chunks": 124,
+      "runs": {
+        "rules": {
+          "accepted": 13,
+          "review": 0,
+          "review_reasons": {},
+          "extractor": "Rules baseline (regular expressions, no model)",
+          "seconds_all_files_in_run": 14.0
+        },
+        "hybrid_3b": {
+          "accepted": 9,
+          "review": 387,
+          "review_reasons": {
+            "found by the model only, not by the rules": 263,
+            "text is not a verbatim piece of the source": 110,
+            "text runs across more than one paragraph or table cell": 10,
+            "found by the rules only, not by the model": 4
+          },
+          "extractor": "Hybrid: qwen2.5-3b-instruct (local model server) + rules, disagreements held for review",
+          "seconds_all_files_in_run": 422.1
+        }
+      }
+    }
+  },
+  "annex_a_numbered_items": {
+    "total": 46,
+    "ids": [
+      "1.1",
+      "1.2",
+      "1.3",
+      "1.4",
+      "1.5",
+      "1.6",
+      "1.7",
+      "1.8",
+      "1.9",
+      "2.1",
+      "2.2",
+      "2.3",
+      "2.4",
+      "2.5",
+      "2.6",
+      "3.1",
+      "3.2",
+      "3.3",
+      "3.4",
+      "3.5",
+      "3.6",
+      "3.7",
+      "3.8",
+      "4.1",
+      "4.2",
+      "4.3",
+      "4.4",
+      "4.5",
+      "6.1",
+      "6.2",
+      "7.1",
+      "7.2",
+      "7.3",
+      "8.1",
+      "8.2",
+      "8.3",
+      "8.4",
+      "8.5",
+      "9.1",
+      "9.2",
+      "9.3",
+      "9.4",
+      "9.5",
+      "10.1",
+      "10.2",
+      "10.3"
+    ],
+    "rules": {
+      "accepted": 28,
+      "accepted_or_review": 28,
+      "not_found_at_all": [
+        "1.5",
+        "1.6",
+        "2.2",
+        "2.3",
+        "2.4",
+        "2.5",
+        "3.1",
+        "3.2",
+        "3.3",
+        "3.4",
+        "3.6",
+        "3.7",
+        "6.2",
+        "7.3",
+        "9.3",
+        "9.4",
+        "9.5",
+        "10.3"
+      ]
+    },
+    "hybrid_3b": {
+      "accepted": 21,
+      "accepted_or_review": 44,
+      "not_found_at_all": [
+        "6.2",
+        "7.3"
+      ]
+    },
+    "llm_27b": {
+      "accepted": 36,
+      "accepted_or_review": 41,
+      "not_found_at_all": [
+        "2.3",
+        "2.4",
+        "3.4",
+        "4.5",
+        "6.2"
+      ]
+    }
+  }
+}

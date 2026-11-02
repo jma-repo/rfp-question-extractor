@@ -21,6 +21,22 @@ def test_the_results_in_the_readme_are_the_ones_in_the_reports():
     assert README[start:end].strip() == script.block()
 
 
+def test_the_real_file_counts_in_the_readme_are_the_ones_in_the_committed_summary():
+    script = load_script()
+    start, end = README.index(script.PUBLIC_START) + len(script.PUBLIC_START), README.index(script.PUBLIC_END)
+    assert README[start:end].strip() == script.public_block()
+
+
+def test_the_committed_summary_of_the_real_files_holds_counts_and_ids_only():
+    """It may be published; the files themselves may not. No sentence from a real file belongs in it."""
+    text = (ROOT / "artifacts" / "reports" / "public-files.json").read_text(encoding="utf-8")
+    data = json.loads(text)
+    assert set(data) == {"files", "annex_a_numbered_items"}
+    assert len(data["files"]) == 6
+    assert all(set(entry) == {"format", "bytes", "pages", "chunks", "runs"} for entry in data["files"].values())
+    assert len(text) < 20000
+
+
 def test_the_headline_numbers_quoted_in_the_prose_match_the_reports():
     rules = json.loads((ROOT / "artifacts" / "reports" / "eval_rules.json").read_text(encoding="utf-8"))
     assert rules["summary"]["gold"] == 350                                # "350 distinct questions"

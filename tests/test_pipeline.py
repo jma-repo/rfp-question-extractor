@@ -52,6 +52,18 @@ def test_inputs_are_found_in_a_folder_or_given_as_one_file(synth_dir):
     assert list_inputs(one) == [one]
 
 
+def test_subfolders_are_read_only_when_asked_for_and_temporary_office_files_never(tmp_path):
+    (tmp_path / "01-a").mkdir()
+    (tmp_path / "01-a" / "x.docx").write_bytes(b"")
+    (tmp_path / "01-a" / "~$x.docx").write_bytes(b"")
+    (tmp_path / "02-b").mkdir()
+    (tmp_path / "02-b" / "y.pdf").write_bytes(b"")
+    (tmp_path / "top.xlsx").write_bytes(b"")
+    (tmp_path / "notes.txt").write_bytes(b"")
+    assert [p.name for p in list_inputs(tmp_path)] == ["top.xlsx"]
+    assert [p.name for p in list_inputs(tmp_path, recursive=True)] == ["x.docx", "y.pdf", "top.xlsx"]
+
+
 def test_a_missing_model_server_does_not_stop_the_run_and_everything_found_is_flagged(synth_dir, tmp_path, monkeypatch, capsys):
     monkeypatch.setenv("RFPX_NO_LLM", "1")
     out = tmp_path / "offline.docx"
