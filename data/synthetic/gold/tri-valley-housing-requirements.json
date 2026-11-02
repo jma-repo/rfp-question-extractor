@@ -1,0 +1,278 @@
+{
+  "file": "tri-valley-housing-requirements.xlsx",
+  "title": "Property Management System",
+  "issuer": "Tri-Valley Housing Corporation",
+  "split": "test",
+  "questions": [
+    {
+      "id": "R-001",
+      "section": "Core functionality",
+      "question_text": "The property and tenancy management system shall mask personal information in non-production environments.",
+      "type": "yes_no",
+      "required": true,
+      "constraints": "",
+      "dup_group": null
+    },
+    {
+      "id": "R-002",
+      "section": "Core functionality",
+      "question_text": "The property and tenancy management system shall allow documents of up to 100 MB to be attached to a record.",
+      "type": "yes_no",
+      "required": true,
+      "constraints": "",
+      "dup_group": null
+    },
+    {
+      "id": "R-003",
+      "section": "Core functionality",
+      "question_text": "The property and tenancy management system shall support full-text search across all records the user is permitted to see.",
+      "type": "yes_no",
+      "required": true,
+      "constraints": "",
+      "dup_group": null
+    },
+    {
+      "id": "R-004",
+      "section": "Core functionality",
+      "question_text": "The property and tenancy management system shall support retention rules that can be set by record type.",
+      "type": "yes_no",
+      "required": true,
+      "constraints": "",
+      "dup_group": null
+    },
+    {
+      "id": "R-005",
+      "section": "Core functionality",
+      "question_text": "The property and tenancy management system shall send an email notification when a workflow step is assigned to a user.",
+      "type": "yes_no",
+      "required": true,
+      "constraints": "",
+      "dup_group": null
+    },
+    {
+      "id": "R-006",
+      "section": "Core functionality",
+      "question_text": "The property and tenancy management system shall allow authorized users to export any report to Excel and PDF.",
+      "type": "yes_no",
+      "required": true,
+      "constraints": "",
+      "dup_group": null
+    },
+    {
+      "id": "R-007",
+      "section": "Core functionality",
+      "question_text": "The property and tenancy management system shall provide a documented REST API covering every function available in the user interface.",
+      "type": "yes_no",
+      "required": true,
+      "constraints": "",
+      "dup_group": null
+    },
+    {
+      "id": "R-008",
+      "section": "Core functionality",
+      "question_text": "The property and tenancy management system shall take a daily backup that can be restored to any point within the previous 14 days.",
+      "type": "yes_no",
+      "required": true,
+      "constraints": "",
+      "dup_group": null
+    },
+    {
+      "id": "R-009",
+      "section": "Administration",
+      "question_text": "The property and tenancy management system shall retain deleted records for 30 days before permanent removal.",
+      "type": "yes_no",
+      "required": true,
+      "constraints": "",
+      "dup_group": null
+    },
+    {
+      "id": "R-010",
+      "section": "Administration",
+      "question_text": "The property and tenancy management system shall support at least 500 named users at the same time without degradation.",
+      "type": "yes_no",
+      "required": true,
+      "constraints": "",
+      "dup_group": null
+    },
+    {
+      "id": "R-011",
+      "section": "Administration",
+      "question_text": "The property and tenancy management system shall validate Canadian postal codes and street addresses.",
+      "type": "yes_no",
+      "required": true,
+      "constraints": "",
+      "dup_group": null
+    },
+    {
+      "id": "R-012",
+      "section": "Administration",
+      "question_text": "The property and tenancy management system shall support role-based access control with at least five configurable roles.",
+      "type": "yes_no",
+      "required": true,
+      "constraints": "",
+      "dup_group": null
+    },
+    {
+      "id": "R-013",
+      "section": "Administration",
+      "question_text": "The property and tenancy management system shall allow administrators to define fields and pick lists without code changes.",
+      "type": "yes_no",
+      "required": true,
+      "constraints": "",
+      "dup_group": null
+    },
+    {
+      "id": "R-014",
+      "section": "Administration",
+      "question_text": "The property and tenancy management system should support electronic signatures that are legally binding in Alberta.",
+      "type": "yes_no",
+      "required": false,
+      "constraints": "",
+      "dup_group": null
+    },
+    {
+      "id": "R-015",
+      "section": "Integration and reporting",
+      "question_text": "The property and tenancy management system should provide a mobile application for iOS and Android.",
+      "type": "yes_no",
+      "required": false,
+      "constraints": "",
+      "dup_group": null
+    },
+    {
+      "id": "R-016",
+      "section": "Integration and reporting",
+      "question_text": "The property and tenancy management system shall allow all data to be extracted in a documented, non-proprietary format at any time.",
+      "type": "yes_no",
+      "required": true,
+      "constraints": "",
+      "dup_group": null
+    },
+    {
+      "id": "R-017",
+      "section": "Integration and reporting",
+      "question_text": "The property and tenancy management system shall support single sign-on with the identity provider used by the Housing Corporation.",
+      "type": "yes_no",
+      "required": true,
+      "constraints": "",
+      "dup_group": null
+    },
+    {
+      "id": "R-018",
+      "section": "Integration and reporting",
+      "question_text": "The property and tenancy management system shall record every create, update and delete action with the user and time stamp.",
+      "type": "yes_no",
+      "required": true,
+      "constraints": "",
+      "dup_group": null
+    },
+    {
+      "id": "R-019",
+      "section": "Integration and reporting",
+      "question_text": "The property and tenancy management system shall provide a test environment for trying upgrades before they reach production.",
+      "type": "yes_no",
+      "required": true,
+      "constraints": "",
+      "dup_group": null
+    },
+    {
+      "id": "R-020",
+      "section": "Integration and reporting",
+      "question_text": "The property and tenancy management system shall provide an administrator dashboard showing system health and usage.",
+      "type": "yes_no",
+      "required": true,
+      "constraints": "",
+      "dup_group": null
+    },
+    {
+      "id": "R-021",
+      "section": "Vendor questions",
+      "question_text": "Describe how rent-geared-to-income amounts are calculated and recalculated when household income changes.",
+      "type": "narrative",
+      "required": true,
+      "constraints": "",
+      "dup_group": null
+    },
+    {
+      "id": "R-022",
+      "section": "Vendor questions",
+      "question_text": "Describe the mobile application used by inspectors, including offline operation.",
+      "type": "narrative",
+      "required": true,
+      "constraints": "",
+      "dup_group": null
+    },
+    {
+      "id": "R-023",
+      "section": "Vendor questions",
+      "question_text": "Does the property and tenancy management system track maintenance work orders from request to completion? (Yes/No)",
+      "type": "yes_no",
+      "required": true,
+      "constraints": "",
+      "dup_group": null
+    },
+    {
+      "id": "R-024",
+      "section": "Vendor questions",
+      "question_text": "Describe how the applicant waitlist is prioritized and audited.",
+      "type": "narrative",
+      "required": true,
+      "constraints": "",
+      "dup_group": null
+    },
+    {
+      "id": "R-025",
+      "section": "Vendor questions",
+      "question_text": "Attach a sample inspection report generated by the property and tenancy management system.",
+      "type": "upload",
+      "required": true,
+      "constraints": "",
+      "dup_group": null
+    },
+    {
+      "id": "R-026",
+      "section": "Vendor questions",
+      "question_text": "Describe the warranty provided and what it excludes.",
+      "type": "narrative",
+      "required": true,
+      "constraints": "",
+      "dup_group": null
+    },
+    {
+      "id": "R-027",
+      "section": "Vendor questions",
+      "question_text": "Provide a work plan in tabular form showing milestones, deliverables, responsibilities and dates.",
+      "type": "table",
+      "required": true,
+      "constraints": "tabular form",
+      "dup_group": null
+    },
+    {
+      "id": "R-028",
+      "section": "Vendor questions",
+      "question_text": "Describe your project management methodology and how progress will be reported to the Housing Corporation.",
+      "type": "narrative",
+      "required": true,
+      "constraints": "",
+      "dup_group": null
+    },
+    {
+      "id": "R-029",
+      "section": "Vendor questions",
+      "question_text": "State every assumption and exclusion that affects the prices quoted.",
+      "type": "pricing",
+      "required": true,
+      "constraints": "",
+      "dup_group": null
+    },
+    {
+      "id": "R-030",
+      "section": "Vendor questions",
+      "question_text": "Complete the Pricing Schedule in Appendix C, showing all prices in Canadian dollars and excluding GST.",
+      "type": "pricing",
+      "required": true,
+      "constraints": "Appendix C; Canadian dollars, excluding GST",
+      "dup_group": null
+    }
+  ]
+}

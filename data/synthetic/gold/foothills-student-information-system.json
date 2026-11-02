@@ -1,0 +1,449 @@
+{
+  "file": "foothills-student-information-system.pdf",
+  "title": "Student Information System",
+  "issuer": "Foothills School Division",
+  "split": "dev",
+  "questions": [
+    {
+      "id": "4.1.1",
+      "section": "4.1 Corporate Experience",
+      "question_text": "The Proponent must disclose any litigation or claims against its organization in the last five years that relate to services of this kind.",
+      "type": "narrative",
+      "required": true,
+      "constraints": "",
+      "dup_group": null
+    },
+    {
+      "id": "4.1.2",
+      "section": "4.1 Corporate Experience",
+      "question_text": "Who will be the single point of contact for the Division, and what authority do they have to commit your organization?",
+      "type": "narrative",
+      "required": true,
+      "constraints": "",
+      "dup_group": null
+    },
+    {
+      "id": "4.1.3",
+      "section": "4.1 Corporate Experience",
+      "question_text": "Provide a profile of your organization, including years in business, number of employees and head office location.",
+      "type": "narrative",
+      "required": true,
+      "constraints": "",
+      "dup_group": null
+    },
+    {
+      "id": "4.1.4",
+      "section": "4.1 Corporate Experience",
+      "question_text": "The Proponent must state whether it has an office in Alberta (Yes/No).",
+      "type": "yes_no",
+      "required": true,
+      "constraints": "",
+      "dup_group": null
+    },
+    {
+      "id": "4.1.5",
+      "section": "4.1 Corporate Experience",
+      "question_text": "Describe at least two comparable projects completed in the last five years, including scope, duration and outcome.",
+      "type": "narrative",
+      "required": true,
+      "constraints": "",
+      "dup_group": null
+    },
+    {
+      "id": "4.2.1",
+      "section": "4.2 Technical Approach",
+      "question_text": "Describe the standard reports and dashboards included, and how custom reports are created.",
+      "type": "narrative",
+      "required": true,
+      "constraints": "",
+      "dup_group": null
+    },
+    {
+      "id": "4.2.2",
+      "section": "4.2 Technical Approach",
+      "question_text": "Describe the licensing model (named user, concurrent or enterprise) and how licence counts are measured.",
+      "type": "narrative",
+      "required": true,
+      "constraints": "",
+      "dup_group": null
+    },
+    {
+      "id": "4.2.3",
+      "section": "4.2 Technical Approach",
+      "question_text": "The student information system must support single sign-on using SAML 2.0 or OpenID Connect (Yes/No).",
+      "type": "yes_no",
+      "required": true,
+      "constraints": "",
+      "dup_group": null
+    },
+    {
+      "id": "4.2.4",
+      "section": "4.2 Technical Approach",
+      "question_text": "(Desirable) Describe the parent portal, including how guardians are verified before they can see student records.",
+      "type": "narrative",
+      "required": false,
+      "constraints": "",
+      "dup_group": null
+    },
+    {
+      "id": "4.2.5",
+      "section": "4.2 Technical Approach",
+      "question_text": "Does the student information system produce report cards in the provincial format? (Yes/No)",
+      "type": "yes_no",
+      "required": true,
+      "constraints": "",
+      "dup_group": null
+    },
+    {
+      "id": "4.2.6",
+      "section": "4.2 Technical Approach",
+      "question_text": "The Proponent must describe how attendance is captured and how absences are reported to guardians.",
+      "type": "narrative",
+      "required": true,
+      "constraints": "",
+      "dup_group": null
+    },
+    {
+      "id": "4.2.7",
+      "section": "4.2 Technical Approach",
+      "question_text": "The Proponent should describe how data is submitted to the provincial student reporting system.",
+      "type": "narrative",
+      "required": false,
+      "constraints": "",
+      "dup_group": null
+    },
+    {
+      "id": "4.2.8",
+      "section": "4.2 Technical Approach",
+      "question_text": "Please describe how student records are transferred when a student moves to another school division.",
+      "type": "narrative",
+      "required": true,
+      "constraints": "",
+      "dup_group": null
+    },
+    {
+      "id": "4.3.1",
+      "section": "4.3 Security and Privacy",
+      "question_text": "The Proponent shall state whether it holds a current ISO/IEC 27001 certification (Yes/No).",
+      "type": "yes_no",
+      "required": true,
+      "constraints": "",
+      "dup_group": null
+    },
+    {
+      "id": "4.3.2",
+      "section": "4.3 Security and Privacy",
+      "question_text": "How is student records encrypted at rest and in transit, and who holds the encryption keys?",
+      "type": "narrative",
+      "required": true,
+      "constraints": "",
+      "dup_group": "security_controls"
+    },
+    {
+      "id": "4.3.3",
+      "section": "4.3 Security and Privacy",
+      "question_text": "Confirm that monthly availability of at least 99.9 percent will be guaranteed in the service level agreement. (Yes/No)",
+      "type": "yes_no",
+      "required": true,
+      "constraints": "99.9 percent monthly availability",
+      "dup_group": null
+    },
+    {
+      "id": "4.3.4",
+      "section": "4.3 Security and Privacy",
+      "question_text": "The Proponent shall describe its disaster recovery plan, including recovery time and recovery point objectives.",
+      "type": "narrative",
+      "required": true,
+      "constraints": "",
+      "dup_group": "disaster_recovery"
+    },
+    {
+      "id": "(a)",
+      "section": "4.3 Security and Privacy",
+      "question_text": "Describe how administrative access to production systems is controlled and logged.",
+      "type": "narrative",
+      "required": true,
+      "constraints": "",
+      "dup_group": null
+    },
+    {
+      "id": "(b)",
+      "section": "4.3 Security and Privacy",
+      "question_text": "Describe how security events are monitored and who responds outside business hours.",
+      "type": "narrative",
+      "required": true,
+      "constraints": "",
+      "dup_group": null
+    },
+    {
+      "id": "(c)",
+      "section": "4.3 Security and Privacy",
+      "question_text": "State whether penetration testing is performed by an independent party. (Yes/No)",
+      "type": "yes_no",
+      "required": true,
+      "constraints": "",
+      "dup_group": null
+    },
+    {
+      "id": "4.4.1",
+      "section": "4.4 Implementation and Support",
+      "question_text": "Describe the exit and transition assistance available at the end of the contract.",
+      "type": "narrative",
+      "required": true,
+      "constraints": "",
+      "dup_group": null
+    },
+    {
+      "id": "4.4.2",
+      "section": "4.4 Implementation and Support",
+      "question_text": "Identify the five most significant project risks and the mitigation proposed for each.",
+      "type": "narrative",
+      "required": true,
+      "constraints": "five risks",
+      "dup_group": null
+    },
+    {
+      "id": "4.4.3",
+      "section": "4.4 Implementation and Support",
+      "question_text": "Describe your testing approach, including user acceptance testing and who signs off.",
+      "type": "narrative",
+      "required": true,
+      "constraints": "",
+      "dup_group": null
+    },
+    {
+      "id": "4.4.4",
+      "section": "4.4 Implementation and Support",
+      "question_text": "The Proponent must describe the warranty provided and what it excludes.",
+      "type": "narrative",
+      "required": true,
+      "constraints": "",
+      "dup_group": null
+    },
+    {
+      "id": "4.4.5",
+      "section": "4.4 Implementation and Support",
+      "question_text": "Describe your support model, including hours of coverage, escalation paths and target response times.",
+      "type": "narrative",
+      "required": true,
+      "constraints": "",
+      "dup_group": null
+    },
+    {
+      "id": "4.4.6",
+      "section": "4.4 Implementation and Support",
+      "question_text": "List all subcontractors you intend to use and the portion of the work each will perform.",
+      "type": "table",
+      "required": true,
+      "constraints": "",
+      "dup_group": null
+    },
+    {
+      "id": "(a)",
+      "section": "4.4 Implementation and Support",
+      "question_text": "Provide a high-level schedule showing the main phases and their durations.",
+      "type": "table",
+      "required": true,
+      "constraints": "",
+      "dup_group": null
+    },
+    {
+      "id": "(b)",
+      "section": "4.4 Implementation and Support",
+      "question_text": "Identify the tasks that need the participation of staff of the Division.",
+      "type": "narrative",
+      "required": true,
+      "constraints": "",
+      "dup_group": null
+    },
+    {
+      "id": "(c)",
+      "section": "4.4 Implementation and Support",
+      "question_text": "Describe how scope changes will be handled during implementation.",
+      "type": "narrative",
+      "required": true,
+      "constraints": "",
+      "dup_group": null
+    },
+    {
+      "id": "(d)",
+      "section": "4.4 Implementation and Support",
+      "question_text": "Attach a sample status report from a comparable project.",
+      "type": "upload",
+      "required": true,
+      "constraints": "",
+      "dup_group": null
+    },
+    {
+      "id": "4.5.1",
+      "section": "4.5 Value-Added Services (Desirable)",
+      "question_text": "The Proponent should describe the training provided to administrators and end users, including delivery method, duration and materials.",
+      "type": "narrative",
+      "required": false,
+      "constraints": "",
+      "dup_group": "training"
+    },
+    {
+      "id": "4.5.2",
+      "section": "4.5 Value-Added Services (Desirable)",
+      "question_text": "The Proponent should provide a work plan in tabular form showing milestones, deliverables, responsibilities and dates.",
+      "type": "table",
+      "required": false,
+      "constraints": "tabular form",
+      "dup_group": null
+    },
+    {
+      "id": "4.5.3",
+      "section": "4.5 Value-Added Services (Desirable)",
+      "question_text": "(Optional) Please describe how the student information system scales to support peak loads and growth in the number of users.",
+      "type": "narrative",
+      "required": false,
+      "constraints": "",
+      "dup_group": null
+    },
+    {
+      "id": "4.6.1",
+      "section": "4.6 Required Attachments",
+      "question_text": "The Proponent shall attach a current Workers' Compensation Board clearance letter.",
+      "type": "upload",
+      "required": true,
+      "constraints": "",
+      "dup_group": null
+    },
+    {
+      "id": "4.6.2",
+      "section": "4.6 Required Attachments",
+      "question_text": "The Proponent shall attach its most recent SOC 2 Type II report.",
+      "type": "upload",
+      "required": true,
+      "constraints": "",
+      "dup_group": null
+    },
+    {
+      "id": "4.6.3",
+      "section": "4.6 Required Attachments",
+      "question_text": "The Proponent must attach a certificate of insurance showing commercial general liability coverage of not less than $5,000,000.",
+      "type": "upload",
+      "required": true,
+      "constraints": "commercial general liability of not less than $5,000,000",
+      "dup_group": null
+    },
+    {
+      "id": "5.1.1",
+      "section": "5.1 Pricing Requirements",
+      "question_text": "Hourly rates by role for change requests and additional services are required.",
+      "type": "pricing",
+      "required": true,
+      "constraints": "",
+      "dup_group": null
+    },
+    {
+      "id": "5.1.2",
+      "section": "5.1 Pricing Requirements",
+      "question_text": "The Proponent shall state every assumption and exclusion that affects the prices quoted.",
+      "type": "pricing",
+      "required": true,
+      "constraints": "",
+      "dup_group": null
+    },
+    {
+      "id": "5.1.3",
+      "section": "5.1 Pricing Requirements",
+      "question_text": "Pricing is to be submitted using the Pricing Schedule in Appendix C, in Canadian dollars and excluding GST.",
+      "type": "pricing",
+      "required": true,
+      "constraints": "Appendix C; Canadian dollars, excluding GST",
+      "dup_group": null
+    },
+    {
+      "id": "5.1.4",
+      "section": "5.1 Pricing Requirements",
+      "question_text": "Any annual price escalation proposed for the term of the contract is to be described.",
+      "type": "pricing",
+      "required": true,
+      "constraints": "",
+      "dup_group": null
+    },
+    {
+      "id": "A-041",
+      "section": "6.1 Appendix A - Mandatory Requirements Checklist",
+      "question_text": "The student information system should provide a mobile application for iOS and Android.",
+      "type": "yes_no",
+      "required": false,
+      "constraints": "",
+      "dup_group": null
+    },
+    {
+      "id": "A-042",
+      "section": "6.1 Appendix A - Mandatory Requirements Checklist",
+      "question_text": "The student information system shall allow authorized users to export any report to Excel and PDF.",
+      "type": "yes_no",
+      "required": true,
+      "constraints": "",
+      "dup_group": null
+    },
+    {
+      "id": "A-043",
+      "section": "6.1 Appendix A - Mandatory Requirements Checklist",
+      "question_text": "The student information system shall provide an administrator dashboard showing system health and usage.",
+      "type": "yes_no",
+      "required": true,
+      "constraints": "",
+      "dup_group": null
+    },
+    {
+      "id": "A-044",
+      "section": "6.1 Appendix A - Mandatory Requirements Checklist",
+      "question_text": "The student information system shall provide a documented REST API covering every function available in the user interface.",
+      "type": "yes_no",
+      "required": true,
+      "constraints": "",
+      "dup_group": null
+    },
+    {
+      "id": "A-045",
+      "section": "6.1 Appendix A - Mandatory Requirements Checklist",
+      "question_text": "The student information system shall provide a test environment for trying upgrades before they reach production.",
+      "type": "yes_no",
+      "required": true,
+      "constraints": "",
+      "dup_group": null
+    },
+    {
+      "id": "A-046",
+      "section": "6.1 Appendix A - Mandatory Requirements Checklist",
+      "question_text": "The student information system should offer a French-language user interface.",
+      "type": "yes_no",
+      "required": false,
+      "constraints": "",
+      "dup_group": null
+    },
+    {
+      "id": "6.1.1",
+      "section": "6.1 Appendix A - Mandatory Requirements Checklist",
+      "question_text": "The Proponent shall describe its disaster recovery plan, including recovery time and recovery point objectives.",
+      "type": "narrative",
+      "required": true,
+      "constraints": "",
+      "dup_group": "disaster_recovery"
+    },
+    {
+      "id": "6.1.2",
+      "section": "6.1 Appendix A - Mandatory Requirements Checklist",
+      "question_text": "(Optional) Describe the training provided to administrators and end users, including delivery method, duration and materials.",
+      "type": "narrative",
+      "required": false,
+      "constraints": "",
+      "dup_group": "training"
+    },
+    {
+      "id": "6.1.3",
+      "section": "6.1 Appendix A - Mandatory Requirements Checklist",
+      "question_text": "The Proponent shall describe the security controls that protect student records at rest and in transit.",
+      "type": "narrative",
+      "required": true,
+      "constraints": "",
+      "dup_group": "security_controls"
+    }
+  ]
+}

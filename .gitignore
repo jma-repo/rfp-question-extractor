@@ -1,0 +1,25 @@
+# Environments and caches
+.venv/
+__pycache__/
+*.pyc
+.pytest_cache/
+.ruff_cache/
+pytest-of-*/
+
+# Real public RFP files (never committed: copyright belongs to the issuer) and anything the pipeline writes there
+data/public/
+data/work/
+out/
+
+# Local tooling and notes
+.claude/
+HANDOFF.md
+*.log
+.DS_Store
+Thumbs.db
+~$*
+
+# Committed on purpose:
+#   data/synthetic/   the invented RFPs (Word, PDF, Excel) and their gold labels
+#   artifacts/reports/ the evaluation numbers quoted in the README
+#   templates/        the Word template the register is rendered from

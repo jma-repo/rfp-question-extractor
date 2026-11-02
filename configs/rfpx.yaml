@@ -1,0 +1,21 @@
+# Settings shared by `rfpx run` and `rfpx eval`. Command-line flags override them.
+
+chunk:
+  max_chars: 2400            # about 600 tokens of RFP text per model call; short chunks keep a 3B model accurate
+
+dedupe:
+  near_duplicate: 0.75       # token overlap above which a reworded repeat is flagged (never merged)
+
+llm:
+  base_url: http://127.0.0.1:1234/v1     # must be this machine; the client refuses anything else
+  temperature: 0.0
+  max_tokens: 1800
+  retries: 1                 # one retry with the validation error sent back to the model
+  recheck: false             # second pass per chunk: ask the model what was missed
+  json_schema: auto          # auto | on | off: constrain the reply with response_format when the server supports it
+  timeout_s: 900
+
+paths:
+  template: templates/question_register.docx
+  synthetic: data/synthetic
+  reports: artifacts/reports

@@ -1,0 +1,242 @@
+{
+  "file": "westland-cloud-hosting.pdf",
+  "title": "Managed Cloud Hosting",
+  "issuer": "Government of Westland",
+  "split": "test",
+  "questions": [
+    {
+      "id": "R-001",
+      "section": "3.1 General Functionality",
+      "question_text": "The managed cloud hosting service should provision users automatically from Microsoft Entra ID.",
+      "type": "yes_no",
+      "required": false,
+      "constraints": "",
+      "dup_group": null
+    },
+    {
+      "id": "R-002",
+      "section": "3.1 General Functionality",
+      "question_text": "The managed cloud hosting service shall support retention rules that can be set by record type.",
+      "type": "yes_no",
+      "required": true,
+      "constraints": "",
+      "dup_group": null
+    },
+    {
+      "id": "R-003",
+      "section": "3.1 General Functionality",
+      "question_text": "The managed cloud hosting service should provide a mobile application for iOS and Android.",
+      "type": "yes_no",
+      "required": false,
+      "constraints": "",
+      "dup_group": null
+    },
+    {
+      "id": "R-004",
+      "section": "3.1 General Functionality",
+      "question_text": "The managed cloud hosting service should allow business users to configure workflow steps without vendor assistance.",
+      "type": "yes_no",
+      "required": false,
+      "constraints": "",
+      "dup_group": null
+    },
+    {
+      "id": "R-005",
+      "section": "3.1 General Functionality",
+      "question_text": "The managed cloud hosting service shall support role-based access control with at least five configurable roles.",
+      "type": "yes_no",
+      "required": true,
+      "constraints": "",
+      "dup_group": null
+    },
+    {
+      "id": "R-006",
+      "section": "3.1 General Functionality",
+      "question_text": "The managed cloud hosting service shall support single sign-on with the identity provider used by the Government.",
+      "type": "yes_no",
+      "required": true,
+      "constraints": "",
+      "dup_group": null
+    },
+    {
+      "id": "R-007",
+      "section": "3.1 General Functionality",
+      "question_text": "The managed cloud hosting service shall allow authorized users to export any report to Excel and PDF.",
+      "type": "yes_no",
+      "required": true,
+      "constraints": "",
+      "dup_group": null
+    },
+    {
+      "id": "R-008",
+      "section": "3.1 General Functionality",
+      "question_text": "The managed cloud hosting service shall support full-text search across all records the user is permitted to see.",
+      "type": "yes_no",
+      "required": true,
+      "constraints": "",
+      "dup_group": null
+    },
+    {
+      "id": "R-009",
+      "section": "3.2 Administration and Security",
+      "question_text": "The managed cloud hosting service should support electronic signatures that are legally binding in Alberta.",
+      "type": "yes_no",
+      "required": false,
+      "constraints": "",
+      "dup_group": null
+    },
+    {
+      "id": "R-010",
+      "section": "3.2 Administration and Security",
+      "question_text": "The managed cloud hosting service shall enforce multi-factor authentication for all administrative users.",
+      "type": "yes_no",
+      "required": true,
+      "constraints": "",
+      "dup_group": null
+    },
+    {
+      "id": "R-011",
+      "section": "3.2 Administration and Security",
+      "question_text": "The managed cloud hosting service shall take a daily backup that can be restored to any point within the previous 14 days.",
+      "type": "yes_no",
+      "required": true,
+      "constraints": "",
+      "dup_group": null
+    },
+    {
+      "id": "R-012",
+      "section": "3.2 Administration and Security",
+      "question_text": "The managed cloud hosting service shall allow documents of up to 100 MB to be attached to a record.",
+      "type": "yes_no",
+      "required": true,
+      "constraints": "",
+      "dup_group": null
+    },
+    {
+      "id": "R-013",
+      "section": "3.2 Administration and Security",
+      "question_text": "The managed cloud hosting service shall send an email notification when a workflow step is assigned to a user.",
+      "type": "yes_no",
+      "required": true,
+      "constraints": "",
+      "dup_group": null
+    },
+    {
+      "id": "R-014",
+      "section": "3.2 Administration and Security",
+      "question_text": "The managed cloud hosting service shall mask personal information in non-production environments.",
+      "type": "yes_no",
+      "required": true,
+      "constraints": "",
+      "dup_group": null
+    },
+    {
+      "id": "R-015",
+      "section": "3.2 Administration and Security",
+      "question_text": "The managed cloud hosting service shall provide bulk import of records from CSV files, listing validation errors by row.",
+      "type": "yes_no",
+      "required": true,
+      "constraints": "",
+      "dup_group": null
+    },
+    {
+      "id": "R-016",
+      "section": "3.2 Administration and Security",
+      "question_text": "The managed cloud hosting service shall validate Canadian postal codes and street addresses.",
+      "type": "yes_no",
+      "required": true,
+      "constraints": "",
+      "dup_group": null
+    },
+    {
+      "id": "R-017",
+      "section": "4.1 Experience and Delivery",
+      "question_text": "The Proponent shall describe its approach to social procurement, including Indigenous, local and diversity-owned subcontracting.",
+      "type": "narrative",
+      "required": true,
+      "constraints": "",
+      "dup_group": null
+    },
+    {
+      "id": "R-018",
+      "section": "4.1 Experience and Delivery",
+      "question_text": "The Proponent must disclose any actual or potential conflict of interest relating to this RFP.",
+      "type": "narrative",
+      "required": true,
+      "constraints": "",
+      "dup_group": null
+    },
+    {
+      "id": "R-019",
+      "section": "4.1 Experience and Delivery",
+      "question_text": "The Proponent shall provide a profile of its organization, including years in business, number of employees and head office location.",
+      "type": "narrative",
+      "required": true,
+      "constraints": "",
+      "dup_group": null
+    },
+    {
+      "id": "R-020",
+      "section": "4.1 Experience and Delivery",
+      "question_text": "The Proponent must describe the landing zone design, including network segmentation and identity controls.",
+      "type": "narrative",
+      "required": true,
+      "constraints": "",
+      "dup_group": null
+    },
+    {
+      "id": "R-021",
+      "section": "4.1 Experience and Delivery",
+      "question_text": "The Proponent must provide monthly cost reports by application and department (Yes/No).",
+      "type": "yes_no",
+      "required": true,
+      "constraints": "",
+      "dup_group": null
+    },
+    {
+      "id": "R-022",
+      "section": "4.1 Experience and Delivery",
+      "question_text": "The Proponent shall describe backup retention options and the process for restoring a single database.",
+      "type": "narrative",
+      "required": true,
+      "constraints": "",
+      "dup_group": null
+    },
+    {
+      "id": "R-023",
+      "section": "4.2 Attachments and Pricing",
+      "question_text": "The most recent audited financial statements of the Proponent are to be attached.",
+      "type": "upload",
+      "required": true,
+      "constraints": "",
+      "dup_group": null
+    },
+    {
+      "id": "R-024",
+      "section": "4.2 Attachments and Pricing",
+      "question_text": "The Proponent shall attach a current Workers' Compensation Board clearance letter.",
+      "type": "upload",
+      "required": true,
+      "constraints": "",
+      "dup_group": null
+    },
+    {
+      "id": "R-025",
+      "section": "4.2 Attachments and Pricing",
+      "question_text": "The Proponent must state every assumption and exclusion that affects the prices quoted.",
+      "type": "pricing",
+      "required": true,
+      "constraints": "",
+      "dup_group": null
+    },
+    {
+      "id": "R-026",
+      "section": "4.2 Attachments and Pricing",
+      "question_text": "The Proponent shall complete the Pricing Schedule in Appendix C. All prices must be in Canadian dollars and exclude GST.",
+      "type": "pricing",
+      "required": true,
+      "constraints": "Appendix C; Canadian dollars, excluding GST",
+      "dup_group": null
+    }
+  ]
+}

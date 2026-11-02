@@ -1,0 +1,242 @@
+{
+  "file": "lakeshore-billing-modernization.docx",
+  "title": "Customer Billing Modernization",
+  "issuer": "Lakeshore Utilities",
+  "split": "test",
+  "questions": [
+    {
+      "id": "R-001",
+      "section": "3.1 General Functionality",
+      "question_text": "The customer billing and payment system shall send an email notification when a workflow step is assigned to a user.",
+      "type": "yes_no",
+      "required": true,
+      "constraints": "",
+      "dup_group": null
+    },
+    {
+      "id": "R-002",
+      "section": "3.1 General Functionality",
+      "question_text": "The customer billing and payment system shall support retention rules that can be set by record type.",
+      "type": "yes_no",
+      "required": true,
+      "constraints": "",
+      "dup_group": null
+    },
+    {
+      "id": "R-003",
+      "section": "3.1 General Functionality",
+      "question_text": "The customer billing and payment system should allow users to save and share filtered views.",
+      "type": "yes_no",
+      "required": false,
+      "constraints": "",
+      "dup_group": null
+    },
+    {
+      "id": "R-004",
+      "section": "3.1 General Functionality",
+      "question_text": "The customer billing and payment system shall take a daily backup that can be restored to any point within the previous 14 days.",
+      "type": "yes_no",
+      "required": true,
+      "constraints": "",
+      "dup_group": null
+    },
+    {
+      "id": "R-005",
+      "section": "3.1 General Functionality",
+      "question_text": "The customer billing and payment system should support electronic signatures that are legally binding in Alberta.",
+      "type": "yes_no",
+      "required": false,
+      "constraints": "",
+      "dup_group": null
+    },
+    {
+      "id": "R-006",
+      "section": "3.1 General Functionality",
+      "question_text": "The customer billing and payment system shall support full-text search across all records the user is permitted to see.",
+      "type": "yes_no",
+      "required": true,
+      "constraints": "",
+      "dup_group": null
+    },
+    {
+      "id": "R-007",
+      "section": "3.1 General Functionality",
+      "question_text": "The customer billing and payment system should provision users automatically from Microsoft Entra ID.",
+      "type": "yes_no",
+      "required": false,
+      "constraints": "",
+      "dup_group": null
+    },
+    {
+      "id": "R-008",
+      "section": "3.1 General Functionality",
+      "question_text": "The customer billing and payment system shall support single sign-on with the identity provider used by the Utility.",
+      "type": "yes_no",
+      "required": true,
+      "constraints": "",
+      "dup_group": null
+    },
+    {
+      "id": "R-009",
+      "section": "3.2 Administration and Security",
+      "question_text": "The customer billing and payment system shall provide read-only access for auditors.",
+      "type": "yes_no",
+      "required": true,
+      "constraints": "",
+      "dup_group": null
+    },
+    {
+      "id": "R-010",
+      "section": "3.2 Administration and Security",
+      "question_text": "The customer billing and payment system shall provide bulk import of records from CSV files, listing validation errors by row.",
+      "type": "yes_no",
+      "required": true,
+      "constraints": "",
+      "dup_group": null
+    },
+    {
+      "id": "R-011",
+      "section": "3.2 Administration and Security",
+      "question_text": "The customer billing and payment system shall enforce multi-factor authentication for all administrative users.",
+      "type": "yes_no",
+      "required": true,
+      "constraints": "",
+      "dup_group": null
+    },
+    {
+      "id": "R-012",
+      "section": "3.2 Administration and Security",
+      "question_text": "The customer billing and payment system shall support role-based access control with at least five configurable roles.",
+      "type": "yes_no",
+      "required": true,
+      "constraints": "",
+      "dup_group": null
+    },
+    {
+      "id": "R-013",
+      "section": "3.2 Administration and Security",
+      "question_text": "The customer billing and payment system should provide a mobile application for iOS and Android.",
+      "type": "yes_no",
+      "required": false,
+      "constraints": "",
+      "dup_group": null
+    },
+    {
+      "id": "R-014",
+      "section": "3.2 Administration and Security",
+      "question_text": "The customer billing and payment system shall allow administrators to define fields and pick lists without code changes.",
+      "type": "yes_no",
+      "required": true,
+      "constraints": "",
+      "dup_group": null
+    },
+    {
+      "id": "R-015",
+      "section": "3.2 Administration and Security",
+      "question_text": "The customer billing and payment system shall work on current versions of Chrome, Edge, Safari and Firefox without plug-ins.",
+      "type": "yes_no",
+      "required": true,
+      "constraints": "",
+      "dup_group": null
+    },
+    {
+      "id": "R-016",
+      "section": "3.2 Administration and Security",
+      "question_text": "The customer billing and payment system should allow business users to configure workflow steps without vendor assistance.",
+      "type": "yes_no",
+      "required": false,
+      "constraints": "",
+      "dup_group": null
+    },
+    {
+      "id": "R-017",
+      "section": "4.1 Experience and Delivery",
+      "question_text": "Disclose any litigation or claims against your organization in the last five years that relate to services of this kind.",
+      "type": "narrative",
+      "required": true,
+      "constraints": "",
+      "dup_group": null
+    },
+    {
+      "id": "R-018",
+      "section": "4.1 Experience and Delivery",
+      "question_text": "Describe your approach to social procurement, including Indigenous, local and diversity-owned subcontracting.",
+      "type": "narrative",
+      "required": true,
+      "constraints": "",
+      "dup_group": null
+    },
+    {
+      "id": "R-019",
+      "section": "4.1 Experience and Delivery",
+      "question_text": "Describe at least two comparable projects completed in the last five years, including scope, duration and outcome.",
+      "type": "narrative",
+      "required": true,
+      "constraints": "",
+      "dup_group": null
+    },
+    {
+      "id": "R-020",
+      "section": "4.1 Experience and Delivery",
+      "question_text": "The Proponent must describe how rate changes are configured and applied to bills that span the effective date.",
+      "type": "narrative",
+      "required": true,
+      "constraints": "",
+      "dup_group": null
+    },
+    {
+      "id": "R-021",
+      "section": "4.1 Experience and Delivery",
+      "question_text": "The Proponent must confirm that online payments are processed in a PCI DSS compliant manner (Yes/No).",
+      "type": "yes_no",
+      "required": true,
+      "constraints": "",
+      "dup_group": null
+    },
+    {
+      "id": "R-022",
+      "section": "4.1 Experience and Delivery",
+      "question_text": "Please describe the interface with the meter data management system, including data volumes and frequency.",
+      "type": "narrative",
+      "required": true,
+      "constraints": "",
+      "dup_group": null
+    },
+    {
+      "id": "R-023",
+      "section": "4.2 Attachments and Pricing",
+      "question_text": "Attach your most recent audited financial statements.",
+      "type": "upload",
+      "required": true,
+      "constraints": "",
+      "dup_group": null
+    },
+    {
+      "id": "R-024",
+      "section": "4.2 Attachments and Pricing",
+      "question_text": "The Proponent shall attach a certificate of insurance showing commercial general liability coverage of not less than $5,000,000.",
+      "type": "upload",
+      "required": true,
+      "constraints": "commercial general liability of not less than $5,000,000",
+      "dup_group": null
+    },
+    {
+      "id": "R-025",
+      "section": "4.2 Attachments and Pricing",
+      "question_text": "The Proponent must state every assumption and exclusion that affects the prices quoted.",
+      "type": "pricing",
+      "required": true,
+      "constraints": "",
+      "dup_group": null
+    },
+    {
+      "id": "R-026",
+      "section": "4.2 Attachments and Pricing",
+      "question_text": "The Proponent shall confirm that its prices will be held for 120 days after the Closing Time (Yes/No).",
+      "type": "yes_no",
+      "required": true,
+      "constraints": "120 days after the Closing Time",
+      "dup_group": null
+    }
+  ]
+}

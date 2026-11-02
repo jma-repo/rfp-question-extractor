@@ -1,0 +1,269 @@
+{
+  "file": "northern-lights-security-assessment.xlsx",
+  "title": "Vendor Security Assessment",
+  "issuer": "Northern Lights Energy",
+  "split": "test",
+  "questions": [
+    {
+      "id": "S1",
+      "section": "Governance",
+      "question_text": "Does your organization maintain a documented information security policy that is reviewed at least annually?",
+      "type": "yes_no",
+      "required": true,
+      "constraints": "",
+      "dup_group": null
+    },
+    {
+      "id": "S2",
+      "section": "Governance",
+      "question_text": "Is there a named executive accountable for information security?",
+      "type": "yes_no",
+      "required": true,
+      "constraints": "",
+      "dup_group": null
+    },
+    {
+      "id": "S3",
+      "section": "Governance",
+      "question_text": "Describe how security responsibilities are assigned across your teams.",
+      "type": "narrative",
+      "required": true,
+      "constraints": "",
+      "dup_group": null
+    },
+    {
+      "id": "S4",
+      "section": "Access control",
+      "question_text": "Is multi-factor authentication required for all administrative access?",
+      "type": "yes_no",
+      "required": true,
+      "constraints": "",
+      "dup_group": "mfa"
+    },
+    {
+      "id": "S5",
+      "section": "Access control",
+      "question_text": "Are user access rights reviewed at least quarterly?",
+      "type": "yes_no",
+      "required": true,
+      "constraints": "",
+      "dup_group": null
+    },
+    {
+      "id": "S6",
+      "section": "Access control",
+      "question_text": "Describe how access is removed when an employee or subcontractor leaves.",
+      "type": "narrative",
+      "required": true,
+      "constraints": "",
+      "dup_group": null
+    },
+    {
+      "id": "S7",
+      "section": "Access control",
+      "question_text": "Do you enforce the principle of least privilege for production systems?",
+      "type": "yes_no",
+      "required": true,
+      "constraints": "",
+      "dup_group": null
+    },
+    {
+      "id": "S8",
+      "section": "Encryption",
+      "question_text": "Is all customer data encrypted at rest using AES-256 or equivalent?",
+      "type": "yes_no",
+      "required": true,
+      "constraints": "",
+      "dup_group": "encryption_at_rest"
+    },
+    {
+      "id": "S9",
+      "section": "Encryption",
+      "question_text": "Is all customer data encrypted in transit using TLS 1.2 or higher?",
+      "type": "yes_no",
+      "required": true,
+      "constraints": "",
+      "dup_group": null
+    },
+    {
+      "id": "S10",
+      "section": "Encryption",
+      "question_text": "Describe how encryption keys are generated, stored and rotated.",
+      "type": "narrative",
+      "required": true,
+      "constraints": "",
+      "dup_group": null
+    },
+    {
+      "id": "S11",
+      "section": "Vulnerability management",
+      "question_text": "Are authenticated vulnerability scans run at least monthly?",
+      "type": "yes_no",
+      "required": true,
+      "constraints": "",
+      "dup_group": null
+    },
+    {
+      "id": "S12",
+      "section": "Vulnerability management",
+      "question_text": "Is an independent penetration test performed at least annually?",
+      "type": "yes_no",
+      "required": true,
+      "constraints": "",
+      "dup_group": null
+    },
+    {
+      "id": "S13",
+      "section": "Vulnerability management",
+      "question_text": "Attach the executive summary of your most recent penetration test.",
+      "type": "upload",
+      "required": true,
+      "constraints": "",
+      "dup_group": null
+    },
+    {
+      "id": "S14",
+      "section": "Vulnerability management",
+      "question_text": "Describe your process for patching critical vulnerabilities.",
+      "type": "narrative",
+      "required": true,
+      "constraints": "",
+      "dup_group": null
+    },
+    {
+      "id": "S15",
+      "section": "Incident response",
+      "question_text": "Do you have a documented incident response plan that is tested at least annually?",
+      "type": "yes_no",
+      "required": true,
+      "constraints": "",
+      "dup_group": null
+    },
+    {
+      "id": "S16",
+      "section": "Incident response",
+      "question_text": "Will you notify the customer of a confirmed breach within 72 hours?",
+      "type": "yes_no",
+      "required": true,
+      "constraints": "",
+      "dup_group": null
+    },
+    {
+      "id": "S17",
+      "section": "Incident response",
+      "question_text": "Describe your process for investigating and reporting a security incident.",
+      "type": "narrative",
+      "required": true,
+      "constraints": "",
+      "dup_group": null
+    },
+    {
+      "id": "S18",
+      "section": "Business continuity",
+      "question_text": "Is there a documented and tested business continuity plan?",
+      "type": "yes_no",
+      "required": true,
+      "constraints": "",
+      "dup_group": null
+    },
+    {
+      "id": "S19",
+      "section": "Business continuity",
+      "question_text": "Are backups stored in a separate geographic location from production?",
+      "type": "yes_no",
+      "required": true,
+      "constraints": "",
+      "dup_group": null
+    },
+    {
+      "id": "S20",
+      "section": "Business continuity",
+      "question_text": "State the recovery time objective for the proposed service.",
+      "type": "narrative",
+      "required": true,
+      "constraints": "",
+      "dup_group": null
+    },
+    {
+      "id": "S21",
+      "section": "Third parties",
+      "question_text": "Do you assess the security of subcontractors that handle customer data?",
+      "type": "yes_no",
+      "required": true,
+      "constraints": "",
+      "dup_group": null
+    },
+    {
+      "id": "S22",
+      "section": "Third parties",
+      "question_text": "List every subcontractor that will have access to customer data.",
+      "type": "table",
+      "required": true,
+      "constraints": "",
+      "dup_group": null
+    },
+    {
+      "id": "S23",
+      "section": "Third parties",
+      "question_text": "Attach your standard data processing agreement.",
+      "type": "upload",
+      "required": true,
+      "constraints": "",
+      "dup_group": null
+    },
+    {
+      "id": "S24",
+      "section": "Privacy",
+      "question_text": "Do you have a designated privacy officer?",
+      "type": "yes_no",
+      "required": true,
+      "constraints": "",
+      "dup_group": null
+    },
+    {
+      "id": "S25",
+      "section": "Privacy",
+      "question_text": "Is customer data ever used for purposes other than providing the service?",
+      "type": "yes_no",
+      "required": true,
+      "constraints": "",
+      "dup_group": null
+    },
+    {
+      "id": "S26",
+      "section": "Privacy",
+      "question_text": "Describe how you respond to a request from an individual for access to their personal information.",
+      "type": "narrative",
+      "required": true,
+      "constraints": "",
+      "dup_group": null
+    },
+    {
+      "id": "S27",
+      "section": "Privacy",
+      "question_text": "Where will customer data be stored and processed? List each country.",
+      "type": "table",
+      "required": true,
+      "constraints": "",
+      "dup_group": null
+    },
+    {
+      "id": "S28",
+      "section": "Additional questions",
+      "question_text": "Is all customer data encrypted at rest using AES-256 or equivalent?",
+      "type": "yes_no",
+      "required": true,
+      "constraints": "",
+      "dup_group": "encryption_at_rest"
+    },
+    {
+      "id": "S29",
+      "section": "Additional questions",
+      "question_text": "Is multi-factor authentication enforced for every administrator account?",
+      "type": "yes_no",
+      "required": true,
+      "constraints": "",
+      "dup_group": "mfa"
+    }
+  ]
+}

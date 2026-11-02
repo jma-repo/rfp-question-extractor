@@ -1,0 +1,278 @@
+{
+  "file": "bow-river-fare-questionnaire.xlsx",
+  "title": "Fare Payment Platform",
+  "issuer": "Bow River Transit",
+  "split": "dev",
+  "questions": [
+    {
+      "id": "Q1",
+      "section": "Company and Experience",
+      "question_text": "Disclose any litigation or claims against your organization in the last five years that relate to services of this kind.",
+      "type": "narrative",
+      "required": true,
+      "constraints": "",
+      "dup_group": null
+    },
+    {
+      "id": "Q2",
+      "section": "Company and Experience",
+      "question_text": "Does your organization have an office in Alberta? (Yes/No)",
+      "type": "yes_no",
+      "required": true,
+      "constraints": "",
+      "dup_group": null
+    },
+    {
+      "id": "Q3",
+      "section": "Company and Experience",
+      "question_text": "Please describe your approach to social procurement, including Indigenous, local and diversity-owned subcontracting.",
+      "type": "narrative",
+      "required": true,
+      "constraints": "",
+      "dup_group": null
+    },
+    {
+      "id": "Q4",
+      "section": "Company and Experience",
+      "question_text": "Provide three client references for comparable projects using the table in Appendix B.",
+      "type": "table",
+      "required": true,
+      "constraints": "three references, table in Appendix B",
+      "dup_group": "references"
+    },
+    {
+      "id": "Q5",
+      "section": "Company and Experience",
+      "question_text": "Describe your organization, its ownership and its experience delivering account-based fare payment platforms to public-sector clients.",
+      "type": "narrative",
+      "required": true,
+      "constraints": "",
+      "dup_group": null
+    },
+    {
+      "id": "Q6",
+      "section": "Solution",
+      "question_text": "Does the account-based fare payment platform keep an audit log of user activity that administrators cannot alter? (Yes/No)",
+      "type": "yes_no",
+      "required": true,
+      "constraints": "",
+      "dup_group": null
+    },
+    {
+      "id": "Q7",
+      "section": "Solution",
+      "question_text": "Does the account-based fare payment platform support single sign-on using SAML 2.0 or OpenID Connect? (Yes/No)",
+      "type": "yes_no",
+      "required": true,
+      "constraints": "",
+      "dup_group": null
+    },
+    {
+      "id": "Q8",
+      "section": "Solution",
+      "question_text": "(Optional) Does the account-based fare payment platform conform to WCAG 2.1 Level AA? (Yes/No)",
+      "type": "yes_no",
+      "required": false,
+      "constraints": "",
+      "dup_group": null
+    },
+    {
+      "id": "Q9",
+      "section": "Solution",
+      "question_text": "Describe how fare capping is calculated across bus and train trips.",
+      "type": "narrative",
+      "required": true,
+      "constraints": "",
+      "dup_group": null
+    },
+    {
+      "id": "Q10",
+      "section": "Solution",
+      "question_text": "Confirm that open-loop contactless EMV payments are accepted at all validators. (Yes/No)",
+      "type": "yes_no",
+      "required": true,
+      "constraints": "",
+      "dup_group": null
+    },
+    {
+      "id": "Q11",
+      "section": "Solution",
+      "question_text": "Describe how validators operate when the connection to the back office is lost.",
+      "type": "narrative",
+      "required": true,
+      "constraints": "",
+      "dup_group": null
+    },
+    {
+      "id": "Q12",
+      "section": "Solution",
+      "question_text": "Describe how concession fares for seniors, youth and low-income riders are verified.",
+      "type": "narrative",
+      "required": true,
+      "constraints": "",
+      "dup_group": null
+    },
+    {
+      "id": "Q13",
+      "section": "Solution",
+      "question_text": "(Optional) Please attach the hardware specification for the proposed validator.",
+      "type": "upload",
+      "required": false,
+      "constraints": "",
+      "dup_group": null
+    },
+    {
+      "id": "Q14",
+      "section": "Security, Privacy and Hosting",
+      "question_text": "Please describe how you comply with the Freedom of Information and Protection of Privacy Act (Alberta) and any other privacy legislation that applies to rider and payment data.",
+      "type": "narrative",
+      "required": true,
+      "constraints": "",
+      "dup_group": null
+    },
+    {
+      "id": "Q15",
+      "section": "Security, Privacy and Hosting",
+      "question_text": "Confirm that monthly availability of at least 99.9 percent will be guaranteed in the service level agreement. (Yes/No)",
+      "type": "yes_no",
+      "required": true,
+      "constraints": "99.9 percent monthly availability",
+      "dup_group": null
+    },
+    {
+      "id": "Q16",
+      "section": "Security, Privacy and Hosting",
+      "question_text": "Proponent to confirm that all rider and payment data will be stored and processed in Canada. (Yes/No)",
+      "type": "yes_no",
+      "required": true,
+      "constraints": "",
+      "dup_group": null
+    },
+    {
+      "id": "Q17",
+      "section": "Security, Privacy and Hosting",
+      "question_text": "Does your organization hold a current ISO/IEC 27001 certification? (Yes/No)",
+      "type": "yes_no",
+      "required": true,
+      "constraints": "",
+      "dup_group": null
+    },
+    {
+      "id": "Q18",
+      "section": "Delivery and Support",
+      "question_text": "Proponent to identify the five most significant project risks and the mitigation proposed for each.",
+      "type": "narrative",
+      "required": true,
+      "constraints": "five risks",
+      "dup_group": null
+    },
+    {
+      "id": "Q19",
+      "section": "Delivery and Support",
+      "question_text": "Describe the warranty provided and what it excludes.",
+      "type": "narrative",
+      "required": true,
+      "constraints": "",
+      "dup_group": null
+    },
+    {
+      "id": "Q20",
+      "section": "Delivery and Support",
+      "question_text": "The proposed implementation timeline, from contract award to go-live, is to be stated.",
+      "type": "narrative",
+      "required": true,
+      "constraints": "",
+      "dup_group": null
+    },
+    {
+      "id": "Q21",
+      "section": "Delivery and Support",
+      "question_text": "Describe your testing approach, including user acceptance testing and who signs off.",
+      "type": "narrative",
+      "required": true,
+      "constraints": "",
+      "dup_group": null
+    },
+    {
+      "id": "Q22",
+      "section": "Delivery and Support",
+      "question_text": "Describe your approach to migrating existing data, including cut-over and rollback.",
+      "type": "narrative",
+      "required": true,
+      "constraints": "",
+      "dup_group": "data_migration"
+    },
+    {
+      "id": "Q23",
+      "section": "Pricing and Attachments",
+      "question_text": "(Desirable) Describe any annual price escalation proposed for the term of the contract.",
+      "type": "pricing",
+      "required": false,
+      "constraints": "",
+      "dup_group": null
+    },
+    {
+      "id": "Q24",
+      "section": "Pricing and Attachments",
+      "question_text": "Will the prices quoted be held for 120 days after the Closing Time? (Yes/No)",
+      "type": "yes_no",
+      "required": true,
+      "constraints": "120 days after the Closing Time",
+      "dup_group": null
+    },
+    {
+      "id": "Q25",
+      "section": "Pricing and Attachments",
+      "question_text": "State every assumption and exclusion that affects the prices quoted.",
+      "type": "pricing",
+      "required": true,
+      "constraints": "",
+      "dup_group": null
+    },
+    {
+      "id": "Q26",
+      "section": "Pricing and Attachments",
+      "question_text": "Provide hourly rates by role for change requests and additional services.",
+      "type": "pricing",
+      "required": true,
+      "constraints": "",
+      "dup_group": null
+    },
+    {
+      "id": "Q27",
+      "section": "Pricing and Attachments",
+      "question_text": "Attach a certificate of insurance showing commercial general liability coverage of not less than $5,000,000.",
+      "type": "upload",
+      "required": true,
+      "constraints": "commercial general liability of not less than $5,000,000",
+      "dup_group": null
+    },
+    {
+      "id": "Q28",
+      "section": "Pricing and Attachments",
+      "question_text": "Attach your most recent audited financial statements.",
+      "type": "upload",
+      "required": true,
+      "constraints": "",
+      "dup_group": null
+    },
+    {
+      "id": "Q29",
+      "section": "Pricing and Attachments",
+      "question_text": "Provide three client references for comparable projects using the table in Appendix B.",
+      "type": "table",
+      "required": true,
+      "constraints": "three references, table in Appendix B",
+      "dup_group": "references"
+    },
+    {
+      "id": "Q30",
+      "section": "Pricing and Attachments",
+      "question_text": "The Proponent shall describe its approach to migrating existing data, including cut-over and rollback.",
+      "type": "narrative",
+      "required": true,
+      "constraints": "",
+      "dup_group": "data_migration"
+    }
+  ]
+}

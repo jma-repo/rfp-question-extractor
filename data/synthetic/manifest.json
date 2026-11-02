@@ -1,0 +1,82 @@
+[
+  {
+    "file": "northfield-fleet-telematics.docx",
+    "format": "docx",
+    "split": "dev",
+    "layout": "outline",
+    "questions": 49,
+    "required": 42
+  },
+  {
+    "file": "prairie-health-scheduling.docx",
+    "format": "docx",
+    "split": "test",
+    "layout": "outline",
+    "questions": 49,
+    "required": 42
+  },
+  {
+    "file": "lakeshore-billing-modernization.docx",
+    "format": "docx",
+    "split": "test",
+    "layout": "matrix",
+    "questions": 26,
+    "required": 21
+  },
+  {
+    "file": "mountain-view-records.docx",
+    "format": "docx",
+    "split": "test",
+    "layout": "flat",
+    "questions": 31,
+    "required": 25
+  },
+  {
+    "file": "foothills-student-information-system.pdf",
+    "format": "pdf",
+    "split": "dev",
+    "layout": "outline",
+    "questions": 49,
+    "required": 41
+  },
+  {
+    "file": "westland-cloud-hosting.pdf",
+    "format": "pdf",
+    "split": "test",
+    "layout": "matrix",
+    "questions": 26,
+    "required": 22
+  },
+  {
+    "file": "capital-library-digital-content.pdf",
+    "format": "pdf",
+    "split": "test",
+    "layout": "alpha",
+    "questions": 38,
+    "required": 37
+  },
+  {
+    "file": "bow-river-fare-questionnaire.xlsx",
+    "format": "xlsx",
+    "split": "dev",
+    "layout": "flat",
+    "questions": 30,
+    "required": 27
+  },
+  {
+    "file": "northern-lights-security-assessment.xlsx",
+    "format": "xlsx",
+    "split": "test",
+    "layout": "security",
+    "questions": 29,
+    "required": 29
+  },
+  {
+    "file": "tri-valley-housing-requirements.xlsx",
+    "format": "xlsx",
+    "split": "test",
+    "layout": "xmatrix",
+    "questions": 30,
+    "required": 28
+  }
+]

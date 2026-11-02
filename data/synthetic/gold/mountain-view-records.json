@@ -1,0 +1,287 @@
+{
+  "file": "mountain-view-records.docx",
+  "title": "Electronic Records Management",
+  "issuer": "Mountain View County",
+  "split": "test",
+  "questions": [
+    {
+      "id": null,
+      "section": "Company and Experience",
+      "question_text": "(Optional) Resumes for all key team members, not exceeding two pages per person, are to be attached.",
+      "type": "upload",
+      "required": false,
+      "constraints": "not exceeding two pages per person",
+      "dup_group": null
+    },
+    {
+      "id": null,
+      "section": "Company and Experience",
+      "question_text": "Three client references for comparable projects are to be provided using the table in Appendix B.",
+      "type": "table",
+      "required": true,
+      "constraints": "three references, table in Appendix B",
+      "dup_group": "references"
+    },
+    {
+      "id": null,
+      "section": "Company and Experience",
+      "question_text": "The proposed project team structure and the role of each team member are to be described.",
+      "type": "narrative",
+      "required": true,
+      "constraints": "",
+      "dup_group": null
+    },
+    {
+      "id": null,
+      "section": "Company and Experience",
+      "question_text": "(Desirable) Does your organization have an office in Alberta? (Yes/No)",
+      "type": "yes_no",
+      "required": false,
+      "constraints": "",
+      "dup_group": null
+    },
+    {
+      "id": null,
+      "section": "Company and Experience",
+      "question_text": "Please describe at least two comparable projects completed in the last five years, including scope, duration and outcome.",
+      "type": "narrative",
+      "required": true,
+      "constraints": "",
+      "dup_group": null
+    },
+    {
+      "id": null,
+      "section": "Solution",
+      "question_text": "The product roadmap for the next 24 months is to be attached.",
+      "type": "upload",
+      "required": true,
+      "constraints": "next 24 months",
+      "dup_group": null
+    },
+    {
+      "id": null,
+      "section": "Solution",
+      "question_text": "Please describe how the electronic records management system scales to support peak loads and growth in the number of users.",
+      "type": "narrative",
+      "required": true,
+      "constraints": "",
+      "dup_group": null
+    },
+    {
+      "id": null,
+      "section": "Solution",
+      "question_text": "Does the electronic records management system support single sign-on using SAML 2.0 or OpenID Connect? (Yes/No)",
+      "type": "yes_no",
+      "required": true,
+      "constraints": "",
+      "dup_group": null
+    },
+    {
+      "id": null,
+      "section": "Solution",
+      "question_text": "Describe how retention schedules are applied and how records are disposed of at the end of the retention period.",
+      "type": "narrative",
+      "required": true,
+      "constraints": "",
+      "dup_group": null
+    },
+    {
+      "id": null,
+      "section": "Solution",
+      "question_text": "(Optional) Does the electronic records management system support legal holds that suspend disposal of selected records? (Yes/No)",
+      "type": "yes_no",
+      "required": false,
+      "constraints": "",
+      "dup_group": null
+    },
+    {
+      "id": null,
+      "section": "Solution",
+      "question_text": "Please describe your approach to migrating approximately two million existing documents, including metadata mapping.",
+      "type": "narrative",
+      "required": true,
+      "constraints": "",
+      "dup_group": null
+    },
+    {
+      "id": null,
+      "section": "Solution",
+      "question_text": "Proponent to describe the OCR and full-text search capabilities, including supported languages.",
+      "type": "narrative",
+      "required": true,
+      "constraints": "",
+      "dup_group": null
+    },
+    {
+      "id": null,
+      "section": "Solution",
+      "question_text": "Please describe how public requests for records are searched, reviewed and redacted.",
+      "type": "narrative",
+      "required": true,
+      "constraints": "",
+      "dup_group": null
+    },
+    {
+      "id": null,
+      "section": "Security, Privacy and Hosting",
+      "question_text": "Will any County records be stored, processed or accessed outside Canada? (Yes/No)",
+      "type": "yes_no",
+      "required": true,
+      "constraints": "",
+      "dup_group": null
+    },
+    {
+      "id": null,
+      "section": "Security, Privacy and Hosting",
+      "question_text": "What are your recovery time and recovery point objectives, and when were they last tested?",
+      "type": "narrative",
+      "required": true,
+      "constraints": "",
+      "dup_group": null
+    },
+    {
+      "id": null,
+      "section": "Security, Privacy and Hosting",
+      "question_text": "Describe how you comply with the Freedom of Information and Protection of Privacy Act (Alberta) and any other privacy legislation that applies to County records.",
+      "type": "narrative",
+      "required": true,
+      "constraints": "",
+      "dup_group": null
+    },
+    {
+      "id": null,
+      "section": "Security, Privacy and Hosting",
+      "question_text": "(Optional) How is County records encrypted at rest and in transit, and who holds the encryption keys?",
+      "type": "narrative",
+      "required": false,
+      "constraints": "",
+      "dup_group": "security_controls"
+    },
+    {
+      "id": null,
+      "section": "Delivery and Support",
+      "question_text": "Provide a work plan in tabular form showing milestones, deliverables, responsibilities and dates.",
+      "type": "table",
+      "required": true,
+      "constraints": "tabular form",
+      "dup_group": null
+    },
+    {
+      "id": null,
+      "section": "Delivery and Support",
+      "question_text": "State the proposed implementation timeline from contract award to go-live.",
+      "type": "narrative",
+      "required": true,
+      "constraints": "",
+      "dup_group": null
+    },
+    {
+      "id": null,
+      "section": "Delivery and Support",
+      "question_text": "List all subcontractors you intend to use and the portion of the work each will perform.",
+      "type": "table",
+      "required": true,
+      "constraints": "",
+      "dup_group": null
+    },
+    {
+      "id": null,
+      "section": "Delivery and Support",
+      "question_text": "Describe your support model, including hours of coverage, escalation paths and target response times.",
+      "type": "narrative",
+      "required": true,
+      "constraints": "",
+      "dup_group": "support_model"
+    },
+    {
+      "id": null,
+      "section": "Delivery and Support",
+      "question_text": "Describe your approach to migrating existing data, including cut-over and rollback.",
+      "type": "narrative",
+      "required": true,
+      "constraints": "",
+      "dup_group": null
+    },
+    {
+      "id": null,
+      "section": "Pricing and Attachments",
+      "question_text": "Please confirm that your prices will be held for 120 days after the Closing Time. (Yes/No)",
+      "type": "yes_no",
+      "required": true,
+      "constraints": "120 days after the Closing Time",
+      "dup_group": null
+    },
+    {
+      "id": null,
+      "section": "Pricing and Attachments",
+      "question_text": "Provide hourly rates by role for change requests and additional services.",
+      "type": "pricing",
+      "required": true,
+      "constraints": "",
+      "dup_group": null
+    },
+    {
+      "id": null,
+      "section": "Pricing and Attachments",
+      "question_text": "Complete the Pricing Schedule in Appendix C, showing all prices in Canadian dollars and excluding GST.",
+      "type": "pricing",
+      "required": true,
+      "constraints": "Appendix C; Canadian dollars, excluding GST",
+      "dup_group": null
+    },
+    {
+      "id": null,
+      "section": "Pricing and Attachments",
+      "question_text": "(Optional) Any annual price escalation proposed for the term of the contract is to be described.",
+      "type": "pricing",
+      "required": false,
+      "constraints": "",
+      "dup_group": null
+    },
+    {
+      "id": null,
+      "section": "Pricing and Attachments",
+      "question_text": "Attach a current Workers' Compensation Board clearance letter.",
+      "type": "upload",
+      "required": true,
+      "constraints": "",
+      "dup_group": null
+    },
+    {
+      "id": null,
+      "section": "Pricing and Attachments",
+      "question_text": "The most recent SOC 2 Type II report is to be attached.",
+      "type": "upload",
+      "required": true,
+      "constraints": "",
+      "dup_group": null
+    },
+    {
+      "id": null,
+      "section": "Pricing and Attachments",
+      "question_text": "(Optional) How is County records encrypted at rest and in transit, and who holds the encryption keys?",
+      "type": "narrative",
+      "required": false,
+      "constraints": "",
+      "dup_group": "security_controls"
+    },
+    {
+      "id": null,
+      "section": "Pricing and Attachments",
+      "question_text": "The Proponent shall provide three client references for comparable projects using the table in Appendix B.",
+      "type": "table",
+      "required": true,
+      "constraints": "three references, table in Appendix B",
+      "dup_group": "references"
+    },
+    {
+      "id": null,
+      "section": "Pricing and Attachments",
+      "question_text": "The Proponent shall describe its support model, including hours of coverage, escalation paths and target response times.",
+      "type": "narrative",
+      "required": true,
+      "constraints": "",
+      "dup_group": "support_model"
+    }
+  ]
+}

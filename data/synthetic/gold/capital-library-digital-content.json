@@ -1,0 +1,350 @@
+{
+  "file": "capital-library-digital-content.pdf",
+  "title": "Digital Content Lending Platform",
+  "issuer": "Capital Region Library Consortium",
+  "split": "test",
+  "questions": [
+    {
+      "id": null,
+      "section": "B. Proponent Qualifications",
+      "question_text": "Disclose any litigation or claims against your organization in the last five years that relate to services of this kind.",
+      "type": "narrative",
+      "required": true,
+      "constraints": "",
+      "dup_group": null
+    },
+    {
+      "id": null,
+      "section": "B. Proponent Qualifications",
+      "question_text": "Provide three client references for comparable projects using the table in Appendix B.",
+      "type": "table",
+      "required": true,
+      "constraints": "three references, table in Appendix B",
+      "dup_group": "references"
+    },
+    {
+      "id": null,
+      "section": "B. Proponent Qualifications",
+      "question_text": "Any actual or potential conflict of interest relating to this RFP must be disclosed.",
+      "type": "narrative",
+      "required": true,
+      "constraints": "",
+      "dup_group": null
+    },
+    {
+      "id": null,
+      "section": "B. Proponent Qualifications",
+      "question_text": "Provide a profile of your organization, including years in business, number of employees and head office location.",
+      "type": "narrative",
+      "required": true,
+      "constraints": "",
+      "dup_group": null
+    },
+    {
+      "id": null,
+      "section": "B. Proponent Qualifications",
+      "question_text": "Does your organization have an office in Alberta? (Yes/No)",
+      "type": "yes_no",
+      "required": true,
+      "constraints": "",
+      "dup_group": null
+    },
+    {
+      "id": null,
+      "section": "C. Solution Description",
+      "question_text": "Please describe how the digital content lending platform scales to support peak loads and growth in the number of users.",
+      "type": "narrative",
+      "required": true,
+      "constraints": "",
+      "dup_group": null
+    },
+    {
+      "id": null,
+      "section": "C. Solution Description",
+      "question_text": "Does the digital content lending platform keep an audit log of user activity that administrators cannot alter? (Yes/No)",
+      "type": "yes_no",
+      "required": true,
+      "constraints": "",
+      "dup_group": null
+    },
+    {
+      "id": null,
+      "section": "C. Solution Description",
+      "question_text": "Describe the licensing model (named user, concurrent or enterprise) and how licence counts are measured.",
+      "type": "narrative",
+      "required": true,
+      "constraints": "",
+      "dup_group": null
+    },
+    {
+      "id": null,
+      "section": "C. Solution Description",
+      "question_text": "Proponent to describe how holds queues are managed across member libraries.",
+      "type": "narrative",
+      "required": true,
+      "constraints": "",
+      "dup_group": null
+    },
+    {
+      "id": null,
+      "section": "C. Solution Description",
+      "question_text": "(Desirable) Describe how the platform integrates with the library card database of the Consortium.",
+      "type": "narrative",
+      "required": false,
+      "constraints": "",
+      "dup_group": null
+    },
+    {
+      "id": null,
+      "section": "C. Solution Description",
+      "question_text": "Confirm that titles from Canadian publishers can be loaded and shown as a collection. (Yes/No)",
+      "type": "yes_no",
+      "required": true,
+      "constraints": "",
+      "dup_group": null
+    },
+    {
+      "id": null,
+      "section": "C. Solution Description",
+      "question_text": "Please describe the reading applications provided, including offline reading and accessibility features.",
+      "type": "narrative",
+      "required": true,
+      "constraints": "",
+      "dup_group": null
+    },
+    {
+      "id": null,
+      "section": "C. Solution Description",
+      "question_text": "Attach a sample monthly usage report.",
+      "type": "upload",
+      "required": true,
+      "constraints": "",
+      "dup_group": null
+    },
+    {
+      "id": "(a)",
+      "section": "C. Solution Description",
+      "question_text": "Describe the channels through which users can request support.",
+      "type": "narrative",
+      "required": true,
+      "constraints": "",
+      "dup_group": null
+    },
+    {
+      "id": "(b)",
+      "section": "C. Solution Description",
+      "question_text": "State the target response and resolution times for each severity level.",
+      "type": "narrative",
+      "required": true,
+      "constraints": "",
+      "dup_group": null
+    },
+    {
+      "id": "(c)",
+      "section": "C. Solution Description",
+      "question_text": "Confirm that support is available on statutory holidays. (Yes/No)",
+      "type": "yes_no",
+      "required": true,
+      "constraints": "",
+      "dup_group": null
+    },
+    {
+      "id": null,
+      "section": "D. Security and Hosting",
+      "question_text": "How is patron data encrypted at rest and in transit, and who holds the encryption keys?",
+      "type": "narrative",
+      "required": true,
+      "constraints": "",
+      "dup_group": "security_controls"
+    },
+    {
+      "id": null,
+      "section": "D. Security and Hosting",
+      "question_text": "Please describe how you comply with the Freedom of Information and Protection of Privacy Act (Alberta) and any other privacy legislation that applies to patron data.",
+      "type": "narrative",
+      "required": true,
+      "constraints": "",
+      "dup_group": null
+    },
+    {
+      "id": null,
+      "section": "D. Security and Hosting",
+      "question_text": "Describe your disaster recovery plan, including recovery time and recovery point objectives.",
+      "type": "narrative",
+      "required": true,
+      "constraints": "",
+      "dup_group": null
+    },
+    {
+      "id": null,
+      "section": "D. Security and Hosting",
+      "question_text": "Will any patron data be stored, processed or accessed outside Canada? (Yes/No)",
+      "type": "yes_no",
+      "required": true,
+      "constraints": "",
+      "dup_group": null
+    },
+    {
+      "id": null,
+      "section": "D. Security and Hosting",
+      "question_text": "Does your organization hold a current ISO/IEC 27001 certification? (Yes/No)",
+      "type": "yes_no",
+      "required": true,
+      "constraints": "",
+      "dup_group": null
+    },
+    {
+      "id": "(a)",
+      "section": "D. Security and Hosting",
+      "question_text": "Describe how administrative access to production systems is controlled and logged.",
+      "type": "narrative",
+      "required": true,
+      "constraints": "",
+      "dup_group": null
+    },
+    {
+      "id": "(b)",
+      "section": "D. Security and Hosting",
+      "question_text": "Describe how security events are monitored and who responds outside business hours.",
+      "type": "narrative",
+      "required": true,
+      "constraints": "",
+      "dup_group": null
+    },
+    {
+      "id": "(c)",
+      "section": "D. Security and Hosting",
+      "question_text": "State whether penetration testing is performed by an independent party. (Yes/No)",
+      "type": "yes_no",
+      "required": true,
+      "constraints": "",
+      "dup_group": null
+    },
+    {
+      "id": null,
+      "section": "E. Delivery and Support",
+      "question_text": "Please describe how you will support organizational change management and user adoption.",
+      "type": "narrative",
+      "required": true,
+      "constraints": "",
+      "dup_group": null
+    },
+    {
+      "id": null,
+      "section": "E. Delivery and Support",
+      "question_text": "Describe the warranty provided and what it excludes.",
+      "type": "narrative",
+      "required": true,
+      "constraints": "",
+      "dup_group": null
+    },
+    {
+      "id": null,
+      "section": "E. Delivery and Support",
+      "question_text": "What training materials are included, and are they available in French?",
+      "type": "narrative",
+      "required": true,
+      "constraints": "",
+      "dup_group": "training"
+    },
+    {
+      "id": null,
+      "section": "E. Delivery and Support",
+      "question_text": "What is the shortest realistic time from contract award to go-live, and what does it depend on?",
+      "type": "narrative",
+      "required": true,
+      "constraints": "",
+      "dup_group": null
+    },
+    {
+      "id": null,
+      "section": "E. Delivery and Support",
+      "question_text": "Subcontractors the Proponent intends to use, and the portion of the work each will perform, are to be listed.",
+      "type": "table",
+      "required": true,
+      "constraints": "",
+      "dup_group": null
+    },
+    {
+      "id": null,
+      "section": "F. Commercial",
+      "question_text": "Assumptions and exclusions that affect the prices quoted are to be stated.",
+      "type": "pricing",
+      "required": true,
+      "constraints": "",
+      "dup_group": null
+    },
+    {
+      "id": null,
+      "section": "F. Commercial",
+      "question_text": "Provide a fixed price for the Services using the Pricing Schedule in Appendix C (Canadian dollars, excluding GST).",
+      "type": "pricing",
+      "required": true,
+      "constraints": "Appendix C; Canadian dollars, excluding GST",
+      "dup_group": null
+    },
+    {
+      "id": null,
+      "section": "F. Commercial",
+      "question_text": "Hourly rates by role for change requests and additional services are required.",
+      "type": "pricing",
+      "required": true,
+      "constraints": "",
+      "dup_group": null
+    },
+    {
+      "id": null,
+      "section": "F. Commercial",
+      "question_text": "Describe any annual price escalation proposed for the term of the contract.",
+      "type": "pricing",
+      "required": true,
+      "constraints": "",
+      "dup_group": null
+    },
+    {
+      "id": null,
+      "section": "F. Commercial",
+      "question_text": "Attach a current Workers' Compensation Board clearance letter.",
+      "type": "upload",
+      "required": true,
+      "constraints": "",
+      "dup_group": null
+    },
+    {
+      "id": null,
+      "section": "F. Commercial",
+      "question_text": "Provide a copy of your most recent SOC 2 Type II report as an attachment to your Proposal.",
+      "type": "upload",
+      "required": true,
+      "constraints": "",
+      "dup_group": null
+    },
+    {
+      "id": null,
+      "section": "F. Commercial",
+      "question_text": "Provide three client references for comparable projects using the table in Appendix B.",
+      "type": "table",
+      "required": true,
+      "constraints": "three references, table in Appendix B",
+      "dup_group": "references"
+    },
+    {
+      "id": null,
+      "section": "F. Commercial",
+      "question_text": "The Proponent shall describe the training provided to administrators and end users, including delivery method, duration and materials.",
+      "type": "narrative",
+      "required": true,
+      "constraints": "",
+      "dup_group": "training"
+    },
+    {
+      "id": null,
+      "section": "F. Commercial",
+      "question_text": "The Proponent shall describe the security controls that protect patron data at rest and in transit.",
+      "type": "narrative",
+      "required": true,
+      "constraints": "",
+      "dup_group": "security_controls"
+    }
+  ]
+}
