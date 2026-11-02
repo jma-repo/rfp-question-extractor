@@ -34,6 +34,9 @@ class DocScore:
     id_ok: int = 0
     false_positives: list[str] = field(default_factory=list)
     misses: list[str] = field(default_factory=list)
+    wrong_labels: list[str] = field(default_factory=list)       # "gold type -> predicted type | text" for matched questions
+    review_reasons: dict[str, int] = field(default_factory=dict)
+    review_hits: int = 0                                         # review items that are real questions (gold) or not
 
     @property
     def precision(self) -> float:
@@ -80,11 +83,18 @@ def score_document(found: list[Finding], gold: list[dict]) -> DocScore:
     hits = set(gold_by_key) & set(accepted)
     score.tp, score.fp, score.fn = len(hits), len(set(accepted) - set(gold_by_key)), len(set(gold_by_key) - hits)
     score.tp_with_review = len(set(gold_by_key) & (set(accepted) | set(review)))
+    score.review_hits = len(set(gold_by_key) & set(review) - set(accepted))
+    for f in review.values():
+        score.review_reasons[f.reason or "(no reason)"] = score.review_reasons.get(f.reason or "(no reason)", 0) + 1
     for key in hits:
         g, f = gold_by_key[key], accepted[key].q
         score.type_ok += f.type == g["type"]
         score.required_ok += f.required == g["required"]
         score.id_ok += _id(f.id) == _id(g["id"])
+        if f.type != g["type"]:
+            score.wrong_labels.append(f"type {g['type']} -> {f.type} | {g['question_text'][:90]}")
+        if f.required != g["required"]:
+            score.wrong_labels.append(f"required {g['required']} -> {f.required} | {g['question_text'][:90]}")
     score.false_positives = [accepted[k].q.question_text for k in accepted if k not in gold_by_key]
     score.misses = [gold_by_key[k]["question_text"] for k in gold_by_key if k not in hits]
     predicted_texts = [f.q.question_text for f in accepted.values()]
@@ -93,7 +103,7 @@ def score_document(found: list[Finding], gold: list[dict]) -> DocScore:
 
 
 def evaluate_extractor(extractor, data_dir: Path, split: str = "test", max_chars: int = 2400, near: float = 0.75,
-                       only: list[str] | None = None, progress=None) -> dict[str, Any]:
+                       only: list[str] | None = None, progress=None, gate: bool = True) -> dict[str, Any]:
     """Run an extractor over the synthetic RFPs and score it against their answer keys."""
     from rfpx.ingest import read_document
     from rfpx.pipeline import process_document
@@ -106,7 +116,7 @@ def evaluate_extractor(extractor, data_dir: Path, split: str = "test", max_chars
         if (split != "all" and key["split"] != split) or (only and name not in only):
             continue
         doc = read_document(Path(data_dir) / "rfps" / name)
-        result = process_document(doc, extractor, max_chars, near)
+        result = process_document(doc, extractor, max_chars, near, gate)
         score = score_document(result.findings, key["questions"])
         score.file, score.format, score.split = name, doc.fmt, key["split"]
         scores.append(score)
@@ -118,6 +128,7 @@ def evaluate_extractor(extractor, data_dir: Path, split: str = "test", max_chars
     for entry in report["documents"]:
         entry["seconds"], entry["notes"] = seconds[entry["file"]], notes[entry["file"]]
     report["summary"]["seconds"] = round(sum(seconds.values()), 1)
+    report["extractor_stats"] = dict(getattr(extractor, "stats", {}))
     return report
 
 
@@ -129,6 +140,8 @@ def format_report(report: dict[str, Any]) -> str:
              f"type {s['type_accuracy']:.3f}  required {s['required_accuracy']:.3f}  id {s['id_accuracy']:.3f}"]
     for fmt, r in report["by_format"].items():
         lines.append(f"  {fmt:5s} precision {r['precision']:.3f}  recall {r['recall']:.3f}  (gold {r['gold']}, documents {r['documents']})")
+    for split, r in report.get("by_split", {}).items():
+        lines.append(f"  [{split}] precision {r['precision']:.3f}  recall {r['recall']:.3f}  F1 {r['f1']:.3f}  (gold {r['gold']}, documents {r['documents']})")
     return "\n".join(lines)
 
 
@@ -154,12 +167,21 @@ def _roll(scores: list[DocScore]) -> dict[str, Any]:
 
 def aggregate(scores: list[DocScore]) -> dict[str, Any]:
     formats = sorted({s.format for s in scores})
+    splits = sorted({s.split for s in scores if s.split})
+    reasons: dict[str, int] = {}
+    for s in scores:
+        for reason, count in s.review_reasons.items():
+            reasons[reason] = reasons.get(reason, 0) + count
+    summary = _roll(scores)
+    summary["review_real_questions"] = sum(s.review_hits for s in scores)
+    summary["review_reasons"] = dict(sorted(reasons.items(), key=lambda kv: -kv[1]))
     return {
-        "summary": _roll(scores),
+        "summary": summary,
         "by_format": {fmt: _roll([s for s in scores if s.format == fmt]) for fmt in formats},
+        "by_split": {split: _roll([s for s in scores if s.split == split]) for split in splits},
         "documents": [{
             "file": s.file, "format": s.format, "split": s.split, "gold": s.gold, "pred": s.pred, "tp": s.tp,
             "precision": round(s.precision, 4), "recall": round(s.recall, 4), "review": s.review, "near_misses": s.near_misses,
-            "false_positives": s.false_positives[:6], "misses": s.misses[:6],
+            "false_positives": s.false_positives[:6], "misses": s.misses[:6], "wrong_labels": s.wrong_labels[:8],
         } for s in scores],
     }

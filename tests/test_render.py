@@ -110,6 +110,24 @@ def test_layout_does_not_depend_on_the_data(template, tmp_path):
     assert used(a) <= used(b) | {"Normal"}
 
 
+def test_restyling_the_template_in_word_restyles_the_register(template, tmp_path):
+    """The promise in the README: change a style or a column width in the template and the next run follows."""
+    from docx.shared import Inches, Pt
+
+    edited = Document(str(template))
+    edited.styles["RFP Table Text"].font.size = Pt(12)
+    edited.styles["Heading 2"].font.name = "Georgia"
+    for row in edited.tables[1].rows:                       # the first question table: widen the Question column
+        row.cells[1].width = Inches(4.4)
+    edited.save(str(template))
+    out = tmp_path / "out.docx"
+    render_register(build_context([result("a.pdf", [f("Describe your support model.", "4.1")])], extractor="x"), template, out)
+    doc = Document(str(out))
+    assert doc.styles["RFP Table Text"].font.size == Pt(12) and doc.styles["Heading 2"].font.name == "Georgia"
+    question_table = next(t for t in doc.tables if len(t.columns) == 8)
+    assert question_table.rows[1].cells[1].width == Inches(4.4)
+
+
 def test_template_can_be_rebuilt_and_opened(tmp_path):
     path = tmp_path / "t.docx"
     build_template(path)

@@ -1,0 +1,171 @@
+{
+  "summary": {
+    "documents": 3,
+    "gold": 125,
+    "pred": 117,
+    "tp": 108,
+    "fp": 9,
+    "fn": 17,
+    "precision": 0.9231,
+    "recall": 0.864,
+    "f1": 0.8926,
+    "macro_precision": 0.9306,
+    "macro_recall": 0.8819,
+    "recall_with_review": 0.864,
+    "review_items": 24,
+    "near_misses": 0,
+    "type_accuracy": 0.8796,
+    "required_accuracy": 0.9537,
+    "id_accuracy": 1.0,
+    "seconds": 54.9
+  },
+  "by_format": {
+    "docx": {
+      "documents": 1,
+      "gold": 48,
+      "pred": 46,
+      "tp": 43,
+      "fp": 3,
+      "fn": 5,
+      "precision": 0.9348,
+      "recall": 0.8958,
+      "f1": 0.9149,
+      "macro_precision": 0.9348,
+      "macro_recall": 0.8958,
+      "recall_with_review": 0.8958,
+      "review_items": 6,
+      "near_misses": 0,
+      "type_accuracy": 0.7907,
+      "required_accuracy": 0.9302,
+      "id_accuracy": 1.0
+    },
+    "pdf": {
+      "documents": 1,
+      "gold": 48,
+      "pred": 42,
+      "tp": 36,
+      "fp": 6,
+      "fn": 12,
+      "precision": 0.8571,
+      "recall": 0.75,
+      "f1": 0.8,
+      "macro_precision": 0.8571,
+      "macro_recall": 0.75,
+      "recall_with_review": 0.75,
+      "review_items": 18,
+      "near_misses": 0,
+      "type_accuracy": 0.8889,
+      "required_accuracy": 0.9444,
+      "id_accuracy": 1.0
+    },
+    "xlsx": {
+      "documents": 1,
+      "gold": 29,
+      "pred": 29,
+      "tp": 29,
+      "fp": 0,
+      "fn": 0,
+      "precision": 1.0,
+      "recall": 1.0,
+      "f1": 1.0,
+      "macro_precision": 1.0,
+      "macro_recall": 1.0,
+      "recall_with_review": 1.0,
+      "review_items": 0,
+      "near_misses": 0,
+      "type_accuracy": 1.0,
+      "required_accuracy": 1.0,
+      "id_accuracy": 1.0
+    }
+  },
+  "documents": [
+    {
+      "file": "bow-river-fare-questionnaire.xlsx",
+      "format": "xlsx",
+      "split": "dev",
+      "gold": 29,
+      "pred": 29,
+      "tp": 29,
+      "precision": 1.0,
+      "recall": 1.0,
+      "review": 0,
+      "near_misses": 0,
+      "false_positives": [],
+      "misses": [],
+      "seconds": 10.87,
+      "notes": []
+    },
+    {
+      "file": "foothills-student-information-system.pdf",
+      "format": "pdf",
+      "split": "dev",
+      "gold": 48,
+      "pred": 42,
+      "tp": 36,
+      "precision": 0.8571,
+      "recall": 0.75,
+      "review": 18,
+      "near_misses": 0,
+      "false_positives": [
+        "This RFP does not commit the Division to award a contract.",
+        "One electronic copy of the Proposal is to be submitted in PDF format.",
+        "Note: responses to this section should not exceed 15 pages.",
+        "The following items are desirable. Responses to them will be scored but are not mandatory.",
+        "Proponents are requested to submit all questions about this RFP in writing.",
+        "Describe the training provided to administrators and end users, including delivery method, duration and materials."
+      ],
+      "misses": [
+        "The Proponent must state whether it has an office in Alberta (Yes/No).",
+        "The student information system must support single sign-on using SAML 2.0 or OpenID Connect (Yes/No).",
+        "Does the student information system produce report cards in the provincial format? (Yes/No)",
+        "Provide a high-level schedule showing the main phases and their durations.",
+        "Identify the tasks that need the participation of staff of the Division.",
+        "Describe how scope changes will be handled during implementation."
+      ],
+      "seconds": 23.47,
+      "notes": []
+    },
+    {
+      "file": "northfield-fleet-telematics.docx",
+      "format": "docx",
+      "split": "dev",
+      "gold": 48,
+      "pred": 46,
+      "tp": 43,
+      "precision": 0.9348,
+      "recall": 0.8958,
+      "review": 6,
+      "near_misses": 0,
+      "false_positives": [
+        "This RFP does not commit the City to award a contract.",
+        "Addenda will be posted on the portal, and Proponents should check the portal regularly for updates.",
+        "Mark each requirement Yes or No. A No against a mandatory requirement may result in disqualification."
+      ],
+      "misses": [
+        "Provide a high-level schedule showing the main phases and their durations.",
+        "Identify the tasks that need the participation of staff of the City.",
+        "Describe how scope changes will be handled during implementation.",
+        "Attach a sample status report from a comparable project.",
+        "The fleet telematics platform shall mask personal information in non-production environments."
+      ],
+      "seconds": 20.55,
+      "notes": []
+    }
+  ],
+  "extractor_stats": {
+    "calls": 13,
+    "retries": 0,
+    "fallback_chunks": 0,
+    "recheck_added": 0,
+    "schema_used": true
+  },
+  "settings": {
+    "extractor": "llm",
+    "label": "qwen2.5-3b-instruct (local model server)",
+    "split": "dev",
+    "max_chars": 2400,
+    "section_gate": true,
+    "model": "qwen2.5-3b-instruct",
+    "recheck": false
+  }
+}

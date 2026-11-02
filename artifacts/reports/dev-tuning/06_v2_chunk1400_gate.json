@@ -1,0 +1,162 @@
+{
+  "summary": {
+    "documents": 3,
+    "gold": 125,
+    "pred": 121,
+    "tp": 117,
+    "fp": 4,
+    "fn": 8,
+    "precision": 0.9669,
+    "recall": 0.936,
+    "f1": 0.9512,
+    "macro_precision": 0.9733,
+    "macro_recall": 0.9444,
+    "recall_with_review": 0.936,
+    "review_items": 16,
+    "near_misses": 0,
+    "type_accuracy": 0.906,
+    "required_accuracy": 0.9829,
+    "id_accuracy": 1.0,
+    "seconds": 54.7
+  },
+  "by_format": {
+    "docx": {
+      "documents": 1,
+      "gold": 48,
+      "pred": 50,
+      "tp": 46,
+      "fp": 4,
+      "fn": 2,
+      "precision": 0.92,
+      "recall": 0.9583,
+      "f1": 0.9388,
+      "macro_precision": 0.92,
+      "macro_recall": 0.9583,
+      "recall_with_review": 0.9583,
+      "review_items": 5,
+      "near_misses": 0,
+      "type_accuracy": 0.8913,
+      "required_accuracy": 1.0,
+      "id_accuracy": 1.0
+    },
+    "pdf": {
+      "documents": 1,
+      "gold": 48,
+      "pred": 42,
+      "tp": 42,
+      "fp": 0,
+      "fn": 6,
+      "precision": 1.0,
+      "recall": 0.875,
+      "f1": 0.9333,
+      "macro_precision": 1.0,
+      "macro_recall": 0.875,
+      "recall_with_review": 0.875,
+      "review_items": 11,
+      "near_misses": 0,
+      "type_accuracy": 0.881,
+      "required_accuracy": 0.9524,
+      "id_accuracy": 1.0
+    },
+    "xlsx": {
+      "documents": 1,
+      "gold": 29,
+      "pred": 29,
+      "tp": 29,
+      "fp": 0,
+      "fn": 0,
+      "precision": 1.0,
+      "recall": 1.0,
+      "f1": 1.0,
+      "macro_precision": 1.0,
+      "macro_recall": 1.0,
+      "recall_with_review": 1.0,
+      "review_items": 0,
+      "near_misses": 0,
+      "type_accuracy": 0.9655,
+      "required_accuracy": 1.0,
+      "id_accuracy": 1.0
+    }
+  },
+  "documents": [
+    {
+      "file": "bow-river-fare-questionnaire.xlsx",
+      "format": "xlsx",
+      "split": "dev",
+      "gold": 29,
+      "pred": 29,
+      "tp": 29,
+      "precision": 1.0,
+      "recall": 1.0,
+      "review": 0,
+      "near_misses": 0,
+      "false_positives": [],
+      "misses": [],
+      "seconds": 10.55,
+      "notes": []
+    },
+    {
+      "file": "foothills-student-information-system.pdf",
+      "format": "pdf",
+      "split": "dev",
+      "gold": 48,
+      "pred": 42,
+      "tp": 42,
+      "precision": 1.0,
+      "recall": 0.875,
+      "review": 11,
+      "near_misses": 0,
+      "false_positives": [],
+      "misses": [
+        "Provide a high-level schedule showing the main phases and their durations.",
+        "Identify the tasks that need the participation of staff of the Division.",
+        "Attach a sample status report from a comparable project.",
+        "The student information system should provide a mobile application for iOS and Android.",
+        "The student information system shall allow authorized users to export any report to Excel and PDF.",
+        "The student information system shall provide an administrator dashboard showing system health and usage."
+      ],
+      "seconds": 22.45,
+      "notes": []
+    },
+    {
+      "file": "northfield-fleet-telematics.docx",
+      "format": "docx",
+      "split": "dev",
+      "gold": 48,
+      "pred": 50,
+      "tp": 46,
+      "precision": 0.92,
+      "recall": 0.9583,
+      "review": 5,
+      "near_misses": 0,
+      "false_positives": [
+        "This RFP does not commit the City to award a contract.",
+        "Addenda will be posted on the portal, and Proponents should check the portal regularly for updates.",
+        "Proponents shall respond to every item in this section, in the order shown.",
+        "Mark each requirement Yes or No. A No against a mandatory requirement may result in disqualification."
+      ],
+      "misses": [
+        "The Proponent should attach sample maintenance alert reports generated from engine diagnostic codes.",
+        "Attach a sample status report from a comparable project."
+      ],
+      "seconds": 21.66,
+      "notes": []
+    }
+  ],
+  "extractor_stats": {
+    "calls": 22,
+    "retries": 0,
+    "fallback_chunks": 0,
+    "recheck_added": 0,
+    "schema_used": true
+  },
+  "settings": {
+    "extractor": "llm",
+    "label": "qwen2.5-3b-instruct (local model server)",
+    "split": "dev",
+    "max_chars": 1400,
+    "section_gate": true,
+    "model": "qwen2.5-3b-instruct",
+    "recheck": false
+  }
+}

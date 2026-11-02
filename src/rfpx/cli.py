@@ -17,13 +17,16 @@ def _extractor(s: Settings, args: argparse.Namespace):
 
         return RulesExtractor()
     from rfpx.llm import LocalLLM
-    from rfpx.llm_extract import LlmExtractor
+    from rfpx.llm_extract import HybridExtractor, LlmExtractor
 
     options = s.llm
     if getattr(args, "recheck", False):
         options["recheck"] = True
+    if getattr(args, "no_json_schema", False):
+        options["json_schema"] = "off"
     llm = LocalLLM(args.base_url or options["base_url"], model=args.model, timeout=float(options["timeout_s"]))
-    return LlmExtractor(llm, **{k: options[k] for k in ("temperature", "max_tokens", "retries", "recheck", "json_schema")})
+    model = LlmExtractor(llm, **{k: options[k] for k in ("temperature", "max_tokens", "retries", "recheck", "json_schema")})
+    return HybridExtractor(model) if args.extractor == "hybrid" else model
 
 
 def _run(s: Settings, args: argparse.Namespace) -> int:
@@ -36,7 +39,7 @@ def _run(s: Settings, args: argparse.Namespace) -> int:
         return 2
     extractor = _extractor(s, args)
     started = time.time()
-    results = run_directory(Path(args.input), extractor, args.max_chars or s.max_chars, s.near_duplicate)
+    results = run_directory(Path(args.input), extractor, args.max_chars or s.max_chars, s.near_duplicate, not args.no_section_gate)
     template = Path(args.template) if args.template else s.path("template")
     out = render_register(build_context(results, extractor.label), template, Path(args.output))
     questions = sum(f.status == "accepted" for r in results for f in r.findings)
@@ -57,10 +60,11 @@ def _eval(s: Settings, args: argparse.Namespace) -> int:
     extractor = _extractor(s, args)
     data = Path(args.data) if args.data else s.path("synthetic")
     report = evaluate_extractor(extractor, data, args.split, args.max_chars or s.max_chars, s.near_duplicate,
-                                only=args.only, progress=lambda m: print(m, flush=True))
+                                only=args.only, progress=lambda m: print(m, flush=True), gate=not args.no_section_gate)
     report["settings"] = {"extractor": extractor.name, "label": extractor.label, "split": args.split, "max_chars": args.max_chars or s.max_chars,
+                          "section_gate": not args.no_section_gate,
                           **({"model": getattr(extractor, "model_name", None), "recheck": getattr(extractor, "recheck", None)}
-                             if args.extractor == "llm" else {})}
+                             if args.extractor != "rules" else {})}
     print(format_report(report))
     if args.out:
         target = Path(args.out)
@@ -101,6 +105,9 @@ def _add_llm_options(p: argparse.ArgumentParser) -> None:
     p.add_argument("--model", help="chat model id (default: LLM_CHAT_MODEL, else qwen2.5-3b-instruct if loaded)")
     p.add_argument("--base-url", help="local model server (must be on this machine)")
     p.add_argument("--recheck", action="store_true", help="second pass per chunk: ask the model what it missed")
+    p.add_argument("--no-json-schema", action="store_true", help="do not send response_format; rely on the prompt and the retry")
+    p.add_argument("--no-section-gate", action="store_true",
+                   help="accept items found under Background / Definitions / Instructions headings instead of holding them for review")
 
 
 def main(argv: list[str] | None = None) -> int:
@@ -110,13 +117,13 @@ def main(argv: list[str] | None = None) -> int:
     run = sub.add_parser("run", help="read a folder (or one file) of RFPs and write the Word register")
     run.add_argument("input", help="folder with .docx, .pdf and .xlsx files, or a single file")
     run.add_argument("-o", "--output", default="out/register.docx")
-    run.add_argument("--extractor", choices=["rules", "llm"], default="rules")
+    run.add_argument("--extractor", choices=["rules", "llm", "hybrid"], default="rules")
     run.add_argument("--template", help="Word template (default: templates/question_register.docx)")
     run.add_argument("--max-chars", type=int, help="chunk size in characters")
     _add_llm_options(run)
 
     ev = sub.add_parser("eval", help="precision and recall against the answer keys of the synthetic RFPs")
-    ev.add_argument("--extractor", choices=["rules", "llm"], default="rules")
+    ev.add_argument("--extractor", choices=["rules", "llm", "hybrid"], default="rules")
     ev.add_argument("--split", choices=["dev", "test", "all"], default="test")
     ev.add_argument("--data", help="folder with rfps/ and gold/ (default: data/synthetic)")
     ev.add_argument("--only", nargs="*", help="file names to include")

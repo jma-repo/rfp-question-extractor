@@ -1,0 +1,442 @@
+{
+  "summary": {
+    "documents": 10,
+    "gold": 350,
+    "pred": 357,
+    "tp": 322,
+    "fp": 35,
+    "fn": 28,
+    "precision": 0.902,
+    "recall": 0.92,
+    "f1": 0.9109,
+    "macro_precision": 0.9035,
+    "macro_recall": 0.9286,
+    "recall_with_review": 0.92,
+    "review_items": 52,
+    "near_misses": 9,
+    "type_accuracy": 0.8137,
+    "required_accuracy": 0.9317,
+    "id_accuracy": 1.0,
+    "review_real_questions": 0,
+    "review_reasons": {
+      "text is not a verbatim piece of the source": 27,
+      "found under a heading that normally holds background or instructions, not questions": 22,
+      "text runs across more than one paragraph or table cell": 3
+    },
+    "seconds": 155.0
+  },
+  "by_format": {
+    "docx": {
+      "documents": 4,
+      "gold": 152,
+      "pred": 166,
+      "tp": 139,
+      "fp": 27,
+      "fn": 13,
+      "precision": 0.8373,
+      "recall": 0.9145,
+      "f1": 0.8742,
+      "macro_precision": 0.8228,
+      "macro_recall": 0.9135,
+      "recall_with_review": 0.9145,
+      "review_items": 30,
+      "near_misses": 5,
+      "type_accuracy": 0.8705,
+      "required_accuracy": 0.9209,
+      "id_accuracy": 1.0
+    },
+    "pdf": {
+      "documents": 3,
+      "gold": 111,
+      "pred": 103,
+      "tp": 96,
+      "fp": 7,
+      "fn": 15,
+      "precision": 0.932,
+      "recall": 0.8649,
+      "f1": 0.8972,
+      "macro_precision": 0.9257,
+      "macro_recall": 0.8773,
+      "recall_with_review": 0.8649,
+      "review_items": 22,
+      "near_misses": 4,
+      "type_accuracy": 0.8646,
+      "required_accuracy": 0.9479,
+      "id_accuracy": 1.0
+    },
+    "xlsx": {
+      "documents": 3,
+      "gold": 87,
+      "pred": 88,
+      "tp": 87,
+      "fp": 1,
+      "fn": 0,
+      "precision": 0.9886,
+      "recall": 1.0,
+      "f1": 0.9943,
+      "macro_precision": 0.9889,
+      "macro_recall": 1.0,
+      "recall_with_review": 1.0,
+      "review_items": 0,
+      "near_misses": 0,
+      "type_accuracy": 0.6667,
+      "required_accuracy": 0.931,
+      "id_accuracy": 1.0
+    }
+  },
+  "by_split": {
+    "dev": {
+      "documents": 3,
+      "gold": 125,
+      "pred": 122,
+      "tp": 117,
+      "fp": 5,
+      "fn": 8,
+      "precision": 0.959,
+      "recall": 0.936,
+      "f1": 0.9474,
+      "macro_precision": 0.9622,
+      "macro_recall": 0.9444,
+      "recall_with_review": 0.936,
+      "review_items": 16,
+      "near_misses": 0,
+      "type_accuracy": 0.9145,
+      "required_accuracy": 0.9829,
+      "id_accuracy": 1.0
+    },
+    "test": {
+      "documents": 7,
+      "gold": 225,
+      "pred": 235,
+      "tp": 205,
+      "fp": 30,
+      "fn": 20,
+      "precision": 0.8723,
+      "recall": 0.9111,
+      "f1": 0.8913,
+      "macro_precision": 0.8783,
+      "macro_recall": 0.9218,
+      "recall_with_review": 0.9111,
+      "review_items": 36,
+      "near_misses": 9,
+      "type_accuracy": 0.7561,
+      "required_accuracy": 0.9024,
+      "id_accuracy": 1.0
+    }
+  },
+  "documents": [
+    {
+      "file": "bow-river-fare-questionnaire.xlsx",
+      "format": "xlsx",
+      "split": "dev",
+      "gold": 29,
+      "pred": 30,
+      "tp": 29,
+      "precision": 0.9667,
+      "recall": 1.0,
+      "review": 0,
+      "near_misses": 0,
+      "false_positives": [
+        "The Proponent shall provide written notice before the Closing Time if it intends to withdraw a Proposal."
+      ],
+      "misses": [],
+      "wrong_labels": [],
+      "seconds": 11.09,
+      "notes": []
+    },
+    {
+      "file": "capital-library-digital-content.pdf",
+      "format": "pdf",
+      "split": "test",
+      "gold": 37,
+      "pred": 33,
+      "tp": 28,
+      "precision": 0.8485,
+      "recall": 0.7568,
+      "review": 6,
+      "near_misses": 4,
+      "false_positives": [
+        "Does your organization have an office in Alberta?",
+        "Confirm that support is available on statutory holidays.",
+        "Describe how the platform integrates with the library card database of the Consortium.",
+        "Confirm that titles from Canadian publishers can be loaded and shown as a collection.",
+        "In its response to this section, the Proponent shall address each of the following:"
+      ],
+      "misses": [
+        "Disclose any litigation or claims against your organization in the last five years that relate to services of this kind.",
+        "Any actual or potential conflict of interest relating to this RFP must be disclosed.",
+        "Provide a profile of your organization, including years in business, number of employees and head office location.",
+        "Does your organization have an office in Alberta? (Yes/No)",
+        "Please describe how the digital content lending platform scales to support peak loads and growth in the number of users.",
+        "Does the digital content lending platform keep an audit log of user activity that administrators cannot alter? (Yes/No)"
+      ],
+      "wrong_labels": [
+        "type table -> upload | Provide three client references for comparable projects using the table in Appendix B.",
+        "required True -> False | Provide three client references for comparable projects using the table in Appendix B.",
+        "type pricing -> narrative | Assumptions and exclusions that affect the prices quoted are to be stated.",
+        "required True -> False | Assumptions and exclusions that affect the prices quoted are to be stated.",
+        "type table -> narrative | Subcontractors the Proponent intends to use, and the portion of the work each will perform",
+        "type pricing -> narrative | Describe any annual price escalation proposed for the term of the contract.",
+        "required True -> False | Describe any annual price escalation proposed for the term of the contract."
+      ],
+      "seconds": 15.7,
+      "notes": []
+    },
+    {
+      "file": "foothills-student-information-system.pdf",
+      "format": "pdf",
+      "split": "dev",
+      "gold": 48,
+      "pred": 42,
+      "tp": 42,
+      "precision": 1.0,
+      "recall": 0.875,
+      "review": 11,
+      "near_misses": 0,
+      "false_positives": [],
+      "misses": [
+        "Provide a high-level schedule showing the main phases and their durations.",
+        "Identify the tasks that need the participation of staff of the Division.",
+        "Attach a sample status report from a comparable project.",
+        "The student information system should provide a mobile application for iOS and Android.",
+        "The student information system shall allow authorized users to export any report to Excel and PDF.",
+        "The student information system shall provide an administrator dashboard showing system health and usage."
+      ],
+      "wrong_labels": [
+        "type pricing -> narrative | Any annual price escalation proposed for the term of the contract is to be described.",
+        "required True -> False | Any annual price escalation proposed for the term of the contract is to be described.",
+        "type table -> upload | The Proponent should provide a work plan in tabular form showing milestones, deliverables,",
+        "type pricing -> narrative | Pricing is to be submitted using the Pricing Schedule in Appendix C, in Canadian dollars a",
+        "type table -> narrative | List all subcontractors you intend to use and the portion of the work each will perform.",
+        "type pricing -> narrative | The Proponent shall state every assumption and exclusion that affects the prices quoted.",
+        "required True -> False | How is student records encrypted at rest and in transit, and who holds the encryption keys"
+      ],
+      "seconds": 22.71,
+      "notes": []
+    },
+    {
+      "file": "lakeshore-billing-modernization.docx",
+      "format": "docx",
+      "split": "test",
+      "gold": 26,
+      "pred": 33,
+      "tp": 26,
+      "precision": 0.7879,
+      "recall": 1.0,
+      "review": 11,
+      "near_misses": 0,
+      "false_positives": [
+        "Provide the following information in narrative form. Responses to this section should not exceed 15 pages.",
+        "Responses to this section should not exceed 15 pages.",
+        "A Proposal should not include marketing material that does not respond to an item in this RFP.",
+        "Data migration",
+        "Training (per day)",
+        "Annual support and maintenance"
+      ],
+      "misses": [],
+      "wrong_labels": [
+        "type pricing -> narrative | The Proponent must state every assumption and exclusion that affects the prices quoted."
+      ],
+      "seconds": 16.4,
+      "notes": []
+    },
+    {
+      "file": "mountain-view-records.docx",
+      "format": "docx",
+      "split": "test",
+      "gold": 30,
+      "pred": 37,
+      "tp": 24,
+      "precision": 0.6486,
+      "recall": 0.8,
+      "review": 1,
+      "near_misses": 5,
+      "false_positives": [
+        "About this Request",
+        "Company and Experience",
+        "Resumes for all key team members, not exceeding two pages per person, are to be attached.",
+        "Does the electronic records management system support legal holds that suspend disposal of selected records? (Yes/No)",
+        "How is County records encrypted at rest and in transit, and who holds the encryption keys?",
+        "Please confirm that your prices will be held for 120 days after the Closing Time."
+      ],
+      "misses": [
+        "(Optional) Resumes for all key team members, not exceeding two pages per person, are to be attached.",
+        "(Optional) Does the electronic records management system support legal holds that suspend disposal of selected records? (Yes/No)",
+        "(Optional) How is County records encrypted at rest and in transit, and who holds the encryption keys?",
+        "Please confirm that your prices will be held for 120 days after the Closing Time. (Yes/No)",
+        "(Optional) Any annual price escalation proposed for the term of the contract is to be described.",
+        "The most recent SOC 2 Type II report is to be attached."
+      ],
+      "wrong_labels": [
+        "required True -> False | The Proponent shall describe its support model, including hours of coverage, escalation pa",
+        "required True -> False | Will any County records be stored, processed or accessed outside Canada? (Yes/No)",
+        "type table -> upload | The Proponent shall provide three client references for comparable projects using the tabl",
+        "required True -> False | Does the electronic records management system support single sign-on using SAML 2.0 or Ope",
+        "required True -> False | The product roadmap for the next 24 months is to be attached.",
+        "type table -> upload | Three client references for comparable projects are to be provided using the table in Appe",
+        "required True -> False | Three client references for comparable projects are to be provided using the table in Appe"
+      ],
+      "seconds": 12.41,
+      "notes": []
+    },
+    {
+      "file": "northern-lights-security-assessment.xlsx",
+      "format": "xlsx",
+      "split": "test",
+      "gold": 28,
+      "pred": 28,
+      "tp": 28,
+      "precision": 1.0,
+      "recall": 1.0,
+      "review": 0,
+      "near_misses": 0,
+      "false_positives": [],
+      "misses": [],
+      "wrong_labels": [
+        "type yes_no -> narrative | Do you have a designated privacy officer?",
+        "type yes_no -> narrative | Is customer data ever used for purposes other than providing the service?",
+        "type yes_no -> narrative | Do you assess the security of subcontractors that handle customer data?",
+        "type yes_no -> narrative | Is multi-factor authentication enforced for every administrator account?",
+        "type yes_no -> narrative | Do you enforce the principle of least privilege for production systems?",
+        "type table -> narrative | Where will customer data be stored and processed? List each country.",
+        "type table -> upload | List every subcontractor that will have access to customer data."
+      ],
+      "seconds": 9.07,
+      "notes": []
+    },
+    {
+      "file": "northfield-fleet-telematics.docx",
+      "format": "docx",
+      "split": "dev",
+      "gold": 48,
+      "pred": 50,
+      "tp": 46,
+      "precision": 0.92,
+      "recall": 0.9583,
+      "review": 5,
+      "near_misses": 0,
+      "false_positives": [
+        "This RFP does not commit the City to award a contract.",
+        "Addenda will be posted on the portal, and Proponents should check the portal regularly for updates.",
+        "Proponents shall respond to every item in this section, in the order shown.",
+        "Mark each requirement Yes or No. A No against a mandatory requirement may result in disqualification."
+      ],
+      "misses": [
+        "The Proponent should attach sample maintenance alert reports generated from engine diagnostic codes.",
+        "Attach a sample status report from a comparable project."
+      ],
+      "wrong_labels": [
+        "type table -> upload | The Proponent shall provide three client references for comparable projects using the tabl",
+        "type pricing -> narrative | The Proponent must provide hourly rates by role for change requests and additional service",
+        "type table -> narrative | Provide a high-level schedule showing the main phases and their durations.",
+        "type pricing -> narrative | The Proponent shall state every assumption and exclusion that affects the prices quoted.",
+        "type table -> upload | Three client references for comparable projects are to be provided using the table in Appe"
+      ],
+      "seconds": 21.8,
+      "notes": []
+    },
+    {
+      "file": "prairie-health-scheduling.docx",
+      "format": "docx",
+      "split": "test",
+      "gold": 48,
+      "pred": 46,
+      "tp": 43,
+      "precision": 0.9348,
+      "recall": 0.8958,
+      "review": 13,
+      "near_misses": 0,
+      "false_positives": [
+        "Proposals must include the RFP number and the name of the Proponent on the cover page.",
+        "The Proponent shall provide written notice before the Closing Time if it intends to withdraw a Proposal.",
+        "Mark each requirement Yes or No. A No against a mandatory requirement may result in disqualification."
+      ],
+      "misses": [
+        "Please describe how you comply with the Freedom of Information and Protection of Privacy Act (Alberta) and any other privacy legislation that applies to patient information.",
+        "Describe how administrative access to production systems is controlled and logged.",
+        "Describe how security events are monitored and who responds outside business hours.",
+        "Attach a sample status report from a comparable project.",
+        "The patient scheduling and reminder system shall provide bulk import of records from CSV files, listing validation errors by row."
+      ],
+      "wrong_labels": [
+        "type yes_no -> narrative | The patient scheduling and reminder system should allow business users to configure workfl",
+        "type yes_no -> narrative | The patient scheduling and reminder system shall retain deleted records for 30 days before",
+        "type table -> upload | Provide three client references for comparable projects using the table in Appendix B.",
+        "required False -> True | The Proponent should describe the training provided to administrators and end users, inclu",
+        "type pricing -> table | Complete the Pricing Schedule in Appendix C, showing all prices in Canadian dollars and ex",
+        "required True -> False | Attach a sample Privacy Impact Assessment prepared for a comparable client.",
+        "required True -> False | Provide a high-level schedule showing the main phases and their durations.",
+        "required True -> False | Identify the tasks that need the participation of staff of the Authority."
+      ],
+      "seconds": 22.68,
+      "notes": []
+    },
+    {
+      "file": "tri-valley-housing-requirements.xlsx",
+      "format": "xlsx",
+      "split": "test",
+      "gold": 30,
+      "pred": 30,
+      "tp": 30,
+      "precision": 1.0,
+      "recall": 1.0,
+      "review": 0,
+      "near_misses": 0,
+      "false_positives": [],
+      "misses": [],
+      "wrong_labels": [
+        "type yes_no -> narrative | The property and tenancy management system shall record every create, update and delete ac",
+        "type yes_no -> narrative | The property and tenancy management system shall retain deleted records for 30 days before",
+        "required True -> False | Describe how rent-geared-to-income amounts are calculated and recalculated when household ",
+        "required True -> False | Does the property and tenancy management system track maintenance work orders from request",
+        "type pricing -> narrative | State every assumption and exclusion that affects the prices quoted.",
+        "type yes_no -> narrative | The property and tenancy management system shall support at least 500 named users at the s",
+        "type yes_no -> narrative | The property and tenancy management system shall provide an administrator dashboard showin",
+        "type yes_no -> narrative | The property and tenancy management system shall support full-text search across all recor"
+      ],
+      "seconds": 10.91,
+      "notes": []
+    },
+    {
+      "file": "westland-cloud-hosting.pdf",
+      "format": "pdf",
+      "split": "test",
+      "gold": 26,
+      "pred": 28,
+      "tp": 26,
+      "precision": 0.9286,
+      "recall": 1.0,
+      "review": 5,
+      "near_misses": 0,
+      "false_positives": [
+        "Provide the following information in narrative form. Responses to this section should not exceed 15 pages.",
+        "Please note that Proposals which do not follow the format in this RFP may be rejected."
+      ],
+      "misses": [],
+      "wrong_labels": [
+        "type yes_no -> narrative | The managed cloud hosting service should support electronic signatures that are legally bi",
+        "type pricing -> narrative | The Proponent must state every assumption and exclusion that affects the prices quoted.",
+        "type yes_no -> narrative | The managed cloud hosting service shall provide bulk import of records from CSV files, lis",
+        "type yes_no -> narrative | The managed cloud hosting service shall validate Canadian postal codes and street addresse"
+      ],
+      "seconds": 12.26,
+      "notes": []
+    }
+  ],
+  "extractor_stats": {
+    "calls": 56,
+    "retries": 0,
+    "fallback_chunks": 0,
+    "recheck_added": 0,
+    "schema_used": true
+  },
+  "settings": {
+    "extractor": "llm",
+    "label": "qwen2.5-3b-instruct (local model server)",
+    "split": "all",
+    "max_chars": 1400,
+    "section_gate": true,
+    "model": "qwen2.5-3b-instruct",
+    "recheck": false
+  }
+}

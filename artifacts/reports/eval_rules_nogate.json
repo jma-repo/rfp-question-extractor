@@ -1,0 +1,358 @@
+{
+  "summary": {
+    "documents": 10,
+    "gold": 350,
+    "pred": 322,
+    "tp": 312,
+    "fp": 10,
+    "fn": 38,
+    "precision": 0.9689,
+    "recall": 0.8914,
+    "f1": 0.9285,
+    "macro_precision": 0.9586,
+    "macro_recall": 0.8809,
+    "recall_with_review": 0.8914,
+    "review_items": 0,
+    "near_misses": 0,
+    "type_accuracy": 0.9872,
+    "required_accuracy": 1.0,
+    "id_accuracy": 1.0,
+    "seconds": 0.1
+  },
+  "by_format": {
+    "docx": {
+      "documents": 4,
+      "gold": 152,
+      "pred": 143,
+      "tp": 138,
+      "fp": 5,
+      "fn": 14,
+      "precision": 0.965,
+      "recall": 0.9079,
+      "f1": 0.9356,
+      "macro_precision": 0.9655,
+      "macro_recall": 0.9083,
+      "recall_with_review": 0.9079,
+      "review_items": 0,
+      "near_misses": 0,
+      "type_accuracy": 0.9783,
+      "required_accuracy": 1.0,
+      "id_accuracy": 1.0
+    },
+    "pdf": {
+      "documents": 3,
+      "gold": 111,
+      "pred": 90,
+      "tp": 87,
+      "fp": 3,
+      "fn": 24,
+      "precision": 0.9667,
+      "recall": 0.7838,
+      "f1": 0.8657,
+      "macro_precision": 0.9296,
+      "macro_recall": 0.7252,
+      "recall_with_review": 0.7838,
+      "review_items": 0,
+      "near_misses": 0,
+      "type_accuracy": 0.9885,
+      "required_accuracy": 1.0,
+      "id_accuracy": 1.0
+    },
+    "xlsx": {
+      "documents": 3,
+      "gold": 87,
+      "pred": 89,
+      "tp": 87,
+      "fp": 2,
+      "fn": 0,
+      "precision": 0.9775,
+      "recall": 1.0,
+      "f1": 0.9886,
+      "macro_precision": 0.9785,
+      "macro_recall": 1.0,
+      "recall_with_review": 1.0,
+      "review_items": 0,
+      "near_misses": 0,
+      "type_accuracy": 1.0,
+      "required_accuracy": 1.0,
+      "id_accuracy": 1.0
+    }
+  },
+  "by_split": {
+    "dev": {
+      "documents": 3,
+      "gold": 125,
+      "pred": 120,
+      "tp": 116,
+      "fp": 4,
+      "fn": 9,
+      "precision": 0.9667,
+      "recall": 0.928,
+      "f1": 0.947,
+      "macro_precision": 0.9633,
+      "macro_recall": 0.9375,
+      "recall_with_review": 0.928,
+      "review_items": 0,
+      "near_misses": 0,
+      "type_accuracy": 0.9828,
+      "required_accuracy": 1.0,
+      "id_accuracy": 1.0
+    },
+    "test": {
+      "documents": 7,
+      "gold": 225,
+      "pred": 202,
+      "tp": 196,
+      "fp": 6,
+      "fn": 29,
+      "precision": 0.9703,
+      "recall": 0.8711,
+      "f1": 0.918,
+      "macro_precision": 0.9566,
+      "macro_recall": 0.8566,
+      "recall_with_review": 0.8711,
+      "review_items": 0,
+      "near_misses": 0,
+      "type_accuracy": 0.9898,
+      "required_accuracy": 1.0,
+      "id_accuracy": 1.0
+    }
+  },
+  "documents": [
+    {
+      "file": "bow-river-fare-questionnaire.xlsx",
+      "format": "xlsx",
+      "split": "dev",
+      "gold": 29,
+      "pred": 31,
+      "tp": 29,
+      "precision": 0.9355,
+      "recall": 1.0,
+      "review": 0,
+      "near_misses": 0,
+      "false_positives": [
+        "The Proponent shall provide written notice before the Closing Time if it intends to withdraw a Proposal.",
+        "Proponents are requested to submit all questions about this RFP in writing."
+      ],
+      "misses": [],
+      "wrong_labels": [],
+      "seconds": 0.01,
+      "notes": []
+    },
+    {
+      "file": "capital-library-digital-content.pdf",
+      "format": "pdf",
+      "split": "test",
+      "gold": 37,
+      "pred": 34,
+      "tp": 33,
+      "precision": 0.9706,
+      "recall": 0.8919,
+      "review": 0,
+      "near_misses": 0,
+      "false_positives": [
+        "Proponents shall submit each attachment as a separate PDF file named after the item number."
+      ],
+      "misses": [
+        "Any actual or potential conflict of interest relating to this RFP must be disclosed.",
+        "Subcontractors the Proponent intends to use, and the portion of the work each will perform, are to be listed.",
+        "Assumptions and exclusions that affect the prices quoted are to be stated.",
+        "Hourly rates by role for change requests and additional services are required."
+      ],
+      "wrong_labels": [],
+      "seconds": 0.02,
+      "notes": []
+    },
+    {
+      "file": "foothills-student-information-system.pdf",
+      "format": "pdf",
+      "split": "dev",
+      "gold": 48,
+      "pred": 45,
+      "tp": 45,
+      "precision": 1.0,
+      "recall": 0.9375,
+      "review": 0,
+      "near_misses": 0,
+      "false_positives": [],
+      "misses": [
+        "Hourly rates by role for change requests and additional services are required.",
+        "Pricing is to be submitted using the Pricing Schedule in Appendix C, in Canadian dollars and excluding GST.",
+        "Any annual price escalation proposed for the term of the contract is to be described."
+      ],
+      "wrong_labels": [
+        "type table -> narrative | Provide a high-level schedule showing the main phases and their durations."
+      ],
+      "seconds": 0.02,
+      "notes": []
+    },
+    {
+      "file": "lakeshore-billing-modernization.docx",
+      "format": "docx",
+      "split": "test",
+      "gold": 26,
+      "pred": 28,
+      "tp": 26,
+      "precision": 0.9286,
+      "recall": 1.0,
+      "review": 0,
+      "near_misses": 0,
+      "false_positives": [
+        "Complete the Complies column for every requirement. Mandatory requirements must be met at go-live.",
+        "Provide the following information in narrative form. Responses to this section should not exceed 15 pages."
+      ],
+      "misses": [],
+      "wrong_labels": [
+        "type narrative -> pricing | The Proponent must describe how rate changes are configured and applied to bills that span"
+      ],
+      "seconds": 0.01,
+      "notes": []
+    },
+    {
+      "file": "mountain-view-records.docx",
+      "format": "docx",
+      "split": "test",
+      "gold": 30,
+      "pred": 24,
+      "tp": 24,
+      "precision": 1.0,
+      "recall": 0.8,
+      "review": 0,
+      "near_misses": 0,
+      "false_positives": [],
+      "misses": [
+        "(Optional) Resumes for all key team members, not exceeding two pages per person, are to be attached.",
+        "Three client references for comparable projects are to be provided using the table in Appendix B.",
+        "The proposed project team structure and the role of each team member are to be described.",
+        "The product roadmap for the next 24 months is to be attached.",
+        "(Optional) Any annual price escalation proposed for the term of the contract is to be described.",
+        "The most recent SOC 2 Type II report is to be attached."
+      ],
+      "wrong_labels": [],
+      "seconds": 0.01,
+      "notes": []
+    },
+    {
+      "file": "northern-lights-security-assessment.xlsx",
+      "format": "xlsx",
+      "split": "test",
+      "gold": 28,
+      "pred": 28,
+      "tp": 28,
+      "precision": 1.0,
+      "recall": 1.0,
+      "review": 0,
+      "near_misses": 0,
+      "false_positives": [],
+      "misses": [],
+      "wrong_labels": [],
+      "seconds": 0.01,
+      "notes": []
+    },
+    {
+      "file": "northfield-fleet-telematics.docx",
+      "format": "docx",
+      "split": "dev",
+      "gold": 48,
+      "pred": 44,
+      "tp": 42,
+      "precision": 0.9545,
+      "recall": 0.875,
+      "review": 0,
+      "near_misses": 0,
+      "false_positives": [
+        "Proponents shall submit each attachment as a separate PDF file named after the item number.",
+        "The Proponent shall provide written notice before the Closing Time if it intends to withdraw a Proposal."
+      ],
+      "misses": [
+        "Any actual or potential conflict of interest relating to this RFP must be disclosed.",
+        "Three client references for comparable projects are to be provided using the table in Appendix B.",
+        "(Optional) Details of the training provided to administrators and end users, including delivery method, duration and materials, are to be included.",
+        "A current Workers' Compensation Board clearance letter must be provided with the Proposal.",
+        "The most recent SOC 2 Type II report is to be attached.",
+        "Pricing is to be submitted using the Pricing Schedule in Appendix C, in Canadian dollars and excluding GST."
+      ],
+      "wrong_labels": [
+        "type table -> narrative | Provide a high-level schedule showing the main phases and their durations."
+      ],
+      "seconds": 0.02,
+      "notes": []
+    },
+    {
+      "file": "prairie-health-scheduling.docx",
+      "format": "docx",
+      "split": "test",
+      "gold": 48,
+      "pred": 47,
+      "tp": 46,
+      "precision": 0.9787,
+      "recall": 0.9583,
+      "review": 0,
+      "near_misses": 0,
+      "false_positives": [
+        "The Proponent shall provide written notice before the Closing Time if it intends to withdraw a Proposal."
+      ],
+      "misses": [
+        "The warranty provided, and what it excludes, is to be described.",
+        "(Optional) Details of the training provided to administrators and end users, including delivery method, duration and materials, are to be included."
+      ],
+      "wrong_labels": [
+        "type table -> narrative | Provide a high-level schedule showing the main phases and their durations."
+      ],
+      "seconds": 0.03,
+      "notes": []
+    },
+    {
+      "file": "tri-valley-housing-requirements.xlsx",
+      "format": "xlsx",
+      "split": "test",
+      "gold": 30,
+      "pred": 30,
+      "tp": 30,
+      "precision": 1.0,
+      "recall": 1.0,
+      "review": 0,
+      "near_misses": 0,
+      "false_positives": [],
+      "misses": [],
+      "wrong_labels": [],
+      "seconds": 0.01,
+      "notes": []
+    },
+    {
+      "file": "westland-cloud-hosting.pdf",
+      "format": "pdf",
+      "split": "test",
+      "gold": 26,
+      "pred": 11,
+      "tp": 9,
+      "precision": 0.8182,
+      "recall": 0.3462,
+      "review": 0,
+      "near_misses": 0,
+      "false_positives": [
+        "Complete the Complies column for every requirement. Mandatory requirements must be met at go-live.",
+        "Provide the following information in narrative form. Responses to this section should not exceed 15 pages."
+      ],
+      "misses": [
+        "The managed cloud hosting service should provision users automatically from Microsoft Entra ID.",
+        "The managed cloud hosting service shall support retention rules that can be set by record type.",
+        "The managed cloud hosting service should provide a mobile application for iOS and Android.",
+        "The managed cloud hosting service should allow business users to configure workflow steps without vendor assistance.",
+        "The managed cloud hosting service shall support role-based access control with at least five configurable roles.",
+        "The managed cloud hosting service shall support single sign-on with the identity provider used by the Government."
+      ],
+      "wrong_labels": [],
+      "seconds": 0.0,
+      "notes": []
+    }
+  ],
+  "extractor_stats": {},
+  "settings": {
+    "extractor": "rules",
+    "label": "Rules baseline (regular expressions, no model)",
+    "split": "all",
+    "max_chars": 1400,
+    "section_gate": false
+  }
+}

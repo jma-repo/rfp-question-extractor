@@ -1,7 +1,7 @@
 # Settings shared by `rfpx run` and `rfpx eval`. Command-line flags override them.
 
 chunk:
-  max_chars: 2400            # about 600 tokens of RFP text per model call; short chunks keep a 3B model accurate
+  max_chars: 1400            # about 350 tokens of RFP text per model call; on the dev split 1,400 beat 2,400 for a 3B model (F1 0.95 vs 0.89)
 
 dedupe:
   near_duplicate: 0.75       # token overlap above which a reworded repeat is flagged (never merged)

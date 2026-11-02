@@ -2,7 +2,7 @@ from rfpx.chunking import chunk_document
 from rfpx.dedupe import merge_duplicates
 from rfpx.ingest import Block, Document, read_document
 from rfpx.models import Finding, Question
-from rfpx.validate import check_question, strip_leading_number
+from rfpx.validate import check_question, gate_sections, strip_leading_number
 
 
 def make_chunk(*blocks: Block):
@@ -88,6 +88,18 @@ def test_different_questions_on_nearby_topics_are_not_flagged():
 def test_items_in_review_are_never_merged_or_dropped():
     out = merge_duplicates([fnd("Describe your support model.", "p.1 L1"), fnd("Describe your support model.", "p.2 L1", status="review", reason="x")])
     assert len(out) == 2 and out[0].also == []
+
+
+def test_items_under_background_and_instruction_headings_go_to_review_not_to_the_register():
+    inside = fnd("The successful Proponent will be expected to begin work within 30 days.")
+    inside.q.section = "1.1 Background"
+    ok = fnd("Describe your support model.")
+    ok.q.section = "4.4 Implementation and Support"
+    held = fnd("Proposals shall be submitted by email.", status="review", reason="x")
+    held.q.section = "2.1 Instructions to Proponents"
+    out = gate_sections([inside, ok, held])
+    assert [f.status for f in out] == ["review", "accepted", "review"]
+    assert "background or instructions" in out[0].reason and out[2].reason == "x"
 
 
 def test_rules_findings_on_a_real_file_round_trip_through_verification(rfp_files):

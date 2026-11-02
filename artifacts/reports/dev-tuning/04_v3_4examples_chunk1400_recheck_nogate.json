@@ -1,0 +1,171 @@
+{
+  "summary": {
+    "documents": 3,
+    "gold": 125,
+    "pred": 129,
+    "tp": 109,
+    "fp": 20,
+    "fn": 16,
+    "precision": 0.845,
+    "recall": 0.872,
+    "f1": 0.8583,
+    "macro_precision": 0.8715,
+    "macro_recall": 0.8752,
+    "recall_with_review": 0.872,
+    "review_items": 6,
+    "near_misses": 6,
+    "type_accuracy": 0.8807,
+    "required_accuracy": 0.9725,
+    "id_accuracy": 1.0,
+    "seconds": 64.0
+  },
+  "by_format": {
+    "docx": {
+      "documents": 1,
+      "gold": 48,
+      "pred": 54,
+      "tp": 42,
+      "fp": 12,
+      "fn": 6,
+      "precision": 0.7778,
+      "recall": 0.875,
+      "f1": 0.8235,
+      "macro_precision": 0.7778,
+      "macro_recall": 0.875,
+      "recall_with_review": 0.875,
+      "review_items": 1,
+      "near_misses": 5,
+      "type_accuracy": 0.8571,
+      "required_accuracy": 1.0,
+      "id_accuracy": 1.0
+    },
+    "pdf": {
+      "documents": 1,
+      "gold": 48,
+      "pred": 49,
+      "tp": 41,
+      "fp": 8,
+      "fn": 7,
+      "precision": 0.8367,
+      "recall": 0.8542,
+      "f1": 0.8454,
+      "macro_precision": 0.8367,
+      "macro_recall": 0.8542,
+      "recall_with_review": 0.8542,
+      "review_items": 2,
+      "near_misses": 1,
+      "type_accuracy": 0.8293,
+      "required_accuracy": 0.9268,
+      "id_accuracy": 1.0
+    },
+    "xlsx": {
+      "documents": 1,
+      "gold": 29,
+      "pred": 26,
+      "tp": 26,
+      "fp": 0,
+      "fn": 3,
+      "precision": 1.0,
+      "recall": 0.8966,
+      "f1": 0.9455,
+      "macro_precision": 1.0,
+      "macro_recall": 0.8966,
+      "recall_with_review": 0.8966,
+      "review_items": 3,
+      "near_misses": 0,
+      "type_accuracy": 1.0,
+      "required_accuracy": 1.0,
+      "id_accuracy": 1.0
+    }
+  },
+  "documents": [
+    {
+      "file": "bow-river-fare-questionnaire.xlsx",
+      "format": "xlsx",
+      "split": "dev",
+      "gold": 29,
+      "pred": 26,
+      "tp": 26,
+      "precision": 1.0,
+      "recall": 0.8966,
+      "review": 3,
+      "near_misses": 0,
+      "false_positives": [],
+      "misses": [
+        "Does the account-based fare payment platform keep an audit log of user activity that administrators cannot alter? (Yes/No)",
+        "Does the account-based fare payment platform support single sign-on using SAML 2.0 or OpenID Connect? (Yes/No)",
+        "Confirm that open-loop contactless EMV payments are accepted at all validators. (Yes/No)"
+      ],
+      "seconds": 14.11,
+      "notes": []
+    },
+    {
+      "file": "foothills-student-information-system.pdf",
+      "format": "pdf",
+      "split": "dev",
+      "gold": 48,
+      "pred": 49,
+      "tp": 41,
+      "precision": 0.8367,
+      "recall": 0.8542,
+      "review": 2,
+      "near_misses": 1,
+      "false_positives": [
+        "The successful Proponent will be expected to begin work within 30 days of contract award. A phased implementation is preferred.",
+        "This RFP was prepared for testing document-processing software. It is not a real solicitation and no contract will be awarded.",
+        "The purpose of this RFP is to select a Contractor to supply, implement and support a student information system.",
+        "\"Proponent\" means an organization that submits a Proposal in response to this RFP.",
+        "\"Contractor\" means the Proponent with which the Division enters into a contract.",
+        "\"Services\" means the services, software and deliverables described in this RFP."
+      ],
+      "misses": [
+        "(Desirable) Describe the parent portal, including how guardians are verified before they can see student records.",
+        "Provide a high-level schedule showing the main phases and their durations.",
+        "Identify the tasks that need the participation of staff of the Division.",
+        "Attach a sample status report from a comparable project.",
+        "The student information system should provide a mobile application for iOS and Android.",
+        "The student information system shall allow authorized users to export any report to Excel and PDF."
+      ],
+      "seconds": 24.73,
+      "notes": []
+    },
+    {
+      "file": "northfield-fleet-telematics.docx",
+      "format": "docx",
+      "split": "dev",
+      "gold": 48,
+      "pred": 54,
+      "tp": 42,
+      "precision": 0.7778,
+      "recall": 0.875,
+      "review": 1,
+      "near_misses": 5,
+      "false_positives": [
+        "Value-Added Services (Desirable)",
+        "Pricing Requirements 12",
+        "Responses should follow the order and numbering used in this RFP.",
+        "This RFP does not commit the City to award a contract.",
+        "Proposals will be evaluated against the criteria and weights below.",
+        "The Proponent must confirm that the fleet telematics platform conforms to WCAG 2.1 Level AA."
+      ],
+      "misses": [
+        "The Proponent must confirm that the fleet telematics platform conforms to WCAG 2.1 Level AA (Yes/No).",
+        "The fleet telematics platform must keep an audit log of user activity that administrators cannot alter (Yes/No).",
+        "(Optional) Please describe how driver behaviour (harsh braking, speeding, idling) is scored and how a driver can dispute a score.",
+        "The fleet telematics platform must integrate with the fuel card provider used by the City (Yes/No).",
+        "The Proponent should attach sample maintenance alert reports generated from engine diagnostic codes.",
+        "The Proponent must confirm that the fleet telematics platform will achieve monthly availability of at least 99.9 percent (Yes/No)."
+      ],
+      "seconds": 25.19,
+      "notes": []
+    }
+  ],
+  "settings": {
+    "extractor": "llm",
+    "label": "qwen2.5-3b-instruct (local model server), second pass on",
+    "split": "dev",
+    "max_chars": 1400,
+    "model": "qwen2.5-3b-instruct",
+    "recheck": true
+  }
+}

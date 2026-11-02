@@ -59,6 +59,7 @@ def test_review_items_are_not_accepted_but_count_toward_recall_with_review():
     s = score_document(p, g)
     assert (s.tp, s.fp, s.fn) == (1, 0, 1)
     assert s.recall_with_review == 1.0 and s.review == 1
+    assert s.review_hits == 1 and s.review_reasons == {"(no reason)": 1}
 
 
 def test_duplicate_gold_texts_count_once():
@@ -70,8 +71,9 @@ def test_duplicate_gold_texts_count_once():
 def test_aggregate_gives_micro_macro_and_per_format_numbers():
     a = score_document([found("Describe your support model.")], [gold("Describe your support model."), gold("Describe your training plan.")])
     b = score_document([found("Describe your hosting plan.")], [gold("Describe your hosting plan.")])
-    a.file, a.format, b.file, b.format = "a.docx", "docx", "b.pdf", "pdf"
+    a.file, a.format, a.split, b.file, b.format, b.split = "a.docx", "docx", "dev", "b.pdf", "pdf", "test"
     out = aggregate([a, b])
+    assert out["by_split"]["dev"]["recall"] == 0.5 and out["by_split"]["test"]["recall"] == 1.0
     assert out["summary"]["precision"] == 1.0
     assert out["summary"]["recall"] == pytest.approx(2 / 3, abs=1e-4)
     assert out["summary"]["macro_recall"] == pytest.approx(0.75)

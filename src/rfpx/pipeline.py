@@ -11,7 +11,7 @@ from rfpx.chunking import Chunk, chunk_document
 from rfpx.dedupe import merge_duplicates
 from rfpx.ingest import SUPPORTED, Document, read_document
 from rfpx.models import Finding, Question
-from rfpx.validate import check_question
+from rfpx.validate import check_question, gate_sections
 
 
 class Extractor(Protocol):
@@ -40,7 +40,7 @@ def list_inputs(path: Path) -> list[Path]:
     return sorted(p for p in path.iterdir() if p.suffix.lower() in SUPPORTED and not p.name.startswith("~$"))
 
 
-def process_document(doc: Document, extractor: Extractor, max_chars: int = 2400, near: float = 0.75) -> DocResult:
+def process_document(doc: Document, extractor: Extractor, max_chars: int = 2400, near: float = 0.75, gate: bool = True) -> DocResult:
     started = time.time()
     findings: list[Finding] = []
     notes: list[str] = []
@@ -50,11 +50,11 @@ def process_document(doc: Document, extractor: Extractor, max_chars: int = 2400,
         findings += [check_question(q, chunk, origin=extractor.name) for q in questions]
         findings += rejected
         notes += chunk_notes
-    merged = merge_duplicates(findings, near)
+    merged = merge_duplicates(gate_sections(findings) if gate else findings, near)
     stats = {"readable_blocks": sum(not b.noise for b in doc.blocks), "noise_blocks": sum(b.noise for b in doc.blocks),
              "merged_duplicates": len(findings) - len(merged)}
     return DocResult(doc.name, doc.fmt, merged, notes, len(chunks), round(time.time() - started, 2), stats)
 
 
-def run_directory(path: Path, extractor: Extractor, max_chars: int = 2400, near: float = 0.75) -> list[DocResult]:
-    return [process_document(read_document(p), extractor, max_chars, near) for p in list_inputs(path)]
+def run_directory(path: Path, extractor: Extractor, max_chars: int = 2400, near: float = 0.75, gate: bool = True) -> list[DocResult]:
+    return [process_document(read_document(p), extractor, max_chars, near, gate) for p in list_inputs(path)]

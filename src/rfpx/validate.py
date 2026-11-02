@@ -8,7 +8,7 @@ from __future__ import annotations
 
 import re
 
-from rfpx.baseline import _ID_HEADER
+from rfpx.baseline import _EXCLUDED_SECTION, _ID_HEADER
 from rfpx.chunking import Chunk
 from rfpx.ingest import Block
 from rfpx.models import Finding, Question
@@ -16,6 +16,15 @@ from rfpx.textutil import split_number, squash, verbatim_key
 
 NOT_VERBATIM = "text is not a verbatim piece of the source"
 SPANS_BLOCKS = "text runs across more than one paragraph or table cell"
+BACKGROUND_SECTION = "found under a heading that normally holds background or instructions, not questions"
+
+
+def gate_sections(findings: list[Finding]) -> list[Finding]:
+    """Items under headings like Background, Definitions or Instructions to Proponents are held for review instead of accepted."""
+    for f in findings:
+        if f.status == "accepted" and _EXCLUDED_SECTION.search(f.q.section):
+            f.status, f.reason = "review", BACKGROUND_SECTION
+    return findings
 
 
 def strip_leading_number(q: Question) -> Question:
