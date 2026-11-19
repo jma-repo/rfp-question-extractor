@@ -6,6 +6,12 @@ import pytest
 from rfpx.llm import LLMUnavailable, LocalLLM, SchemaUnsupported, assert_local, strip_think
 
 
+@pytest.fixture(autouse=True)
+def model_calls_allowed(monkeypatch):
+    # CI sets RFPX_NO_LLM for the whole run; these tests only talk to a fake httpx transport, never to a server
+    monkeypatch.delenv("RFPX_NO_LLM", raising=False)
+
+
 def client(handler) -> httpx.Client:
     return httpx.Client(transport=httpx.MockTransport(handler))
 
