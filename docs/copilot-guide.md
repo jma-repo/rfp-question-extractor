@@ -1,70 +1,79 @@
-# 用 Microsoft Copilot 复刻 RFP 问题汇总 agent
+# Rebuilding the RFP question register agent with Microsoft Copilot
 
-适用环境：只有 Microsoft 365 Copilot（Chat 或带许可证的 Copilot 里的 **Agent Builder**，早期文档里叫 Copilot Studio lite），
-没有 Python，没有本地模型，也不能调外部 API。本指南把本仓库 PoC 的流水线逐步翻译成"Copilot + Word + Excel"能做到的版本，
-并明说哪些做不到。提示词是英文的，可直接粘贴；说明是中文。
+For an environment that has only Microsoft 365 Copilot (Chat, or **Agent Builder** in licensed Copilot, called Copilot Studio lite in
+early documentation): no Python, no local model and no external API calls. This guide translates the pipeline of this repository's
+PoC, step by step, into what "Copilot + Word + Excel" can do, and says plainly what it cannot do. The prompts can be pasted as they are.
 
-> **保密红线**：这个仓库和它的样例全是合成数据。你工作中的真实 RFP 只在公司批准的 Copilot 里处理，不要拿到仓库里，也不要上传到任何别的工具。
-> 另见下面"先验证"第 9 条：嵌入 agent 的文件对所有能访问该 agent 的人可见。
+> **Confidentiality**: this repository and its samples are all synthetic. Real RFPs from your work belong only in the Copilot your
+> company has approved; do not bring them into this repository and do not upload them to any other tool.
+> See also item 9 under "Verify first": files embedded in an agent are visible to everyone who can use the agent.
 
-图例：✅ = 我在 Microsoft Learn / Support 官方页面上读到了（2026-11-02 查阅，链接在文末）；🔍 = 文档没写或取决于租户/授权，**要在你的环境里先验证**；⛔ = 无代码做不到。
+Legend: ✅ = read on an official Microsoft Learn / Support page (checked 2026-11-02, links at the end); 🔍 = not documented or depends
+on your tenant or licence, **verify it in your environment first**; ⛔ = cannot be done without code.
 
 ---
 
-## 0. 结论先行
+## 0. Summary
 
-| PoC 里的步骤 | Copilot 里的替代 | 能做到吗 |
+| Step in the PoC | Replacement in Copilot | Possible? |
 |---|---|---|
-| 1 格式归一化（不用 LLM） | 让 Copilot 自己读 Word/PDF/Excel；或你手动拆成小文件/粘贴文本 | 部分：读文件 ✅（Word、Excel、PDF、CSV、TXT 可作输入），页码/行号是它"估"的 🔍 |
-| 2 分块 | **你手动分块**（按章节/页/sheet），一块一次 | ✅ 官方也建议把长文档拆小：模型对长文档中间部分注意力低 |
-| 3 JSON schema 约束 | 固定列的 Markdown 表格 + 提示词里的示例 | ⛔ 没有真正的约束解码，只能靠提示词和事后检查 |
-| 逐字抄录 + 页码/行号 | 提示词约束 + "开头/结尾 6 个词"两列，供你 Ctrl+F | 部分：能大幅降低改写，**不能保证**；页码/行号要抽查 |
-| 4 子串校验（代码） | Excel `FIND` 公式 / Word 查找；有代码解释器时让它跑 Python | 无代码：半自动；有代码解释器：可自动 🔍 |
-| 5 第二遍"漏题/重复"检查 | 每块再问一次（提示词 P2） | ✅ 能做，召回有提升但**不保证没漏** |
-| 6 合并去重 | **不要让 Copilot 合并**：把每块的表粘进 Excel，用"删除重复项"/条件格式 | ✅ 比让 Copilot 合并可靠 |
-| 7 渲染成统一版式 Word | A. Word 模板样式 + 粘贴 Excel 表格；B. 把本仓库的固定脚本交给代码解释器 | A ✅（不依赖 AI）；B 🔍 |
-| 汇总统计、"待人工确认"区 | Excel 透视表 / COUNTIFS；REVIEW 表单独一个 sheet | ✅ |
+| 1 Normalize formats (no LLM) | Let Copilot read the Word / PDF / Excel file, or split it into small files or pasted text yourself | Partly: reading files ✅ (Word, Excel, PDF, CSV and TXT are accepted inputs); page and line numbers are its estimate 🔍 |
+| 2 Chunking | **Chunk by hand** (by section, page range or sheet), one chunk per message | ✅ Microsoft also advises splitting long documents: the model pays less attention to the middle of a long document |
+| 3 JSON-schema constraint | A Markdown table with fixed columns plus a worked example in the prompt | ⛔ No real constrained decoding; only the prompt and checks afterwards |
+| Verbatim copy + page / line | Prompt rules plus "Starts with / Ends with" columns of 6 words each, for Ctrl+F | Partly: rewording drops a lot but is **not guaranteed** to stop; spot-check page and line numbers |
+| 4 Substring check (code) | Excel `FIND` formula or Word Find; with the code interpreter, let it run Python | Without code: half-manual; with the code interpreter: automatic 🔍 |
+| 5 Second pass for missed or repeated items | Ask once more per chunk (prompt P2) | ✅ Works; recall improves but **missing nothing is not guaranteed** |
+| 6 Merge duplicates | **Do not let Copilot merge**: paste each chunk's table into Excel, use Remove Duplicates and conditional formatting | ✅ More reliable than letting Copilot merge |
+| 7 Render one consistent Word layout | A. Word template styles + pasted Excel table; B. give this repository's fixed script to the code interpreter | A ✅ (no AI involved); B 🔍 |
+| Summary counts, "needs human review" list | Excel pivot table / COUNTIFS; the REVIEW table on its own sheet | ✅ |
 
-两条路线，按你环境的实际能力选：
+Two routes; pick the one your environment actually supports:
 
-- **路线 A（几乎一定可用，推荐起步）**：Copilot 只做"理解"（抽取成固定列表格），校验、合并、版式都交给 Excel 和 Word。每份 RFP 要你手动分块、粘贴、抽查。
-- **路线 B（代码解释器可用时的增强）**：让代码解释器跑本仓库里的 [`copilot_snippets.py`](copilot_snippets.py)：自动做子串校验，并用固定代码生成版式一致的 Word。省掉 Excel 公式和手动排版。**前提是沙盒里有 `python-docx`，下面"先验证"第 4 条测一下。**
+- **Route A (almost certainly available; start here)**: Copilot only does the understanding (extracting into a fixed-column table);
+  checking, merging and layout are done in Excel and Word. Each RFP needs manual chunking, pasting and spot checks.
+- **Route B (an upgrade when the code interpreter is available)**: let the code interpreter run this repository's
+  [`copilot_snippets.py`](copilot_snippets.py), which runs the substring check and builds a Word file with a consistent layout from
+  fixed code. It replaces the Excel formulas and the manual layout. **It needs `python-docx` in the sandbox; test it with item 4
+  under "Verify first".**
 
 ---
 
-## 1. 先在你的环境里验证这 10 件事
+## 1. Verify these 10 things in your environment first
 
-每条都给了一句可粘贴的测试。**结果不满足时的退路**写在后面；不要在没验证前把这些当成肯定可用。
+Each item has a test you can paste and **a fallback if the result is not good enough**. Do not count on any of them before you have
+checked.
 
-| # | 要验证什么 | 怎么测 | 不行怎么办 |
+| # | What to check | How to test | If it fails |
 |---|---|---|---|
-| 1 | 你能不能新建 agent：Microsoft 365 Copilot 里有没有 **New agent**（✅ Agent Builder 的入口），还是只有普通 Copilot Chat | 左侧栏找 New agent / Agents | 退化为"普通对话"：把第 2 节的 Instructions 当作每次对话的第一条消息粘贴 |
-| 2 | **Instructions 长度**（✅ 官方上限 8,000 字符） | 粘贴第 2 节的 Instructions，看是否被接受 | 删掉里面的示例，示例改放第一条消息 |
-| 3 | 能不能读你的文件类型 | 上传一份合成 Word、PDF、Excel（`data/synthetic/rfps/`），问："How many pages / sheets does this file have, and what is the first heading?" | 先转成 PDF 或把文本粘贴进对话 |
-| 4 | 代码解释器：✅ Agent Builder 里"始终启用"，但 ✅ 仅限"有 Microsoft 365 Copilot 许可证，或没有开 metered 用量的 Copilot Chat 用户"；沙盒里有哪些库 🔍 | 问："Use Python to run `import docx, openpyxl; print(docx.__version__ if hasattr(docx,'__version__') else 'docx ok')` and also try `import pdfplumber`, `import pypdf`. Report which imports work." | 只走路线 A |
-| 5 | 能不能下载生成的 .docx（✅ 官方说生成的文件有临时下载链接，会话结束后失效） | 问："Create a Word file with a 3-column table and give me the download link." | 路线 A（Word 里自己粘贴） |
-| 6 | **一次能输出多少行**（长表格会不会被截断） 🔍 | 对一块有 20+ 个问题的内容，看最后一行是不是你预期的最后一题（输出里的 "Last item in chunk" 行就是为此设计的） | 把块切得更小，每块 ≤ 15 题 |
-| 7 | 扫描版 PDF / 图片能不能读（OCR） 🔍 | 上传一页扫描件，问它逐字转写第一段 | 先用 Word/Acrobat 做 OCR，或人工录入 |
-| 8 | 页码/行号准不准 🔍 | 抽 5 个条目，用 PDF 阅读器对页码；Word 文件没有固定页码，页数取决于渲染 | 改用"章节号 + 段落序号"，或只写开头 6 个词让人 Ctrl+F |
-| 9 | **保密与共享**：✅ 嵌入 agent 的文件存放在租户的默认地理位置；✅ Purview Information Barriers 不支持嵌入文件；✅ 任何能访问该 agent 的人都能看到基于该文件的回答；✅ 带用户自定义权限的敏感度标签的文件不受支持；GCC 环境不支持嵌入文件。你的 DLP/敏感度标签策略是否允许上传 RFP 🔍 | 问 IT/合规。**agent 不要共享给不该看这份 RFP 的人**；真实 RFP 优先用对话附件而不是嵌入 agent | 用对话附件，处理完删除对话 |
-| 10 | 文件数量与大小：✅ 嵌入文件最多 20 个；✅ Excel 数据放在一个 sheet 里效果最好；单文件大小/对话附件数量 🔍 | 一次传 3 份 | 一次只处理一份 RFP |
+| 1 | Whether you can create an agent: does Microsoft 365 Copilot show **New agent** (✅ the entry point of Agent Builder), or only plain Copilot Chat | Look for New agent / Agents in the left rail | Fall back to plain chat: paste the Instructions from section 2 as the first message of every conversation |
+| 2 | **Instructions length** (✅ official limit 8,000 characters) | Paste the Instructions from section 2 and see whether they are accepted | Remove the example from the Instructions and send it as the first message instead |
+| 3 | Whether it reads your file types | Upload a synthetic Word, PDF and Excel file (`data/synthetic/rfps/`) and ask: "How many pages / sheets does this file have, and what is the first heading?" | Convert to PDF first, or paste the text into the conversation |
+| 4 | Code interpreter: ✅ "always on" in Agent Builder, but ✅ only for users "with a Microsoft 365 Copilot licence, or Copilot Chat users without metered usage"; which libraries the sandbox has 🔍 | Ask: "Use Python to run `import docx, openpyxl; print(docx.__version__ if hasattr(docx,'__version__') else 'docx ok')` and also try `import pdfplumber`, `import pypdf`. Report which imports work." | Use route A only |
+| 5 | Whether you can download a generated .docx (✅ generated files get a temporary download link that expires when the session ends) | Ask: "Create a Word file with a 3-column table and give me the download link." | Route A (paste into Word yourself) |
+| 6 | **How many rows one reply can hold** (are long tables cut off) 🔍 | On a chunk with 20+ questions, check that the last row is the last question you expect (the "Last item in chunk" line exists for this) | Cut smaller chunks, at most 15 questions each |
+| 7 | Whether scanned PDFs or images can be read (OCR) 🔍 | Upload one scanned page and ask it to transcribe the first paragraph word for word | OCR first in Word or Acrobat, or type it in |
+| 8 | Whether page and line numbers are right 🔍 | Check the page of 5 items in a PDF reader; Word files have no fixed page numbers, the page count depends on rendering | Use "section number + paragraph number" instead, or only the first 6 words for Ctrl+F |
+| 9 | **Confidentiality and sharing**: ✅ files embedded in an agent are stored in the tenant's default geography; ✅ Purview Information Barriers do not support embedded files; ✅ anyone who can use the agent can see answers based on the file; ✅ files with sensitivity labels that carry user-defined permissions are not supported; embedded files are not supported in GCC. Whether your DLP and sensitivity-label policies allow uploading an RFP 🔍 | Ask IT / compliance. **Do not share the agent with anyone who should not see the RFP**; for real RFPs prefer conversation attachments over files embedded in the agent | Use conversation attachments and delete the conversation afterwards |
+| 10 | Number and size of files: ✅ at most 20 embedded files; ✅ Excel works best with the data on one sheet; single-file size and number of conversation attachments 🔍 | Upload 3 files at once | Process one RFP at a time |
 
-> 不确定的就不要依赖。**第 4、5 条决定走路线 A 还是 B。**
+> If something is uncertain, do not rely on it. **Items 4 and 5 decide between route A and route B.**
 
 ---
 
-## 2. Agent Builder 配置（路线 A 和 B 通用）
+## 2. Agent Builder setup (both routes)
 
-✅ 字段上限：Name ≤ 30 字符，Description ≤ 1,000，Instructions ≤ 8,000。开关：Code interpreter（始终开）、Image generator（**关掉**）。
-Agent Builder 不支持自建 Actions（✅）。
+✅ Field limits: Name ≤ 30 characters, Description ≤ 1,000, Instructions ≤ 8,000. Switches: Code interpreter (always on), Image
+generator (**turn it off**). Agent Builder does not support custom Actions (✅).
 
-- **Name**：`RFP Question Extractor`
-- **Description**：`Turns one chunk of an RFP (Word, PDF or Excel) into a fixed-format table of the questions a vendor must answer, copied word for word.`
-- **Response mode**：选 **Think deeper**（✅ 官方列出 Auto / Quick response / Think deeper；抽取要求细心，不求快）。🔍 是否真的减少漏题，要你对比测试。
-- **Knowledge**：不加。RFP 作为每次对话的附件/粘贴文本，不嵌入 agent（见第 1 节第 9 条）。
-- **Starter prompts**（可选）：`Extract the questions from the chunk below.` / `Check my table for missed or repeated items.`
+- **Name**: `RFP Question Extractor`
+- **Description**: `Turns one chunk of an RFP (Word, PDF or Excel) into a fixed-format table of the questions a vendor must answer, copied word for word.`
+- **Response mode**: choose **Think deeper** (✅ the documented modes are Auto / Quick response / Think deeper; extraction needs care,
+  not speed). 🔍 Whether it really misses fewer items is something to compare yourself.
+- **Knowledge**: none. The RFP comes as an attachment or pasted text in each conversation, not embedded in the agent (see item 9 in
+  section 1).
+- **Starter prompts** (optional): `Extract the questions from the chunk below.` / `Check my table for missed or repeated items.`
 
-### Instructions（整段粘贴，约 4,800 字符，低于 8,000 上限）
+### Instructions (paste as one block; about 4,800 characters, under the 8,000 limit)
 
 <!-- agent-instructions:start -->
 ```text
@@ -118,41 +127,48 @@ Items: 3 | Review: 0 | Last item in chunk: Attach a sample maintenance schedule 
 ```
 <!-- agent-instructions:end -->
 
-这段 Instructions 的长度、示例是否逐字取自示例原文、"开头/结尾 6 词"是否数对，都由 `tests/test_copilot_guide.py` 检查。
+`tests/test_copilot_guide.py` checks the length of these Instructions, that the example copies its chunk word for word, and that
+the "Starts with / Ends with" words are counted correctly.
 
 ---
 
-## 3. 手动分块（替代 PoC 的第 1、2 步）
+## 3. Chunking by hand (replaces steps 1 and 2 of the PoC)
 
-✅ 官方说明：对很长的文档，模型更关注开头和结尾，中间的内容容易被忽略；建议把长文档拆成小文档分别给它，并且"指定章节/页码范围"的功能还在开发中（也就是现在不能让它只读第几页）。所以分块要你自己做。
+✅ Microsoft notes that in a very long document the model pays most attention to the beginning and the end and tends to miss the
+middle; it advises splitting long documents into smaller ones, and the ability to point Copilot at a section or page range is still
+being developed (so today you cannot tell it to read only certain pages). The chunking is therefore yours to do.
 
-**块有多大**：Word/PDF 约 3 到 5 页或 800 到 1,500 个词；一块里问题 ≤ 15 个。本 PoC 的本地小模型在约 1,400 字符（约 250 词）的块上效果最好；Copilot 的模型更强，块可以大得多，但上一节的"最后一行"检查要保留，因为超长输出可能被截断 🔍。
+**Chunk size**: 3 to 5 pages or 800 to 1,500 words for Word and PDF, at most 15 questions per chunk. The PoC's small local model
+works best on chunks of about 1,400 characters (about 250 words); Copilot's model is stronger and can take much larger chunks, but
+keep the "last line" check from the previous section, because very long replies may be cut off 🔍.
 
-| 文件类型 | 怎么拆 | 注意 |
+| File type | How to split | Watch out for |
 |---|---|---|
-| **Word** | 视图 → 导航窗格，按标题选中到下一个同级标题，复制，**粘贴为纯文本**到对话（或粘贴进新文档再上传） | 自动编号（Word 列表）复制出来后编号可能丢失，Ref 会变成 `-` 🔍。需要保留编号时，把这一节另存为 PDF（文件 → 另存为 → PDF）再上传，编号就成了页面上的文字；或者接受 Ref 为 `-` |
-| **PDF（文本型）** | 打印 → "Microsoft Print to PDF"，在"页面范围"里填 `5-7`，得到只含这几页的小 PDF，再上传 | 页眉页脚、页码会混进文本：Instructions 已要求忽略它们，抽样时仍要留意 |
-| **PDF（扫描版）** | 先做 OCR，或手工录入 | 见第 1 节第 7 条 🔍 |
-| **Excel** | 一个 sheet 一块：右键 sheet → 移动或复制 → 新工作簿。行数 > 60 就按行拆，**每块都带表头行** | ✅ "数据放在一个 sheet 里效果最好"。先把合并单元格取消合并并向下填充：选中该列 → 取消合并 → F5 → 定位条件 → 空值 → 输入 `=` 再按 ↑ → Ctrl+Enter |
-| **跨块的题** | 在下一块开头加一行 `CONTEXT ONLY: <上一块最后 1 个编号题的前 10 个词>` | Instructions 已规定 CONTEXT ONLY 不抽取 |
+| **Word** | View → Navigation Pane; select from one heading to the next heading of the same level, copy, **paste as plain text** into the conversation (or paste into a new document and upload it) | Automatic numbering (Word lists) may be lost when copied, and Ref becomes `-` 🔍. To keep numbers, save the section as PDF (File → Save As → PDF) and upload that, so the numbers become text on the page; or accept `-` |
+| **PDF (text)** | Print → "Microsoft Print to PDF" with a page range such as `5-7`, which gives a small PDF of only those pages; upload it | Running headers, footers and page numbers end up in the text: the Instructions tell it to ignore them, but watch for them when spot-checking |
+| **PDF (scanned)** | OCR first, or type it in | See item 7 in section 1 🔍 |
+| **Excel** | One sheet per chunk: right-click the sheet → Move or Copy → new workbook. Split sheets with more than 60 rows by rows, **with the header row in every chunk** | ✅ "Data on one sheet works best". Unmerge merged cells and fill down first: select the column → Unmerge → F5 → Special → Blanks → type `=` and press ↑ → Ctrl+Enter |
+| **Items that cross chunks** | Start the next chunk with a line `CONTEXT ONLY: <first 10 words of the last numbered item of the previous chunk>` | The Instructions say CONTEXT ONLY lines are not extracted |
 
-每块的第一行写：`=== RFP: <文件名> | CHUNK 3/12 | pages 5-7 ===`。再建一个 Excel 台账 sheet `Log`：文件 / 块号 / 页码 / 返回条数 / Review 条数 / 已核对。块号连续、条数合计，是你发现"整块漏掉"的唯一办法。
+Start every chunk with a line `=== RFP: <file name> | CHUNK 3/12 | pages 5-7 ===`. Keep a `Log` sheet in Excel: file / chunk /
+pages / rows returned / review rows / checked. Consecutive chunk numbers and the row totals are the only way you will notice a whole
+chunk that went missing.
 
 ---
 
-## 4. 提示词库（可直接粘贴）
+## 4. Prompt library (paste as is)
 
-### P1 抽取（每块一次）
-agent 里已有 Instructions，每次对话只需要粘贴块：
+### P1 Extraction (once per chunk)
+With the Instructions in the agent, each conversation only needs the chunk:
 
 ```text
 === RFP: Fleet Telematics | CHUNK 3/12 | pages 5-7 ===
 <paste the chunk here>
 ```
 
-没有 agent（普通对话）时，先粘贴第 2 节的 Instructions，再粘贴块。
+Without an agent (plain chat), paste the Instructions from section 2 first, then the chunk.
 
-### P2 漏题与重复检查（每块再问一次）
+### P2 Check for missed and repeated items (once more per chunk)
 ```text
 Below are the chunk again and the table you produced for it. Do not rewrite the table.
 1) Find questions or requirements in the chunk that are missing from the table. Output them as rows in the same columns, copied word for word.
@@ -165,27 +181,29 @@ CHUNK:
 TABLE:
 <paste the table>
 ```
-把 MISSING 行追加到该块的表里，**再核对一次**（第 5 节）。这一遍的价值是提高召回，不是保证。
+Append the MISSING rows to the chunk's table and **check them again** (section 5). This pass raises recall; it does not guarantee it.
 
-### P3 自检（想让 Copilot 自己找出处）
+### P3 Self-check (asking Copilot to show where each row came from)
 ```text
 For each row of the table, quote the sentence from the chunk it was copied from, with the 8 words before and after it. If you cannot find it in the chunk, write NOT FOUND for that row. Do not change any row.
 ```
-⛔ 这仍是模型在"自查"，它给出的出处可能错得很自信。当作提示，不当证据；证据是第 5 节的 Ctrl+F / 公式。
+⛔ This is still the model checking itself, and it can quote a wrong source with confidence. Treat it as a hint, not evidence; the
+evidence is the Ctrl+F or formula check in section 5.
 
-### P4 Excel 问卷（每行已是一道题）
+### P4 Excel questionnaires (each row is already a question)
 ```text
 Each row of the attached sheet is one question. Do not extract anything new. For every row, output the table with Text copied exactly from the Question column, Ref from the Ref column, Required from the Mandatory column, and Type chosen from the Response type column (Free text = narrative, Yes/No = yes_no, Attachment = upload, Table = table, Pricing = pricing). Where = "<sheet>!R<row number>".
 ```
 
-### P5 代码解释器：校验（路线 B）
-先粘贴 `docs/copilot_snippets.py` 全文，然后：
+### P5 Code interpreter: verification (route B)
+Paste the whole of `docs/copilot_snippets.py` first, then:
 ```text
 Run the code above. Then, using the function verify(rows, source): rows is the JSON list I give you and source is the chunk text I give you. Print every row whose text is not a verbatim piece of the source. Do not edit rows.
 ROWS: <paste JSON>
 SOURCE: <paste chunk>
 ```
-JSON 字段：`rfp, section, ref, text, type, required, constraints, source`。让 Copilot 把第 2 节的表转成这个 JSON（附一个示例，小模型和大模型都会照着学）：
+JSON fields: `rfp, section, ref, text, type, required, constraints, source`. Have Copilot convert the section 2 table into this JSON
+(with one example, which small and large models both follow):
 
 <!-- json-example:start -->
 ```text
@@ -195,104 +213,139 @@ Example JSON: [{"rfp": "Fleet Telematics", "section": "3.2 Network Design", "ref
 ```
 <!-- json-example:end -->
 
-JSON 的好处是代码解释器（P5、P6）可以直接读；坏处是 Copilot 偶尔会在 JSON 前后加解释，所以最后一句 `Reply with the JSON only.` 不能删。
+JSON's advantage is that the code interpreter (P5, P6) can read it directly; its drawback is that Copilot sometimes adds explanations
+before or after it, so keep the last sentence, `Reply with the JSON only.`
 
-### P6 代码解释器：生成固定版式 Word（路线 B）
+### P6 Code interpreter: Word file with a fixed layout (route B)
 ```text
 Run build_register(rows) from the code above on the JSON below, save as rfp_register.docx and give me the download link. Do not change the layout, the column names or the fonts.
 ROWS: <paste the full JSON list, all chunks>
 ```
-版式由代码固定（横向、每节一张表、8 列固定宽度），每次一致。🔍 沙盒里要有 `python-docx`（第 1 节第 4 条）。
+The layout is fixed by the code (landscape, one table per section, 8 columns of fixed width), so it is the same every time. 🔍 The
+sandbox needs `python-docx` (item 4 in section 1).
 
 ---
 
-## 5. 没有代码时怎么做"子串校验"
+## 5. The substring check without code
 
-PoC 里的规则：`question_text` 必须是原文的一段连续文字。没有代码时，用下面任一办法，**越靠上越自动**。
+The PoC's rule: `question_text` must be one contiguous piece of the source text. Without code, use any of the methods below; **the
+higher in the list, the more automatic**.
 
-**办法 1：Excel 公式（推荐，批量）**
+**Method 1: an Excel formula (recommended, in bulk)**
 
-1. 新建工作簿，sheet `Source`：把这一块的原文**粘贴进 `A2` 一个单元格**（一块 ≤ 约 3,000 字符，在单元格 32,767 字符上限内）。
-2. sheet `Rows`：把 Copilot 的表粘贴到 `A1`（列：A Ref，B Section，C Text，D Type，E Required，F Constraints，G Where，H Starts with，I Ends with）。
-3. `J2` 填（一行，粘贴即可）：
+1. New workbook, sheet `Source`: paste the chunk's text **into the single cell `A2`** (a chunk of about 3,000 characters or less fits
+   well within the cell limit of 32,767 characters).
+2. Sheet `Rows`: paste Copilot's table at `A1` (columns: A Ref, B Section, C Text, D Type, E Required, F Constraints, G Where,
+   H Starts with, I Ends with).
+3. In `J2` (one line; paste it as is):
 ```text
 =IF(AND(ISNUMBER(FIND(LEFT(C2,100),TRIM(SUBSTITUTE(SUBSTITUTE(Source!$A$2,CHAR(10)," "),CHAR(13)," ")))),ISNUMBER(FIND(RIGHT(C2,100),TRIM(SUBSTITUTE(SUBSTITUTE(Source!$A$2,CHAR(10)," "),CHAR(13)," "))))),"ok","CHECK")
 ```
-下拉到所有行。`CHECK` 的行：开头 100 个字符或结尾 100 个字符不在原文里，多半是被改写了。
-- `FIND` 区分大小写、不当通配符，所以比 `SEARCH` 更接近 PoC 的"逐字"。
-- 开头和结尾都命中但中间被改写的情况，这个公式查不出来。要查全文：把 `LEFT(C2,100)` 换成 `C2`；如果出现 `#VALUE!`，说明你的 Excel 版本对查找文本有长度限制 🔍，回到 LEFT/RIGHT 版本。
-- 原文里的弯引号、长破折号和不间断空格，Copilot 可能换成直引号和普通空格，会造成"误报 CHECK"：先在 Source 里用查找替换把 `’ “ ” – —` 换成直引号和 `-`。
-4. 条件格式：`J` 列等于 `CHECK` 的整行标红。**不要删除这些行**，把它们移到 `REVIEW` sheet（PoC 里叫"待人工确认"区）。
+Fill down to every row. A `CHECK` row means the first or the last 100 characters are not in the source, which usually means it was
+reworded.
+- `FIND` is case-sensitive and has no wildcards, so it is closer to the PoC's "word for word" than `SEARCH`.
+- The formula misses a row whose start and end match but whose middle was reworded. To check the whole text, replace
+  `LEFT(C2,100)` with `C2`; if that returns `#VALUE!`, your Excel version limits the length of the search text 🔍, so go back to
+  the LEFT / RIGHT version.
+- Copilot may turn curly quotes, long dashes and non-breaking spaces in the source into straight quotes and plain spaces, which
+  gives false `CHECK` results: first use Find and Replace in Source to turn `’ “ ” – —` into straight quotes and `-`.
+4. Conditional formatting: colour the whole row red where column `J` is `CHECK`. **Do not delete these rows**; move them to the
+   `REVIEW` sheet (the PoC's "needs human review" list).
 
-**办法 2：Word / PDF 里 Ctrl+F（抽查）**
-用表里的 `Starts with` 列到原文里 Ctrl+F。每块抽 5 行，**优先抽最长的、中间有逗号和括号的**（改写通常发生在这里）。找不到就看 `Ends with`；两个都找不到，这一行是改写的或编造的。
+**Method 2: Ctrl+F in Word or PDF (spot checks)**
+Search the source for the `Starts with` value of a row. Check 5 rows per chunk, **the longest ones with commas and brackets in the
+middle first** (that is where rewording happens). If it is not found, try `Ends with`; if neither is found, the row was reworded or
+invented.
 
-**办法 3：代码解释器（路线 B）**：提示词 P5，`verify` 对全部行做和 PoC 一样的子串检查。
+**Method 3: code interpreter (route B)**: prompt P5; `verify` runs the same substring check as the PoC on every row.
 
-**怎么抽查"漏题"**（子串校验查不了漏题）：
-- 题号连续性：`4.2.1, 4.2.2, 4.2.4` 少了 4.2.3 就是漏了。
-- `Last item in chunk` 行必须等于你肉眼看到的这一块最后一道题。
-- 每块在原文里数 `shall`、`must`、`should`、`?` 出现的次数（Word 导航窗格里搜索会显示匹配数），和返回条数大致对得上；差得多就重跑这一块。
-- 跑 P2。
-
----
-
-## 6. 统一版式（替代 PoC 的 docxtpl 模板）
-
-**路线 A（不依赖 AI，版式一定一致）**
-1. Excel 里把各块的表追加到 sheet `All`；"数据 → 删除重复项"按 `Text` 列去重（只删完全相同的；近似重复用条件格式标出，**让人决定**，对应 PoC 的"flag, never merge"）。
-2. 加两列 `Owner`、`Status`（留给团队填）。
-3. 版式一次性做好，保存为模板：新建 Word 文档，页面设为横向，设置好 标题 1 / 标题 2 / 表格文字 样式，把表头行设成"在各页顶端以标题行形式重复出现"，列宽固定，另存为 `RFP-register.dotx`。
-4. 每次：新建基于 `.dotx` 的文档，把 Excel 的 `All` 区域复制 → 粘贴，粘贴选项选"使用目标样式"（Use Destination Styles）。样式来自模板，所以每次一致。
-5. 汇总统计放在文首：用 Excel 透视表（行 = RFP，列 = Type，值 = 计数）或 `COUNTIFS`，粘贴为表格。
-6. **按 RFP、再按章节分组**：先按 `RFP`、`Section` 排序，再分别粘贴；分节数多时手工很累，这是路线 A 的真实成本，也是路线 B 值得验证的原因。
-
-**路线 B**：P6。固定代码 = 固定版式。限制：只生成 8 列的简单表格，没有 PoC 里那种可在 Word 里直接改样式的模板，也没有汇总表和"待人工确认"区；这些要你在 Word 里补，或者把 `copilot_snippets.py` 里的 `build_register` 改一版再粘贴（每次粘贴同一份代码，不要让 Copilot 重写）。
-
-**不推荐**：直接让 Copilot "把这些问题整理成一份格式漂亮的 Word 文档"。每次排版会不一样，这正是你要解决的问题。
+**How to spot missed items** (the substring check cannot find them):
+- Number gaps: `4.2.1, 4.2.2, 4.2.4` means 4.2.3 is missing.
+- The `Last item in chunk` line must match the last question you see in the chunk.
+- Count `shall`, `must`, `should` and `?` in each chunk of the source (searching in Word's Navigation Pane shows the number of
+  matches) and compare with the number of rows returned; if they differ a lot, run the chunk again.
+- Run P2.
 
 ---
 
-## 7. 做不到的事（明说）
+## 6. One consistent layout (replaces the PoC's docxtpl template)
 
-- ⛔ **保证不漏题、不改写。** 只能降低概率并让它可发现：逐字抄录约束、开头/结尾 6 词、`Last item` 行、P2 第二遍、Excel 公式、人工抽查。
-- ⛔ **真正的 JSON schema 约束。** Copilot 没有约束解码；它可能多一列、少一列、改列名。固定列的 Markdown 表 + 示例是最接近的，出错时你在 Excel 里会立刻看到列错位。
-- ⛔ **批量无人值守。** 10 份 RFP × 每份十几块，是上百次手工粘贴。Agent Builder 不支持自建 Actions（✅），也没有 API 可调。
-- 🔍 **页码/行号。** Word 没有固定页码；PDF 的页码和行号是模型"估"的。可靠的定位是章节号、编号、`Starts with`。
-- 🔍 **长输出被截断**、**超长文档中间被忽略**（✅ 官方提示）。靠小块和 `Last item` 行发现。
-- 🔍 **数据治理。** 见第 1 节第 9 条；你的租户可能禁用文件上传或代码解释器。
-- ⛔ **Jev 之类的外部判断模型**用不上：Copilot 里不能调外部 API，数据也不该出你的租户。
+**Route A (no AI involved, so the layout is always the same)**
+1. In Excel, append each chunk's table to the sheet `All`; Data → Remove Duplicates on the `Text` column (it removes only exact
+   duplicates; mark near-duplicates with conditional formatting and **let a person decide**, as the PoC's "flag, never merge").
+2. Add two columns, `Owner` and `Status`, for the team to fill in.
+3. Build the layout once and save it as a template: a new Word document in landscape, with the Heading 1 / Heading 2 / table-text
+   styles set, the header row set to repeat at the top of each page, fixed column widths; save as `RFP-register.dotx`.
+4. Each time: create a document from the `.dotx`, copy the `All` range from Excel, paste, and choose Use Destination Styles. The
+   styles come from the template, so the result is the same every time.
+5. Put the summary counts at the top: an Excel pivot table (rows = RFP, columns = Type, values = count) or `COUNTIFS`, pasted as a
+   table.
+6. **Group by RFP, then by section**: sort by `RFP` and `Section`, then paste each group separately; with many sections this is
+   tedious by hand, which is the real cost of route A and the reason route B is worth verifying.
 
----
+**Route B**: P6. Fixed code means a fixed layout. Limits: it builds a simple 8-column table only, without the PoC's template whose
+styles can be changed in Word, and without the summary table and the "needs human review" list; add those in Word, or change
+`build_register` in `copilot_snippets.py` and paste that version (paste the same code every time; do not let Copilot rewrite it).
 
-## 8. 用本仓库的合成数据在 Copilot 里做一次评测（10 分钟）
-
-目的：知道你的 Copilot 在这类文件上大概是什么水平，再决定要不要信它。数据是合成的，可以放心上传。
-
-1. 取 `data/synthetic/rfps/` 里的 `northfield-fleet-telematics.docx`、`foothills-student-information-system.pdf`、`bow-river-fare-questionnaire.xlsx`（这三份是开发集；测试集见 `data/synthetic/manifest.json`）。
-2. 按第 3 节分块，P1 抽取，把所有块的表粘到 Excel 的 sheet `Pred`（`C` 列是 Text）。
-3. 把 `data/synthetic/gold_all.csv` 打开，复制到 sheet `Gold`（`E` 列是 question_text）。
-4. 召回（按前 100 个字符近似，不区分大小写，比 PoC 的逐字匹配宽松）：在 `Gold` 的 `K2` 填 `=IF(COUNTIF(Pred!$C:$C,LEFT(E2,100)&"*")>0,1,0)`，下拉，`=AVERAGE(K:K)`。精确率：在 `Pred` 的 `K2` 填 `=IF(COUNTIF(Gold!$E:$E,LEFT(C2,100)&"*")>0,1,0)`，下拉，`=AVERAGE(K:K)`。
-   - `COUNTIF` 会把 `?` `*` 当通配符，所以问号结尾的题可能有少量误判；对一次粗评够用。
-5. 和 PoC 的数字比（README 里的表）：同一批文件（看 Test F1 一列），规则基线约 0.92，3B 本地模型 0.89 到 0.91。**你的 Copilot 如果明显低于规则基线，就别用在真实 RFP 上，或者只用来做"第二意见"。**
-
----
-
-## 9. 推荐的最小工作流（路线 A）
-
-1. 第 1 节验证清单跑一遍（15 分钟），确定路线。
-2. 建 agent（第 2 节）。
-3. 对每份 RFP：分块（第 3 节）→ P1 → 把表粘进 Excel `All` → J 列公式（第 5 节）→ `CHECK` 的行移到 `REVIEW` → P2 → 追加 MISSING 行并核对 → 填台账 `Log`。
-4. 去重、排序、加 Owner/Status，粘进 `.dotx` 模板（第 6 节）。
-5. 交给团队前，对每份 RFP 随机抽 10 行对原文，记下改写率；超过 5% 就缩小块再来。
+**Not recommended**: asking Copilot to "turn these questions into a nicely formatted Word document". The layout changes every time,
+which is exactly the problem you are trying to solve.
 
 ---
 
-### 官方出处（2026-11-02 查阅）
+## 7. What cannot be done (stated plainly)
 
-- Agent Builder 字段与限制、响应模式、能力开关：<https://learn.microsoft.com/en-us/microsoft-365/copilot/extensibility/agent-builder-build-agents>
-- 知识来源与上限、嵌入文件的存放与权限、Excel 单 sheet 建议：<https://learn.microsoft.com/en-us/microsoft-365/copilot/extensibility/agent-builder-add-knowledge>
-- 代码解释器（输入格式、可生成可下载文件、仅会话内有效、许可证条件）：<https://learn.microsoft.com/en-us/microsoft-365/copilot/extensibility/code-interpreter>
-- 文档长度与注意力：<https://support.microsoft.com/en-us/microsoft-365-copilot/how-reference-and-document-lengths-affect-copilot-responses>
+- ⛔ **A guarantee of no missed and no reworded items.** You can only make them less likely and easier to find: the verbatim-copy
+  rules, the 6-word start and end columns, the `Last item` line, the P2 second pass, the Excel formula, and human spot checks.
+- ⛔ **A real JSON-schema constraint.** Copilot has no constrained decoding; it may add a column, drop one or rename one. A
+  fixed-column Markdown table with an example is the closest you get, and a broken column shows up at once in Excel.
+- ⛔ **Unattended batch runs.** 10 RFPs of a dozen chunks each means a hundred or more manual pastes. Agent Builder does not support
+  custom Actions (✅), and there is no API to call.
+- 🔍 **Page and line numbers.** Word has no fixed page numbers; page and line numbers in a PDF are the model's estimate. Reliable
+  locations are section numbers, item numbers and `Starts with`.
+- 🔍 **Long replies cut off** and **the middle of very long documents ignored** (✅ documented). Small chunks and the `Last item` line
+  catch them.
+- 🔍 **Data governance.** See item 9 in section 1; your tenant may have file upload or the code interpreter turned off.
+- ⛔ **External judge models** cannot be used: Copilot cannot call external APIs, and the data should not leave your tenant.
 
-这些页面会更新；其中没写的（沙盒库、输出长度、扫描件、单文件大小）就是上面标 🔍 的项。
+---
+
+## 8. A 10-minute evaluation in Copilot on this repository's synthetic data
+
+Goal: get a rough idea of how your Copilot does on files like these before deciding whether to trust it. The data is synthetic, so it
+is safe to upload.
+
+1. Take `northfield-fleet-telematics.docx`, `foothills-student-information-system.pdf` and `bow-river-fare-questionnaire.xlsx`
+   from `data/synthetic/rfps/` (these three are the dev set; the test set is listed in `data/synthetic/manifest.json`).
+2. Chunk them as in section 3, run P1, and paste every chunk's table into the sheet `Pred` (column `C` is Text).
+3. Open `data/synthetic/gold_all.csv` and copy it into the sheet `Gold` (column `E` is question_text).
+4. Recall (approximated on the first 100 characters, case-insensitive, looser than the PoC's verbatim match): in `Gold`, put
+   `=IF(COUNTIF(Pred!$C:$C,LEFT(E2,100)&"*")>0,1,0)` in `K2`, fill down, then `=AVERAGE(K:K)`. Precision: in `Pred`, put
+   `=IF(COUNTIF(Gold!$E:$E,LEFT(C2,100)&"*")>0,1,0)` in `K2`, fill down, then `=AVERAGE(K:K)`.
+   - `COUNTIF` treats `?` and `*` as wildcards, so questions ending in a question mark may be miscounted now and then; good enough
+     for a rough evaluation.
+5. Compare with the PoC's numbers (the table in the README, the Test F1 column for the same files): about 0.92 for the rules
+   baseline, 0.89 to 0.91 for the 3B local model. **If your Copilot is clearly below the rules baseline, do not use it on real
+   RFPs, or use it only as a second opinion.**
+
+---
+
+## 9. Recommended minimal workflow (route A)
+
+1. Run the checklist in section 1 (15 minutes) and pick a route.
+2. Build the agent (section 2).
+3. For each RFP: chunk (section 3) → P1 → paste the table into Excel `All` → the column J formula (section 5) → move `CHECK` rows to
+   `REVIEW` → P2 → append and check the MISSING rows → fill in the `Log`.
+4. Remove duplicates, sort, add Owner / Status, and paste into the `.dotx` template (section 6).
+5. Before handing it to the team, compare 10 random rows per RFP with the source and note the rewording rate; above 5%, use smaller
+   chunks and run it again.
+
+---
+
+### Official sources (checked 2026-11-02)
+
+- Agent Builder fields and limits, response modes, capability switches: <https://learn.microsoft.com/en-us/microsoft-365/copilot/extensibility/agent-builder-build-agents>
+- Knowledge sources and limits, storage and permissions of embedded files, the one-sheet Excel advice: <https://learn.microsoft.com/en-us/microsoft-365/copilot/extensibility/agent-builder-add-knowledge>
+- Code interpreter (input formats, downloadable generated files valid only in the session, licence conditions): <https://learn.microsoft.com/en-us/microsoft-365/copilot/extensibility/code-interpreter>
+- Document length and attention: <https://support.microsoft.com/en-us/microsoft-365-copilot/how-reference-and-document-lengths-affect-copilot-responses>
+
+These pages change; anything they do not cover (sandbox libraries, reply length, scanned files, single-file size) is marked 🔍 above.
